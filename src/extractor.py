@@ -11,18 +11,20 @@ class Extractor:
         parlamentares_ids: list[str] = None,
         pareceres_ids: list[str] = None,
         orgaos_ids: list[str] = None,
+        max_workers:int = 10
     ) -> None:
         self.legislaturas = list(range(legislatura_inicial, legilatura_final + 1))
         self.parlamentares_ids: list[str] = parlamentares_ids
         self.pareceres_ids: list[str] = pareceres_ids
         self.orgaos_ids: list[str] = orgaos_ids
+        self.max_workers = max_workers
 
     def _execute(
-        self, executable, iterator, tqdm_desc: str = "Baixando", max_workers=10
+        self, executable, iterator, tqdm_desc: str = "Baixando"
     ):
         final = []
         pbar = tqdm(range(0, len(iterator)), desc=tqdm_desc)
-        with ThreadPoolExecutor(max_workers=max_workers) as executor:
+        with ThreadPoolExecutor(max_workers=self.max_workers) as executor:
             futures = [executor.submit(executable, x) for x in iterator]
             for future in as_completed(futures):
                 final += future.result()
