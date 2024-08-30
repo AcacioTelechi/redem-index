@@ -24,7 +24,7 @@ def get_parlamentare_detalhes(id_parl):
         api.HOST, endpoints.PARLAMENTARES_DETALHES.format(id_parl=id_parl)
     )
     resp = api.request(url)
-    return resp
+    return  [flatten_json(p) for p in resp]
 
 def get_parlamentare_mandatos_externos(id_parl):
     url = api.construct_url(
