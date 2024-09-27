@@ -1,0 +1,11 @@
+id,uri,dataInicio,dataFim
+48,https://dadosabertos.camara.leg.br/api/v2/legislaturas/48,1987-02-01,1991-01-31
+55,https://dadosabertos.camara.leg.br/api/v2/legislaturas/55,2015-02-01,2019-01-31
+52,https://dadosabertos.camara.leg.br/api/v2/legislaturas/52,2003-02-01,2007-01-31
+56,https://dadosabertos.camara.leg.br/api/v2/legislaturas/56,2019-02-01,2023-01-31
+57,https://dadosabertos.camara.leg.br/api/v2/legislaturas/57,2023-02-01,2027-01-31
+54,https://dadosabertos.camara.leg.br/api/v2/legislaturas/54,2011-02-01,2015-01-31
+51,https://dadosabertos.camara.leg.br/api/v2/legislaturas/51,1999-02-01,2003-01-31
+53,https://dadosabertos.camara.leg.br/api/v2/legislaturas/53,2007-02-01,2011-01-31
+50,https://dadosabertos.camara.leg.br/api/v2/legislaturas/50,1995-02-01,1999-01-31
+49,https://dadosabertos.camara.leg.br/api/v2/legislaturas/49,1991-02-01,1995-01-31
