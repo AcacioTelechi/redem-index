@@ -23,7 +23,7 @@ class IPPCalculator(BaseIndex):
             "dim_carreira": [
                 "mandatos_cum_norm_w",
                 "fid_gerais_cum_norm_w",
-                "tempo_atuacao_percent_norm_w",
+                "tempo_atuacao_dias_cum_ln_norm_w",
             ],
         }
     
@@ -46,7 +46,7 @@ class IPPCalculator(BaseIndex):
         self.df["ipp"] = (
             self.df["dim_comprometimento_norm"] + 
             self.df["dim_carreira_norm"]
-        ) / 3
+        ) / 2
         
         return self.df
     
