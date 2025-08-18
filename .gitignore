@@ -7,6 +7,9 @@ node_modules
 
 *.bin
 
+#Large files
+2023_Completo_redem_0304.xlsx
+
 #Chroma
 *.chroma_db
 *.sqlite3
