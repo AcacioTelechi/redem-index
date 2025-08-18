@@ -54,14 +54,14 @@ class EqualityIndexCalculator(BaseIndex):
         return dict(zip(df.index, weights)), adjustment_index
 
     def normalize_equality_index(
-        self, weights: pd.Series, method: str = "theoretical_bounds"
+        self, weights: pd.Series, method: str = "gini_based"
     ) -> float:
         """
         Normalize the equality index to [0,1] interval using different methods.
 
         Args:
             weights: Series of individual weights
-            method: Normalization method ('theoretical_bounds', 'empirical_bounds', 'gini_based', 'entropy_based')
+            method: Normalization method ('gini_based' (default), 'theoretical_bounds', 'empirical_bounds', 'entropy_based')
 
         Returns:
             float: Normalized equality index in [0,1]
@@ -249,8 +249,8 @@ class EqualityIndexCalculator(BaseIndex):
         self,
         df: pd.DataFrame,
         population_proportions: dict,
-        normalization_method: str = "theoretical_bounds",
-        weight_normalization_method: str = "min_max",
+        normalization_method: str = "gini_based",
+        weight_normalization_method: str = "z_score",
     ) -> pd.DataFrame:
         """
         Calculate equality index for the given DataFrame.
@@ -259,7 +259,9 @@ class EqualityIndexCalculator(BaseIndex):
             df: Input DataFrame with categorical columns
             population_proportions: Dictionary mapping column names to expected proportions
             normalization_method: Method for normalizing the equality index to [0,1]
+                'gini_based' (default), 'theoretical_bounds', 'empirical_bounds', 'entropy_based'
             weight_normalization_method: Method for normalizing individual weights to [0,1]
+                'z_score' (default), 'min_max', 'robust', 'rank'
 
         Returns:
             DataFrame with added weights and equality index
