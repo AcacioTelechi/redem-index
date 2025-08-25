@@ -14,6 +14,11 @@ class EqualityIndexCalculator(BaseIndex):
         self.adjustment_index = None
         self.normalized_index = None
 
+        self.weight_normalization_method = "original"
+        self.normalization_method = "original"
+
+        self.population_proportions = None
+
     def compute_individual_weights(
         self, df: pd.DataFrame, population_proportions: dict
     ) -> tuple[dict, float]:
@@ -34,39 +39,45 @@ class EqualityIndexCalculator(BaseIndex):
         category_proportions = {
             col: category_totals[col] / total_population for col in df.columns
         }
-
         # Compute weights for each individual
         weights = df.apply(
             lambda row: sum(
-                row[col] * (population_proportions[col] / category_proportions[col])
+                (
+                    row[col] * (population_proportions[col] / category_proportions[col])
+                    if category_proportions[col] > 0
+                    else 0
+                )
                 for col in df.columns
-                if category_totals[col] > 0
             ),
             axis=1,
         )
 
         # Normalize weights to keep total sum of weights = number of individuals
-        weights *= len(df) / weights.sum()
+        # weights *= len(df) / weights.sum()
 
         # Compute the adjustment index
-        adjustment_index = 1 - np.mean(np.abs(weights - 1))
+        # adjustment_index = 1 - np.mean(np.abs(weights - 1))
 
-        return dict(zip(df.index, weights)), adjustment_index
+        return dict(zip(df.index, weights))
 
     def normalize_equality_index(
-        self, weights: pd.Series, method: str = "gini_based"
+        self, weights: pd.Series, method: str = "original"
     ) -> float:
         """
         Normalize the equality index to [0,1] interval using different methods.
 
         Args:
             weights: Series of individual weights
-            method: Normalization method ('gini_based' (default), 'theoretical_bounds', 'empirical_bounds', 'entropy_based')
+            method: Normalization method ('original' (default), 'theoretical_bounds', 'empirical_bounds', 'gini_based', 'entropy_based')
 
         Returns:
             float: Normalized equality index in [0,1]
         """
-        if method == "theoretical_bounds":
+        self.normalization_method = method
+
+        if method == "original":
+            return self._normalize_original(weights)
+        elif method == "theoretical_bounds":
             return self._normalize_theoretical_bounds(weights)
         elif method == "empirical_bounds":
             return self._normalize_empirical_bounds(weights)
@@ -76,6 +87,15 @@ class EqualityIndexCalculator(BaseIndex):
             return self._normalize_entropy_based(weights)
         else:
             raise ValueError(f"Unknown normalization method: {method}")
+
+    def _normalize_original(self, weights: pd.Series) -> float:
+        """
+        Original normalization: 1 - mean(abs(weights - 1))
+        """
+        n = len(weights)
+        i_max = 2 * (1 - 1 / n)
+        i_ =  np.mean(np.abs(weights - 1))
+        return 1 - i_ / i_max
 
     def _normalize_theoretical_bounds(self, weights: pd.Series) -> float:
         """
@@ -165,19 +185,21 @@ class EqualityIndexCalculator(BaseIndex):
         return normalized_entropy
 
     def normalize_individual_weights(
-        self, weights: pd.Series, method: str = "min_max"
+        self, weights: pd.Series, method: str = "original"
     ) -> pd.Series:
         """
         Normalize individual equality weights to [0,1] interval.
 
         Args:
             weights: Series of individual weights
-            method: Normalization method ('min_max', 'z_score', 'robust', 'rank')
+            method: Normalization method ('original' (default), 'robust', 'min_max', 'z_score', 'rank', 'none')
 
         Returns:
             pd.Series: Normalized weights in [0,1]
         """
-        if method == "min_max":
+        if method == "original":
+            return self._normalize_weights_original(weights)
+        elif method == "min_max":
             return self._normalize_weights_min_max(weights)
         elif method == "z_score":
             return self._normalize_weights_z_score(weights)
@@ -185,8 +207,19 @@ class EqualityIndexCalculator(BaseIndex):
             return self._normalize_weights_robust(weights)
         elif method == "rank":
             return self._normalize_weights_rank(weights)
+        elif method == "none" or method is None:
+            return weights
         else:
             raise ValueError(f"Unknown weight normalization method: {method}")
+
+    def _normalize_weights_original(self, weights: pd.Series) -> pd.Series:
+        """
+        Original normalization: weights / q
+        where q is the sum of the population proportionss
+        """
+        q = sum(self.population_proportions.values())
+        weights /= q
+        return weights
 
     def _normalize_weights_min_max(self, weights: pd.Series) -> pd.Series:
         """
@@ -221,7 +254,7 @@ class EqualityIndexCalculator(BaseIndex):
     def _normalize_weights_robust(self, weights: pd.Series) -> pd.Series:
         """
         Robust normalization using median and IQR with sigmoid transformation
-        Less sensitive to outliers than min-max
+        Less sensitive to outliers than min-max and z-score
         """
         median_w = weights.median()
         q75 = weights.quantile(0.75)
@@ -249,8 +282,8 @@ class EqualityIndexCalculator(BaseIndex):
         self,
         df: pd.DataFrame,
         population_proportions: dict,
-        normalization_method: str = "gini_based",
-        weight_normalization_method: str = "z_score",
+        weight_normalization_method: str = "original",
+        normalization_method: str = "original",
     ) -> pd.DataFrame:
         """
         Calculate equality index for the given DataFrame.
@@ -258,20 +291,19 @@ class EqualityIndexCalculator(BaseIndex):
         Args:
             df: Input DataFrame with categorical columns
             population_proportions: Dictionary mapping column names to expected proportions
-            normalization_method: Method for normalizing the equality index to [0,1]
-                'gini_based' (default), 'theoretical_bounds', 'empirical_bounds', 'entropy_based'
             weight_normalization_method: Method for normalizing individual weights to [0,1]
-                'z_score' (default), 'min_max', 'robust', 'rank'
+                'original' (default), 'robust', 'min_max', 'z_score', 'rank', 'none';
+            normalization_method: Method for normalizing the equality index to [0,1]
+                'original' (default), 'theoretical_bounds', 'empirical_bounds', 'gini_based', 'entropy_based'
 
         Returns:
             DataFrame with added weights and equality index
         """
         self.df = df.copy()
+        self.population_proportions = population_proportions
 
         # Calculate weights and adjustment index
-        self.weights, self.adjustment_index = self.compute_individual_weights(
-            self.df, population_proportions
-        )
+        self.weights = self.compute_individual_weights(self.df, population_proportions)
 
         # Add original weights to DataFrame
         self.df["equality_weight"] = self.df.index.map(self.weights)
@@ -289,7 +321,29 @@ class EqualityIndexCalculator(BaseIndex):
         )
 
         # Add both original and normalized indices
-        self.df["equality_index"] = self.adjustment_index
         self.df["equality_index_normalized"] = self.normalized_index
 
         return self.df
+
+
+if __name__ == "__main__":
+    n_a = 10
+    n_b = 2
+    df = pd.DataFrame(
+        {
+            "A": [1 for _ in range(n_a)] + [0 for _ in range(n_b)],
+            "B": [0 for _ in range(n_a)] + [1 for _ in range(n_b)],
+        },
+        index=list(range(n_a + n_b)),
+    )
+    calculator = EqualityIndexCalculator()
+    print("Combination of normalization methods: original and original")
+    print(
+        calculator.calculate(
+            df,
+            {"A": 0.52, "B": 0.48},
+            weight_normalization_method="original",
+            normalization_method="original",
+        )
+    )
+   
