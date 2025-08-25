@@ -4,7 +4,7 @@ import sys
 import os
 
 sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from indices.base_index import BaseIndex
+from src.calculators.base_index import BaseIndex
 
 
 class EqualityIndexCalculator(BaseIndex):
