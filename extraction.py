@@ -1,4 +1,4 @@
-from src.extractor import Extractor
+from src.extractors.extractor import Extractor
 import pandas as pd
 
 LEGISLATURAS = range(48,58)
