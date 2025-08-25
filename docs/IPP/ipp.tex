@@ -1,0 +1,137 @@
+\section*{Índice de Qualidade Parlamentar (IPP)}
+
+O Índice de Qualidade Parlamentar (IPP) é uma métrica composta que avalia a qualidade dos parlamentares brasileiros baseado em múltiplas dimensões de atuação política. O índice combina indicadores de comprometimento institucional com métricas de carreira parlamentar para fornecer uma avaliação abrangente da qualidade dos representantes eleitos.
+
+\subsection*{Estrutura Dimensional}
+
+O IPP é composto por duas dimensões principais, cada uma agregando múltiplas variáveis com pesos específicos:
+
+\subsubsection*{Dimensão de Comprometimento}
+
+Esta dimensão mede o nível de engajamento e responsabilidade institucional do parlamentar:
+
+\begin{itemize}
+    \item \textbf{Mesa Diretora} (peso: 5) - Participação em cargos da mesa diretora da Câmara ou Senado
+    \item \textbf{Posição de Liderança} (peso: 4) - Exercício de funções de liderança partidária ou de governo
+    \item \textbf{Presidência de Comissão} (peso: 3) - Presidência de comissões parlamentares permanentes ou temporárias
+    \item \textbf{Relatorias} (peso: 2) - Número de pareceres de relatoria apresentados
+\end{itemize}
+
+\subsubsection*{Dimensão de Carreira}
+
+Esta dimensão avalia a experiência e trajetória política do parlamentar:
+
+\begin{itemize}
+    \item \textbf{Tempo de Atuação} (peso: 1) - Total de dias em exercício parlamentar
+    \item \textbf{Mandatos} (peso: 1) - Número total de mandatos exercidos
+    \item \textbf{Fidelidade Partidária} (peso: 1) - Grau de fidelidade ao partido político
+\end{itemize}
+
+\subsection*{Metodologia de Cálculo}
+
+\subsubsection*{Normalização das Variáveis}
+
+Todas as variáveis são normalizadas para o intervalo [0,1] utilizando normalização min-max:
+
+\begin{equation}
+x_{norm} = \frac{x - x_{min}}{x_{max} - x_{min}}
+\end{equation}
+
+\subsubsection*{Aplicação de Pesos}
+
+Após a normalização, os pesos são aplicados a cada variável:
+
+\begin{equation}
+x_{weighted} = x_{norm} \times peso
+\end{equation}
+
+\subsubsection*{Cálculo das Dimensões}
+
+As dimensões são calculadas como somas das variáveis ponderadas:
+
+\begin{equation}
+D_{comprometimento} = \sum_{i \in C} x_i^{weighted}
+\end{equation}
+
+\begin{equation}
+D_{carreira} = \sum_{i \in K} x_i^{weighted}
+\end{equation}
+
+Onde:
+\begin{itemize}
+    \item $C$ é o conjunto de variáveis da dimensão de comprometimento
+    \item $K$ é o conjunto de variáveis da dimensão de carreira
+\end{itemize}
+
+\subsubsection*{Normalização das Dimensões}
+
+As dimensões são normalizadas para o intervalo [0,1]:
+
+\begin{equation}
+D_{comprometimento}^{norm} = \frac{D_{comprometimento} - D_{comprometimento}^{min}}{D_{comprometimento}^{max} - D_{comprometimento}^{min}}
+\end{equation}
+
+\begin{equation}
+D_{carreira}^{norm} = \frac{D_{carreira} - D_{carreira}^{min}}{D_{carreira}^{max} - D_{carreira}^{min}}
+\end{equation}
+
+\subsubsection*{Cálculo Final do IPP}
+
+O IPP final é calculado como a média aritmética das duas dimensões normalizadas:
+
+\begin{equation}
+IPP = \frac{D_{comprometimento}^{norm} + D_{carreira}^{norm}}{2}
+\end{equation}
+
+\subsection*{Interpretação dos Pesos}
+
+A estrutura de pesos reflete a importância relativa atribuída a cada aspecto da qualidade parlamentar:
+
+\begin{itemize}
+    \item \textbf{Peso 5 (Mesa Diretora)}: Maior peso devido à responsabilidade institucional máxima
+    \item \textbf{Peso 4 (Liderança)}: Alto peso para funções de coordenação política
+    \item \textbf{Peso 3 (Presidência de Comissão)}: Peso médio-alto para responsabilidades legislativas
+    \item \textbf{Peso 2 (Relatorias)}: Peso médio para trabalho técnico-legislativo
+    \item \textbf{Peso 1 (Carreira)}: Peso base para experiência e fidelidade
+\end{itemize}
+
+\subsection*{Vantagens Metodológicas}
+
+\begin{enumerate}
+    \item \textbf{Abordagem Multidimensional}: Combina diferentes aspectos da qualidade parlamentar
+    \item \textbf{Ponderação Diferenciada}: Atribui pesos distintos baseados na importância institucional
+    \item \textbf{Normalização Padronizada}: Permite comparações entre diferentes períodos e legislaturas
+    \item \textbf{Agregação Balanceada}: Equilibra comprometimento institucional com experiência de carreira
+\end{enumerate}
+
+\subsection*{Limitações e Considerações}
+
+\begin{itemize}
+    \item \textbf{Disponibilidade de Dados}: Depende da qualidade e completude das bases de dados parlamentares
+    \item \textbf{Subjetividade dos Pesos}: A atribuição de pesos reflete juízos de valor sobre a importância relativa
+    \item \textbf{Estabilidade Temporal}: Mudanças nas regras parlamentares podem afetar a comparabilidade
+    \item \textbf{Contexto Político}: O índice não captura aspectos qualitativos da atuação parlamentar
+\end{itemize}
+
+\subsection*{Aplicações}
+
+O IPP pode ser utilizado para:
+
+\begin{itemize}
+    \item Avaliação comparativa de parlamentares entre legislaturas
+    \item Análise da evolução da qualidade parlamentar ao longo do tempo
+    \item Identificação de padrões de carreira parlamentar
+    \item Estudos sobre representação política e qualidade democrática
+    \item Políticas públicas para melhoria da qualidade parlamentar
+\end{itemize}
+
+\subsection*{Implementação Computacional}
+
+A implementação do IPP está disponível na classe \texttt{IPPCalculator} do módulo \texttt{src.calculators.ipp\_calculator}, que implementa todos os passos metodológicos descritos acima, incluindo:
+
+\begin{itemize}
+    \item Normalização automática das variáveis
+    \item Aplicação dos pesos configuráveis
+    \item Cálculo das dimensões e normalização
+    \item Geração do índice final
+\end{itemize}
