@@ -1,0 +1,56 @@
+
+\section*{Dimensão de Representação Descritiva (RD)}
+A dimensão de Representação Descritiva (RD) é composta por duas variáveis: gênero (tratada de forma binária, considerando as categorias ``masculino'' e ``feminino'', conforme as informações disponíveis nas bases de dados utilizadas) e raça (também operacionalizada como variável binária de pessoas brancas e pessoas não brancas). Ambas as características são analisadas tanto no grupo de representantes quanto na população brasileira.
+
+Os dados utilizados para o cálculo desta dimensão foram retirados do Repositório de dados do Tribunal Superior Eleitoral (TSE), no caso das informações referentes aos e às parlamentares, e do Instituto Brasileiro de Geografia e Estatística (IBGE), para os números que dizem respeito à população brasileira.
+
+Na operacionalização das variáveis propusemos o cálculo de pesos individuais para corrigir amostras desequilibradas, garantindo que as proporções das categorias na amostra correspondam às proporções da população desejada. Adicionalmente, introduzimos um índice de ajuste que quantifica o grau de correção aplicada, indicando quão distante a amostra original estava da distribuição populacional almejada.
+
+\subsection*{Cálculo dos Pesos Individuais}
+Dado um conjunto de indivíduos classificados segundo múltiplas características binárias ($C$), busca-se atribuir a cada indivíduo $i$ um peso $w_i$ de modo que, após a ponderação, as proporções observadas na amostra sejam consistentes com as proporções populacionais de interesse. O peso inicial de um indivíduo antes da normalização ($\widetilde{w_i}$) é definido por:
+
+\begin{equation}
+\widetilde{w_i} = \sum_{c=1}^{C} X_{ic}\frac{p_c}{n_c}, \quad \sum_{c=1}^{C} p_c = \sum_{c=1}^{C} n_c = q
+\end{equation}
+
+onde:
+\begin{itemize}
+    \item $X_{ic}$ é uma variável binária que assume valor 1 se o indivíduo $i$ pertence à categoria $c$, e 0 em caso contrário;
+    \item $p_c$ é a proporção da categoria $c$ na população;
+    \item $n_c$ é a proporção da categoria $c$ na amostra;
+    \item $q$ é a quantidade de características analisadas. Por exemplo, considerando ``raça'' e ``gênero'', então $q = 2$;
+    \item $C$ é a quantidade de categorias. No exemplo anterior, se ``raça'' for definida como ``branco'' e ``não-branco'' e ``gênero'' como ``homem'' e ``mulher'', então $C = 4$.
+\end{itemize}
+
+A restrição imposta na equação garante que tanto $p_c$ quanto $n_c$ correspondam, de fato, a distribuições proporcionais entre as categorias consideradas.
+
+Por fim, os pesos são normalizados de forma que a soma total dos pesos seja equivalente ao tamanho da amostra, preservando assim a contagem efetiva de indivíduos:
+
+\begin{equation}
+w_i = \frac{\widetilde{w_i}}{q}
+\end{equation}
+
+A normalização final garante que a soma total dos pesos seja igual ao tamanho da amostra ($\sum_i w_i = N$), preservando a escala e facilitando a interpretação. Em resumo, $w_i$ pode ser visto como uma medida de representatividade: indivíduos de grupos sub-representados passam a ``valer mais'' na análise, enquanto os de grupos super-representados passam a ``valer menos''.
+
+
+\subsection*{Agregação e Índice de Ajuste}
+Para avaliar a intensidade do ajuste aplicado à amostra, definimos um índice de ajuste ($I$), que mensura o desvio médio absoluto dos pesos em relação ao valor de referência 1. Esse valor de referência corresponde à situação ideal em que todos os indivíduos possuem peso unitário, isto é, quando a amostra já é perfeitamente representativa da população.
+
+Formalmente, o índice pode ser expresso como:
+
+\begin{equation}
+I = 1 - \frac{1}{2(N-1)} \sum_{i=1}^{N} \frac{|w_i - 1|}{N}, \quad \sum_i w_i = N
+\end{equation}
+
+onde $N$ é o tamanho da amostra e $w_i$ o peso atribuído ao indivíduo $i$.
+
+Esse índice, obedecida a restrição, assume valores no intervalo $[0,1]$ \footnote{O fator $\tfrac{1}{2(N-1)}$ serve para normalizar o valor do índice, deixando-o no intervalo $[0,1]$, obedecida a restrição. 
+Esse fator é encontrado ao considerarmos o caso limite em que a distância média em relação à neutralidade ($1$) seria máxima: quando um indivíduo possui $w = N$, e os demais $w = 0$. 
+Nesse caso, teríamos a distância média da neutralidade igual a $\frac{1}{N} \sum_{i} |w_i - 1| = 2 \left(1 - \tfrac{1}{N}\right) = I_{\max}$. 
+Assim, podemos obter o quão próximo está a amostra desse máximo teórico realizando $I/I_{\max}$, o que fornece o fator de normalização.}, sendo que o limite superior é determinado pelo grau de desequilíbrio inicial entre as distribuições amostral e populacional. A interpretação é direta:
+\begin{itemize}
+    \item Se $I = 0$, a amostra já reproduz exatamente as proporções populacionais, de modo que não há necessidade de ajuste;
+    \item Quanto maior o valor de $I$, maior é o desvio médio dos pesos em relação a 1, refletindo ajustes mais intensos para compensar discrepâncias entre amostra e população.
+\end{itemize}
+
+Dessa forma, o índice de ajuste constitui uma medida sintética e comparável que permite avaliar, entre diferentes amostras, o grau de distorção que precisou ser corrigido por meio da ponderação.
