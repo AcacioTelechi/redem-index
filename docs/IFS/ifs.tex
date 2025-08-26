@@ -1,0 +1,45 @@
+\section{Índice de Falar Sincero (IFS)}
+
+O Índice de Falar Sincero (IFS) é uma medida projetada para avaliar o comportamento dos parlamentares em relação à disseminação de desinformação. A premissa central é quantificar a frequência e a intensidade com que um parlamentar propaga conteúdos semelhantes a narrativas comprovadamente falsas. A metodologia consiste em comparar as postagens de cada parlamentar com uma base vetorial de conteúdos previamente verificados como falsos por agências de checagem.
+
+O processo de cálculo envolve as seguintes etapas:
+\begin{enumerate}
+    \item \textbf{Construção de um corpus de referência}: Criação de uma base vetorial a partir de conteúdos rotulados como falsos, que serve como referência para a detecção de desinformação.
+    \item \textbf{Curadoria do corpus}: O material é filtrado para garantir a qualidade, com a remoção de duplicatas, ruídos e a seleção de alegações centrais.
+    \item \textbf{Medição de similaridade}: As postagens de cada parlamentar são transformadas em embeddings e comparadas com os vetores do corpus de referência, utilizando a similaridade do cosseno.
+    \item \textbf{Detecção de propagação}: Para cada postagem, identifica-se o grau de alinhamento com a desinformação. Uma postagem é considerada como potencialmente propagadora de conteúdo falso se sua similaridade máxima com alguma alegação do corpus ultrapassar um limiar $\tau$. Adicionalmente, um classificador de \textit{stance} é utilizado para distinguir se a postagem \textit{propaga} ou \textit{denuncia} o conteúdo.
+\end{enumerate}
+
+\subsection{Definição Operacional e Pontuação}
+
+Para um parlamentar $i$, seja $\mathcal{S}_i$ o conjunto de pontuações de similaridade de suas postagens que foram classificadas como propagadoras de desinformação:
+\[
+    \mathcal{S}_i = \Big\{ s_{it} \;:\; s_{it} = \max_j \cos\big(e(\text{post}_{it}), e(\text{claim}_j)\big) \geq \tau \text{ e } \text{stance}_{it} = \text{propaga} \Big\}.
+\]
+Com base nesse conjunto, e sendo $P_i$ o total de postagens analisadas e $c_i = |\mathcal{S}_i|$ o número de postagens que propagam desinformação, duas formas de pontuação estão em avaliação. Ambas são orientadas de forma que, \textit{quanto maior o índice, melhor} o desempenho do parlamentar.
+
+\begin{description}
+    \item[A) Incidência (Taxa)] Pontua a ocorrência de propagação. O índice é maior quanto menor a taxa de postagens propagadoras.
+    \[
+        r_i = \frac{c_i}{P_i} \quad \Rightarrow \quad \mathrm{IFS}_i^{\text{taxa}} = 1 - r_i.
+    \]
+
+    \item[B) Distância (Similaridade Média)] Penaliza postagens que são vetorialmente mais próximas das alegações falsas.
+    \[
+        \bar{s}_i = \begin{cases}
+            \frac{1}{c_i}\sum_{s \in \mathcal{S}_i} s, & \text{se } c_i > 0, \\
+            0, & \text{se } c_i = 0
+        \end{cases}
+        \quad \Rightarrow \quad \mathrm{IFS}_i^{\text{dist}} = 1 - \bar{s}_i.
+    \]
+\end{description}
+
+\subsection{Desafios Metodológicos}
+A implementação do IFS enfrenta alguns desafios que exigem calibração e validação contínuas:
+\begin{itemize}
+    \item \textbf{Polaridade}: Distinguir com precisão entre \textit{denúncia} e \textit{propagação} de desinformação é um dos principais desafios, demandando modelos robustos de \textit{stance detection}.
+    \item \textbf{Limiar de similaridade ($\tau$)}: A definição do limiar $\tau$ é um ponto crítico que afeta diretamente a sensibilidade e a especificidade do índice. Sua calibração deve ser realizada por meio de análises de curvas ROC/PR e validação com anotação humana para mitigar falsos positivos e negativos.
+    \item \textbf{Cobertura do corpus}: A qualidade do índice depende da representatividade e da atualização contínua do corpus de referência, que deve abranger diferentes temas e períodos.
+\end{itemize}
+
+% \input{IFS/validacao_e_aplicacao.tex}
