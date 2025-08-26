@@ -1,7 +1,9 @@
-from .base_index import BaseIndex
+from .base_calculator import BaseCalculator
+
+from utils.df_operations import min_max_normalize, apply_weights
 
 
-class IPPCalculator(BaseIndex):
+class IPPCalculator(BaseCalculator):
     def __init__(self):
         super().__init__()
         self.weights = {
@@ -35,10 +37,10 @@ class IPPCalculator(BaseIndex):
         # Normalize columns
         for col, _ in self.weights.items():
             base_col = col.replace("_norm", "")
-            self.df[col] = self.min_max_normalize(self.df[base_col])
+            self.df[col] = min_max_normalize(self.df[base_col])
 
         # Apply weights
-        self.df = self.apply_weights(self.df, self.weights)
+        self.df = apply_weights(self.df, self.weights)
 
         # Calculate dimensions
         self.calculate_dimensions()
@@ -63,4 +65,4 @@ class IPPCalculator(BaseIndex):
 
         # Normalize dimensions
         for dim in ["dim_comprometimento", "dim_carreira"]:
-            self.df[f"{dim}_norm"] = self.min_max_normalize(self.df[dim])
+            self.df[f"{dim}_norm"] = min_max_normalize(self.df[dim])
