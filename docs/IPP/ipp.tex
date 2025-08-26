@@ -1,7 +1,7 @@
 \section{Índice de Profissionalização do Parlamentar (IPP)}
 
 
-O Índice de Profissionalização do Parlamentar (IPP) é um indicador sintético que avalia a profissionalização parlamenta. Ele é composto por sete variáveis, distribuídas em duas dimensões analíticas:
+O Índice de Profissionalização do Parlamentar (IPP) é um indicador sintético que avalia a profissionalização parlamentar. Ele é composto por sete variáveis, distribuídas em duas dimensões analíticas:
 
 \begin{itemize}
     \item \textbf{Especialização legislativa}: presença na Mesa Diretora, no Colégio de Líderes, na presidência de comissões e na relatoria de proposições;
@@ -14,44 +14,43 @@ O Quadro \ref{tab:ipp_vars} apresenta as variáveis e seus respectivos pesos der
 
 \subsection{Procedimento de cálculo}
 
-Para cada parlamentar \(i\), a variável \(j\) é observada em cada legislatura \(t\). No caso das variáveis de contagem \(\mathrm{Relatoria}_{it}\) e \(\mathrm{TempoAtuacao}_{it}\), aplica-se previamente uma transformação logarítmica a fim de incorporar retornos decrescentes, reduzir a assimetria e mitigar o efeito de valores extremos:
-
+Para cada parlamentar \(i\), a variável \(j\) é observada em cada legislatura \(t\).O valor acumulado ao longo das legislaturas é então definido como:
 \[
-\tilde{x}_{ijt} =
-\begin{cases}
-\ln\!\big(1 + x_{ijt}\big), & \text{se } j \in \{\mathrm{Relatoria},\, \mathrm{TempoAtuacao}\},\\[2pt]
-x_{ijt}, & \text{caso contrário.}
-\end{cases}
-\]
-
-O valor acumulado ao longo das legislaturas é então definido como:
-\[
-X_{ij} = \sum_{t=1}^{T} \tilde{x}_{ijt},
+    \tilde{X}_{ijt} = \sum_{t=1}^{T} {x}_{ijt},
 \]
 onde \(T\) é o número total de legislaturas consideradas.
 
+No caso das variáveis de contagem \(\mathrm{Relatoria}_{it}\) e \(\mathrm{TempoAtuacao}_{it}\), aplica-se previamente uma transformação logarítmica a fim de incorporar retornos decrescentes, reduzir a assimetria e mitigar o efeito de valores extremos:
+
+\[
+{X}_{ijt} =
+\begin{cases}
+\ln\!\big(1 + \tilde{X}_{ijt}\big), & \text{se } j \in \{\mathrm{Relatoria},\, \mathrm{TempoAtuacao}\},\\[2pt]
+\tilde{X}_{ijt}, & \text{caso contrário.}
+\end{cases}
+\]
 Na etapa seguinte, cada variável é normalizada para o intervalo \([0,1]\) pelo método \textit{min--max}:
 \[
-X_{ij}^{\mathrm{norm}} = \frac{X_{ij} - X_{j}^{\min}}{X_{j}^{\max} - X_{j}^{\min}},
+X_{ijt}^{\mathrm{norm}} = \frac{X_{ijt} - X_{jt}^{\min}}{X_{jt}^{\max} - X_{jt}^{\min}},
 \]
-e ponderada pelo peso derivado da AFE:
+e ponderada pelo peso definido no quadro \ref{tab:ipp_vars}:
 \[
-X_{ij}^{w} = X_{ij}^{\mathrm{norm}} \times w_j.
+X_{ijt}^{w} = X_{ijt}^{\mathrm{norm}} \times w_j.
 \]
 
 \subsubsection*{Cálculo das dimensões}
 
 As dimensões são calculadas pela soma das variáveis ponderadas que as compõem:
 \[
-E_i = \sum_{j \in E} X_{ij}^{w}, 
+E_{it} = \sum_{j \in E} X_{ijt}^{w}, 
 \qquad 
-C_i = \sum_{j \in C} X_{ij}^{w},
+C_{it} = \sum_{j \in C} X_{ijt}^{w},
 \]
 onde \(E\) representa o conjunto de variáveis da dimensão de especialização legislativa e \(C\) o conjunto da dimensão de carreira parlamentar.
 
 Após nova normalização em \([0,1]\), o Índice de Profissionalização do Parlamentar é obtido como a média aritmética das duas dimensões:
 \[
-IPP_i = \frac{E_i^{\mathrm{norm}} + C_i^{\mathrm{norm}}}{2}.
+IPP_{it} = \frac{E_{it}^{\mathrm{norm}} + C_{it}^{\mathrm{norm}}}{2}.
 \]
 
 \input{IPP/validacao_e_aplicacao.tex}
