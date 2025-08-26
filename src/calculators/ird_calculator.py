@@ -3,8 +3,8 @@ import numpy as np
 import sys
 import os
 
-sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
-from src.calculators.base_index import BaseIndex
+# sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+from base_index import BaseIndex
 
 
 class IRDCalculator(BaseIndex):
@@ -90,12 +90,16 @@ class IRDCalculator(BaseIndex):
 
     def _normalize_original(self, weights: pd.Series) -> float:
         """
-        Original normalization: 1 - mean(abs(weights - 1))
+        Original normalization: 1 - sum(abs(weights - 1)) / (2 * (n - 1))
         """
+        if len(weights) != sum(weights):
+            raise ValueError("Weights do not sum to the number of individuals")
+
         n = len(weights)
-        i_max = 2 * (1 - 1 / n)
-        i_ =  np.mean(np.abs(weights - 1))
-        return 1 - i_ / i_max
+        normalizer_factor = 1 / (2 * (n - 1))
+        i_ =  np.sum(np.abs(weights - 1))
+
+        return 1 - normalizer_factor * i_
 
     def _normalize_theoretical_bounds(self, weights: pd.Series) -> float:
         """
@@ -336,7 +340,7 @@ if __name__ == "__main__":
         },
         index=list(range(n_a + n_b)),
     )
-    calculator = EqualityIndexCalculator()
+    calculator = IRDCalculator()
     print("Combination of normalization methods: original and original")
     print(
         calculator.calculate(
