@@ -1,7 +1,13 @@
 import pandas as pd
 import numpy as np
 
-from .base_calculator import BaseCalculator
+if __name__ == "__main__":
+    import sys
+    import os
+    sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+    from base_calculator import BaseCalculator
+else:
+    from src.calculators.base_calculator import BaseCalculator
 
 
 class IRDCalculator(BaseCalculator):
@@ -57,7 +63,7 @@ class IRDCalculator(BaseCalculator):
 
         return dict(zip(df.index, weights))
 
-    def normalize_equality_index(
+    def normalize_index(
         self, weights: pd.Series, method: str = "original"
     ) -> float:
         """
@@ -73,7 +79,7 @@ class IRDCalculator(BaseCalculator):
         self.normalization_method = method
 
         if method == "original":
-            return self._normalize_original(weights)
+            return self._normalize_index_original(weights)
         else:
             raise ValueError(f"Unknown normalization method: {method}")
 
@@ -95,13 +101,12 @@ class IRDCalculator(BaseCalculator):
         else:
             raise ValueError(f"Unknown weight normalization method: {method}")
 
-
-    def _normalize_original(self, weights: pd.Series) -> float:
+    def _normalize_index_original(self, weights: pd.Series) -> float:
         """
         Original normalization: 1 - sum(abs(weights - 1)) / (2 * (n - 1))
         """
-        if len(weights) != sum(weights):
-            raise ValueError("Weights do not sum to the number of individuals")
+        if int(len(weights)) != int(sum(weights)):
+            raise ValueError(f"Weights do not sum to the number of individuals: {weights.sum()} != {len(weights)}")
 
         n = len(weights)
         normalizer_factor = 1 / (2 * (n - 1))
@@ -109,7 +114,6 @@ class IRDCalculator(BaseCalculator):
 
         return 1 - normalizer_factor * i_
 
- 
     def _normalize_weights_original(self, weights: pd.Series) -> pd.Series:
         """
         Original normalization: weights / q
@@ -157,8 +161,8 @@ class IRDCalculator(BaseCalculator):
         self.df["equality_weight_normalized"] = normalized_weights
 
         # Calculate normalized equality index
-        self.normalized_index = self.normalize_equality_index(
-            weights_series, normalization_method
+        self.normalized_index = self.normalize_index(
+            normalized_weights, normalization_method
         )
 
         # Add both original and normalized indices
@@ -168,21 +172,29 @@ class IRDCalculator(BaseCalculator):
 
 
 if __name__ == "__main__":
+    import sys
+    import os
+    sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
+
     n_a = 10
     n_b = 2
+    n_c = 3
+    n_d = 9
     df = pd.DataFrame(
         {
             "A": [1 for _ in range(n_a)] + [0 for _ in range(n_b)],
             "B": [0 for _ in range(n_a)] + [1 for _ in range(n_b)],
+            "C": [0 for _ in range(n_c)] + [1 for _ in range(n_d)],
+            "D": [0 for _ in range(n_d)] + [1 for _ in range(n_c)],
         },
-        index=list(range(n_a + n_b)),
+        index=list(range(n_a + n_b )),
     )
     calculator = IRDCalculator()
     print("Combination of normalization methods: original and original")
     print(
         calculator.calculate(
             df,
-            {"A": 0.52, "B": 0.48},
+            {"A": 0.52, "B": 0.48, "C": 0.20, "D": 0.80},
             weight_normalization_method="original",
             normalization_method="original",
         )
