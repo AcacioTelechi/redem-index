@@ -1,0 +1,24 @@
+\section{Índice de Representação Substantiva (IRS)}
+
+A dimensão \textit{Representação Substantiva} aborda como os deputados buscam representar seus constituintes de maneira substantiva, isto é, como eles atuam (ou melhor, \textit{dizem atuar}) na defesa e ação concreta de determinadas pautas. Assim, preocupação de maior magnitude é entender como eles se reivindicam representantes de determinados grupos ou valores. Propomos, assim, a construção de um índice que mensure, individualmente, os níveis de coesão das pautas defendidas por cada deputado em suas páginas nas redes sociais, especificamente o Instagram.
+
+Para isso, extraímos os textos de 306.680 postagens de 495 perfis de deputados federais da 57ª Legislatura, em 2023. Optamos por um ano não eleitoral, por acreditarmos que a proximidade com o pleito poderia enviesar o conteúdo das postagens feitas pelos deputados. A fim de excluir postagens nas quais os deputados não buscavam representar seus eleitorados, os textos foram tratados e filtrados a partir da presença de determinados conjuntos de termos. Nesse sentido, incluímos em nosso universo de análise, apenas as postagens nas quais haviam termos que I) referenciam determinados grupos sociais (população, mulheres, brasileiros, pobres, médicos, etc.) e II) mobilizam alguma relação de representação política (lutar, representar, defender, etc.).
+Restaram, dessa forma, 44.073 postagens ao todo.
+
+Uma vez identificadas as postagens representativas, elas foram analisadas através de uma \textit{Latent Semantical Analysis} (LSA) - técnica não supervisionada de redução de dimensionalidade aplicada a textos. A LSA assume que palavras com significados semelhantes ocorrem em textos semelhantes. Utilizamos a Decomposição em Valores Singulares (\textit{Singular Value Decomposition} - SVD), no qual a proximidade entre vetores captura a semelhança semântica, para reduzir o tamanho da matriz e algoritmos de similaridade de cosseno e obter a similaridade entre as palavras dos posts, atribuindo-se valores entre -1 e 1. Assim, o conteúdo textual da postagem 1 de deputado X foi comparado ao conteúdo textual da postagem 2 e assim sucessivamente:
+\[
+X_1 \leftrightarrow X_2; X_1 \leftrightarrow X_3; X_1 \leftrightarrow X_n; \ldots; X_n \leftrightarrow X_{n+1}; X_n \leftrightarrow X_{n+2}
+\]
+
+Ao final, obtivemos uma matriz para cada deputado. Os valores do índice de coesão individual dos deputados derivaram da média dos valores dessas matrizes. A coesão representativa individual ($RC_x$), portanto, foi definida como a média das similaridades cosseno entre todos os pares de postagens de um mesmo deputado. Essa medida resume o quão semanticamente consistentes são as pautas defendidas pelo parlamentar ao longo do tempo.
+
+\begin{equation}
+RC_x = \frac{1}{n} \sum LSA_i
+\end{equation}
+
+Onde:
+\begin{itemize}
+    \item $RC_x$: Representative Cohesion Index;
+    \item $LSA_i$: Valores das matrizes das postagens de determinado deputado.
+\end{itemize}
+
