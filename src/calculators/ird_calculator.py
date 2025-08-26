@@ -63,6 +63,9 @@ class IRDCalculator(BaseCalculator):
         # Compute the adjustment index
         # adjustment_index = 1 - np.mean(np.abs(weights - 1))
 
+        q = sum(population_proportions.values())
+        weights /= q
+
         return dict(zip(df.index, weights))
 
     def normalize_index(self, weights: pd.Series, method: str = "original") -> float:
@@ -86,22 +89,14 @@ class IRDCalculator(BaseCalculator):
             raise ValueError(f"Unknown normalization method: {method}")
 
     def normalize_individual_weights(
-        self, weights: pd.Series, method: str = "original"
+        self, weights: pd.Series
     ) -> pd.Series:
         """
-        Normalize individual equality weights to [0,1] interval.
-
-        Args:
-            weights: Series of individual wei'ghts
-            method: Normalization method ('original' (default))
-
-        Returns:
-            pd.Series: Normalized weights in [0,1]
+        Normalize individual weights to [0,1] interval using softmax function
         """
-        if method == "original":
-            return self._normalize_weights_original(weights)
-        else:
-            raise ValueError(f"Unknown weight normalization method: {method}")
+        weights = np.exp(weights)
+        weights /= weights.sum()
+        return weights
 
     def _normalize_index_original(self, weights: pd.Series) -> float:
         """
@@ -142,20 +137,10 @@ class IRDCalculator(BaseCalculator):
 
         return 1 - normalized_deviation
 
-    def _normalize_weights_original(self, weights: pd.Series) -> pd.Series:
-        """
-        Original normalization: weights / q
-        where q is the sum of the population proportionss
-        """
-        q = sum(self.population_proportions.values())
-        weights /= q
-        return weights
-
     def calculate(
         self,
         df: pd.DataFrame,
         population_proportions: dict,
-        weight_normalization_method: str = "original",
         normalization_method: str = "original",
     ) -> pd.DataFrame:
         """
@@ -164,8 +149,6 @@ class IRDCalculator(BaseCalculator):
         Args:
             df: Input DataFrame with categorical columns
             population_proportions: Dictionary mapping column names to expected proportions
-            weight_normalization_method: Method for normalizing individual weights to [0,1]
-                'original' (default), 'robust', 'min_max', 'z_score', 'rank', 'none';
             normalization_method: Method for normalizing the equality index to [0,1]
                 'original' (default), 'theoretical_bounds', 'empirical_bounds', 'gini_based', 'entropy_based'
 
@@ -191,14 +174,15 @@ class IRDCalculator(BaseCalculator):
 
         # Normalize individual weights
         weights_series = pd.Series(self.weights)
+        
         normalized_weights = self.normalize_individual_weights(
-            weights_series, weight_normalization_method
+            weights_series
         )
         self.df["equality_weight_normalized"] = normalized_weights
 
         # Calculate normalized equality index
         self.normalized_index = self.normalize_index(
-            normalized_weights, normalization_method
+            weights_series, normalization_method
         )
 
         # Add both original and normalized indices
@@ -218,7 +202,7 @@ if __name__ == "__main__":
     n_b = 1000
 
     scenarios = []
-    for alpha_ in range(0, 101, 1):
+    for alpha_ in range(0,101, 1):
 
         alpha = alpha_ / 100
         scenarios.append(
@@ -238,7 +222,6 @@ if __name__ == "__main__":
         result = calculator.calculate(
             df=df,
             population_proportions=population_proportions,
-            normalization_method="square",
         )
         results.append(
             {"desc": scenario["desc"], "ird": result["equality_index_normalized"][0]}
