@@ -15,7 +15,7 @@ O Quadro \ref{tab:ipp_vars} apresenta as variáveis e seus respectivos pesos der
 
 \input{IPP/ipp_vars.tex}
 
-\subsection*{Procedimento de cálculo}
+\subsection{Procedimento de cálculo}
 
 Para cada parlamentar \(i\), a variável \(j\) é observada em cada legislatura \(t\). No caso das variáveis de contagem \(\mathrm{Relatoria}_{it}\) e \(\mathrm{TempoAtuacao}_{it}\), aplica-se previamente uma transformação logarítmica a fim de incorporar retornos decrescentes, reduzir a assimetria e mitigar o efeito de valores extremos:
 
@@ -56,3 +56,5 @@ Após nova normalização em \([0,1]\), o Índice de Profissionalização do Par
 \[
 IPP_i = \frac{E_i^{\mathrm{norm}} + C_i^{\mathrm{norm}}}{2}.
 \]
+
+\input{IPP/validacao_e_aplicacao.tex}
