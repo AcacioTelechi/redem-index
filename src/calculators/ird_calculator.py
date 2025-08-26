@@ -7,7 +7,7 @@ sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from src.calculators.base_index import BaseIndex
 
 
-class EqualityIndexCalculator(BaseIndex):
+class IRDCalculator(BaseIndex):
     def __init__(self):
         super().__init__()
         self.weights = None

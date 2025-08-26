@@ -47,9 +47,13 @@ Esse índice, obedecida a restrição, assume valores no intervalo $[0,1]$ \foot
 Esse fator é encontrado ao considerarmos o caso limite em que a distância média em relação à neutralidade ($1$) seria máxima: quando um indivíduo possui $w = N$, e os demais $w = 0$. 
 Nesse caso, teríamos a distância média da neutralidade igual a $\frac{1}{N} \sum_{i} |w_i - 1| = 2 \left(1 - \tfrac{1}{N}\right) = I_{\max}$. 
 Assim, podemos obter o quão próximo está a amostra desse máximo teórico realizando $I/I_{\max}$, o que fornece o fator de normalização. Para uma demonstração mais detalhada, consulte o apêndice \ref{appendix:ird}.}, sendo que o limite superior é determinado pelo grau de desequilíbrio inicial entre as distribuições amostral e populacional. A interpretação é direta:
+
 \begin{itemize}
     \item Se $I = 0$, a amostra já reproduz exatamente as proporções populacionais, de modo que não há necessidade de ajuste;
     \item Quanto maior o valor de $I$, maior é o desvio médio dos pesos em relação a 1, refletindo ajustes mais intensos para compensar discrepâncias entre amostra e população.
 \end{itemize}
 
 Dessa forma, o índice de ajuste constitui uma medida sintética e comparável que permite avaliar, entre diferentes amostras, o grau de distorção que precisou ser corrigido por meio da ponderação.
+
+
+\input{IRD/validacao_e_aplicacao.tex}

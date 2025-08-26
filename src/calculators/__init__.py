@@ -1,5 +1,5 @@
 from .base_index import BaseIndex
-from .equality_index_calculator import EqualityIndexCalculator
+from .ird_calculator import IRDCalculator
 from .ipp_calculator import IPPCalculator
 
-__all__ = ["BaseIndex", "EqualityIndexCalculator", "IPPCalculator"]
+__all__ = ["BaseIndex", "IRDCalculator", "IPPCalculator"]
