@@ -34,8 +34,8 @@ redem-index/
 
 #### 2. **Calculadores de Índices** (`src/calculators/`)
 - **`base_index.py`**: Classe base para todos os índices
-- **`ipp_calculator.py`**: Calculador do Índice de Qualidade Parlamentar (IPP)
-- **`equality_index_calculator.py`**: Calculador do Índice de Representação Descritiva (IRD)s
+- **`ipp_calculator.py`**: Calculador do Índice de Profissionalização do Parlamentar (IPP)
+- **`ird_calculator.py`**: Calculador do Índice de Representação Descritiva (IRD)s
 
 #### 3. **Utilitários** (`utils/`)
 - **`api.py`**: Configurações de API
@@ -100,15 +100,15 @@ weights, adjustment_index = equality_calc.compute_individual_weights(
 
 ## 📚 Estudos e Documentação
 
-### **IPP (Índice de Qualidade Parlamentar)**
+### **IPP (Índice de Profissionalização do Parlamentar)**
 - `studies/ipp/ipp_v2.ipynb`: Implementação principal do IPP
 - `studies/ipp/analise_fatorial_v2.ipynb`: Análise fatorial exploratória
 - `studies/ipp/analyse.ipynb`: Análises complementares
 - `docs/IPP/ipp.tex`: Documentação técnica completa em LaTeX
 
 ### **Representação Descritiva (IRD)**
-- `studies/equality_index/indice_representacao_descirtiva.ipynb`: Cálculo do IRD
-- `studies/equality_index/REDEM___Dimensao_Representação.pdf`: Documentação teórica
+- `studies/ird/indice_representacao_descirtiva.ipynb`: Cálculo do IRD
+- `studies/ird/REDEM___Dimensao_Representação.pdf`: Documentação teórica
 - `docs/IRD/ird.tex`: Documentação técnica detalhada em LaTeX
 
 ### **Estudos Específicos**
@@ -130,26 +130,6 @@ weights, adjustment_index = equality_calc.compute_individual_weights(
 - Pareceres de relatoria
 - Dados demográficos (gênero, raça)
 
-## 🔬 Metodologia
-
-### **Normalização:**
-- **Min-Max**: Normalização para intervalo [0,1]
-- **Ponderação**: Aplicação de pesos específicos por dimensão
-- **Agregação**: Combinação de múltiplas métricas em índices compostos
-
-### **Análise Estatística:**
-- **Análise Fatorial Exploratória (AFE)**: Redução de dimensionalidade
-- **Análise de Componentes Principais (PCA)**: Visualização de dados
-- **Correlações**: Análise de relações entre variáveis
-
-## 📈 Visualizações
-
-O projeto inclui diversas visualizações:
-- Boxplots por dimensões
-- Histogramas de distribuição
-- Gráficos de cargas fatoriais
-- Análises temporais por legislatura
-- Comparações entre partidos políticos
 
 ## 📝 Documentação
 
