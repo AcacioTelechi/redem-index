@@ -1,137 +1,58 @@
-\section{Índice de Profissionalismo Parlamentar (IPP)}
+\section{Índice de Profissionalização do Parlamentar (IPP)}
 
-O Índice de Qualidade Parlamentar (IPP) é uma métrica composta que avalia a qualidade dos parlamentares brasileiros baseado em múltiplas dimensões de atuação política. O índice combina indicadores de comprometimento institucional com métricas de carreira parlamentar para fornecer uma avaliação abrangente da qualidade dos representantes eleitos.
+Como as variáveis são contabilizadas ao nível do indivíduo em cada legislatura, inicialmente realizamos uma Análise Fatorial Exploratória (AFE) com um conjunto ampliado de indicadores. A partir dessa análise, extraímos as cargas fatoriais de cada variável em relação a cada fator. 
 
-\subsection*{Estrutura Dimensional}
+Para cada variável \(v\), consideramos o maior valor do exponencial da carga fatorial (\(\exp^{c_{fv}}\), onde \(c_{fv}\) é a carga da variável \(v\) no fator \(f\)). O uso do exponencial tem dois propósitos: (i) eliminar o efeito do sinal negativo eventualmente associado à carga fatorial, e (ii) ampliar a diferenciação entre variáveis com cargas mais relevantes. Esse procedimento permite identificar quais variáveis explicam de maneira significativa a variância dos dados. 
 
-O IPP é composto por duas dimensões principais, cada uma agregando múltiplas variáveis com pesos específicos:
-
-\subsubsection*{Dimensão de Comprometimento}
-
-Esta dimensão mede o nível de engajamento e responsabilidade institucional do parlamentar:
+A partir dessa metodologia, selecionamos sete variáveis, distribuídas em duas dimensões analíticas:
 
 \begin{itemize}
-    \item \textbf{Mesa Diretora} (peso: 5) - Participação em cargos da mesa diretora da Câmara ou Senado
-    \item \textbf{Posição de Liderança} (peso: 4) - Exercício de funções de liderança partidária ou de governo
-    \item \textbf{Presidência de Comissão} (peso: 3) - Presidência de comissões parlamentares permanentes ou temporárias
-    \item \textbf{Relatorias} (peso: 2) - Número de pareceres de relatoria apresentados
+    \item \textbf{Especialização legislativa}: presença na Mesa Diretora, no Colégio de Líderes, na presidência de comissões e na relatoria de proposições;
+    \item \textbf{Carreira parlamentar}: acúmulo de mandatos legislativos subnacionais, tempo de atuação na Câmara dos Deputados e fidelidade ao Congresso Nacional.
 \end{itemize}
 
-\subsubsection*{Dimensão de Carreira}
+O Quadro \ref{tab:ipp_vars} apresenta as variáveis e seus respectivos pesos derivados da AFE.
 
-Esta dimensão avalia a experiência e trajetória política do parlamentar:
+\input{IPP/ipp_vars.tex}
 
-\begin{itemize}
-    \item \textbf{Tempo de Atuação} (peso: 1) - Total de dias em exercício parlamentar
-    \item \textbf{Mandatos} (peso: 1) - Número total de mandatos exercidos
-    \item \textbf{Fidelidade Partidária} (peso: 1) - Grau de fidelidade ao partido político
-\end{itemize}
+\subsection*{Procedimento de cálculo}
 
-\subsection*{Metodologia de Cálculo}
+Para cada parlamentar \(i\), a variável \(j\) é observada em cada legislatura \(t\). No caso das variáveis de contagem \(\mathrm{Relatoria}_{it}\) e \(\mathrm{TempoAtuacao}_{it}\), aplica-se previamente uma transformação logarítmica a fim de incorporar retornos decrescentes, reduzir a assimetria e mitigar o efeito de valores extremos:
 
-\subsubsection*{Normalização das Variáveis}
+\[
+\tilde{x}_{ijt} =
+\begin{cases}
+\ln\!\big(1 + x_{ijt}\big), & \text{se } j \in \{\mathrm{Relatoria},\, \mathrm{TempoAtuacao}\},\\[2pt]
+x_{ijt}, & \text{caso contrário.}
+\end{cases}
+\]
 
-Todas as variáveis são normalizadas para o intervalo [0,1] utilizando normalização min-max:
+O valor acumulado ao longo das legislaturas é então definido como:
+\[
+X_{ij} = \sum_{t=1}^{T} \tilde{x}_{ijt},
+\]
+onde \(T\) é o número total de legislaturas consideradas.
 
-\begin{equation}
-x_{norm} = \frac{x - x_{min}}{x_{max} - x_{min}}
-\end{equation}
+Na etapa seguinte, cada variável é normalizada para o intervalo \([0,1]\) pelo método \textit{min--max}:
+\[
+X_{ij}^{\mathrm{norm}} = \frac{X_{ij} - X_{j}^{\min}}{X_{j}^{\max} - X_{j}^{\min}},
+\]
+e ponderada pelo peso derivado da AFE:
+\[
+X_{ij}^{w} = X_{ij}^{\mathrm{norm}} \times w_j.
+\]
 
-\subsubsection*{Aplicação de Pesos}
+\subsubsection*{Cálculo das dimensões}
 
-Após a normalização, os pesos são aplicados a cada variável:
+As dimensões são calculadas pela soma das variáveis ponderadas que as compõem:
+\[
+E_i = \sum_{j \in E} X_{ij}^{w}, 
+\qquad 
+C_i = \sum_{j \in C} X_{ij}^{w},
+\]
+onde \(E\) representa o conjunto de variáveis da dimensão de especialização legislativa e \(C\) o conjunto da dimensão de carreira parlamentar.
 
-\begin{equation}
-x_{weighted} = x_{norm} \times peso
-\end{equation}
-
-\subsubsection*{Cálculo das Dimensões}
-
-As dimensões são calculadas como somas das variáveis ponderadas:
-
-\begin{equation}
-D_{comprometimento} = \sum_{i \in C} x_i^{weighted}
-\end{equation}
-
-\begin{equation}
-D_{carreira} = \sum_{i \in K} x_i^{weighted}
-\end{equation}
-
-Onde:
-\begin{itemize}
-    \item $C$ é o conjunto de variáveis da dimensão de comprometimento
-    \item $K$ é o conjunto de variáveis da dimensão de carreira
-\end{itemize}
-
-\subsubsection*{Normalização das Dimensões}
-
-As dimensões são normalizadas para o intervalo [0,1]:
-
-\begin{equation}
-D_{comprometimento}^{norm} = \frac{D_{comprometimento} - D_{comprometimento}^{min}}{D_{comprometimento}^{max} - D_{comprometimento}^{min}}
-\end{equation}
-
-\begin{equation}
-D_{carreira}^{norm} = \frac{D_{carreira} - D_{carreira}^{min}}{D_{carreira}^{max} - D_{carreira}^{min}}
-\end{equation}
-
-\subsubsection*{Cálculo Final do IPP}
-
-O IPP final é calculado como a média aritmética das duas dimensões normalizadas:
-
-\begin{equation}
-IPP = \frac{D_{comprometimento}^{norm} + D_{carreira}^{norm}}{2}
-\end{equation}
-
-\subsection*{Interpretação dos Pesos}
-
-A estrutura de pesos reflete a importância relativa atribuída a cada aspecto da qualidade parlamentar:
-
-\begin{itemize}
-    \item \textbf{Peso 5 (Mesa Diretora)}: Maior peso devido à responsabilidade institucional máxima
-    \item \textbf{Peso 4 (Liderança)}: Alto peso para funções de coordenação política
-    \item \textbf{Peso 3 (Presidência de Comissão)}: Peso médio-alto para responsabilidades legislativas
-    \item \textbf{Peso 2 (Relatorias)}: Peso médio para trabalho técnico-legislativo
-    \item \textbf{Peso 1 (Carreira)}: Peso base para experiência e fidelidade
-\end{itemize}
-
-\subsection*{Vantagens Metodológicas}
-
-\begin{enumerate}
-    \item \textbf{Abordagem Multidimensional}: Combina diferentes aspectos da qualidade parlamentar
-    \item \textbf{Ponderação Diferenciada}: Atribui pesos distintos baseados na importância institucional
-    \item \textbf{Normalização Padronizada}: Permite comparações entre diferentes períodos e legislaturas
-    \item \textbf{Agregação Balanceada}: Equilibra comprometimento institucional com experiência de carreira
-\end{enumerate}
-
-\subsection*{Limitações e Considerações}
-
-\begin{itemize}
-    \item \textbf{Disponibilidade de Dados}: Depende da qualidade e completude das bases de dados parlamentares
-    \item \textbf{Subjetividade dos Pesos}: A atribuição de pesos reflete juízos de valor sobre a importância relativa
-    \item \textbf{Estabilidade Temporal}: Mudanças nas regras parlamentares podem afetar a comparabilidade
-    \item \textbf{Contexto Político}: O índice não captura aspectos qualitativos da atuação parlamentar
-\end{itemize}
-
-\subsection*{Aplicações}
-
-O IPP pode ser utilizado para:
-
-\begin{itemize}
-    \item Avaliação comparativa de parlamentares entre legislaturas
-    \item Análise da evolução da qualidade parlamentar ao longo do tempo
-    \item Identificação de padrões de carreira parlamentar
-    \item Estudos sobre representação política e qualidade democrática
-    \item Políticas públicas para melhoria da qualidade parlamentar
-\end{itemize}
-
-\subsection*{Implementação Computacional}
-
-A implementação do IPP está disponível na classe \texttt{IPPCalculator} do módulo \texttt{src.calculators.ipp\_calculator}, que implementa todos os passos metodológicos descritos acima, incluindo:
-
-\begin{itemize}
-    \item Normalização automática das variáveis
-    \item Aplicação dos pesos configuráveis
-    \item Cálculo das dimensões e normalização
-    \item Geração do índice final
-\end{itemize}
+Após nova normalização em \([0,1]\), o Índice de Profissionalização do Parlamentar é obtido como a média aritmética das duas dimensões:
+\[
+IPP_i = \frac{E_i^{\mathrm{norm}} + C_i^{\mathrm{norm}}}{2}.
+\]
