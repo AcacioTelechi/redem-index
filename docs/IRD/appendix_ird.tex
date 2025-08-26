@@ -1,0 +1,39 @@
+\appendix
+\label{appendix:ird}
+\section{Apêndice}
+Considere um conjunto de $N$ indivíduos, cada um com um peso $w_i \in [0,N]$, obedecendo a restrição $\sum_{i} w_i = N$. 
+Além disso, considere um valor $d$ que represente a distância média dos pesos $w$ em relação ao valor de referência $1$. Esse valor, portanto, é dado por:
+
+\begin{equation}
+    d = \frac{1}{N} \sum_{i} |w_i - 1|
+\end{equation}
+
+Analisando o limite inferior de $d$, se dá quando $\sum_{i} |w_i - 1| = 0$, nesse caso quando todos os valores de $w_i$ forem iguais a $1$. Assim, temos o limite inferior de $d$ igual a $0$.
+
+Por outro lado, para encontrarmos o limite superior de $d$, devemos considerar o caso extremo da desigualdade, quando um peso $w_i = N$ e os demais $w_n = 0$, o que fornece:
+
+\begin{equation}
+    \begin{aligned}
+        d_{max} &= \frac{1}{N} (|N - 1| + (N-1) |0 - 1|) \\
+        &= \frac{1}{N} ((N - 1) + (N-1)) \\
+        &= \frac{1}{N} (2 (N - 1)) \\
+        &= 2 \left(1 - \tfrac{1}{N}\right)
+    \end{aligned}
+\end{equation}
+
+Portanto, o limite superior de $d$ é dado por $2 \left(1 - \tfrac{1}{N}\right)$.
+
+Considerando, então, esse limite superior, podemos obter o fator de normalização do índice IRD, que é dado por:
+
+\begin{equation}
+    \begin{aligned}
+        IRD &= 1 - \frac{d}{d_{max}} \\
+        &= 1 - \frac{\frac{1}{N} \sum_{i} |w_i - 1|}{2 \left(1 - \tfrac{1}{N}\right)} \\
+        &= 1 - \frac{\sum_{i} |w_i - 1|}{2N \left(1 - \tfrac{1}{N}\right)}\\
+        &= 1 - \frac{\sum_{i} |w_i - 1|}{2N - 2}\\
+        &= 1 - \frac{1}{2(N - 1)}\sum_{i} |w_i - 1|
+    \end{aligned}
+\end{equation}
+
+Assim, o fator de normalização do índice IRD é dado por $\frac{1}{2 \left(1 - \tfrac{1}{N}\right)}$. 
+O IRD, então, corresponde ao quão distante está a amostra desse máximo teórico realizando $ 1 - \frac{d}{d_{\max}} $.

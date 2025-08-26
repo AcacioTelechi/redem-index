@@ -180,8 +180,8 @@ Este projeto é desenvolvido para fins de pesquisa acadêmica. Consulte os autor
 
 ## 👥 Autores
 
-- **Maria Cecília Eduardo**
-- **Acácio Telechi**
+<!-- - **Maria Cecília Eduardo**
+- **Acácio Telechi** -->
 
 ## 📞 Contato
 
