@@ -48,7 +48,8 @@ redem-index/
 ### 1. **Instalação de Dependências**
 
 ```bash
-pip install pandas numpy matplotlib seaborn scikit-learn openpyxl
+python -m venv .venv
+pip install -r requirements.txt
 ```
 
 ### 2. **Compilação da Documentação (Opcional)**
