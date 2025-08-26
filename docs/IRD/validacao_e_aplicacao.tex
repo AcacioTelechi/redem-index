@@ -1,83 +1,40 @@
-\subsection{Validação e Aplicação}
+\subsection{Validação e Análise do IRD}
 
-\subsubsection{Validação do IRD e Acompanhamento da Representação Demográfica}
+\subsubsection{Validação da Representatividade e Evolução Temporal}
 
-O Índice de Representação Descritiva (IRD) foi validado através da análise de sua evolução temporal em relação às mudanças na composição demográfica da Câmara dos Deputados. A Figura \ref{fig:ird_time} apresenta a evolução do IRD ao longo das legislaturas, demonstrando como o índice acompanha o crescimento da representação de grupos tradicionalmente sub-representados.
+A validação de um índice como o IRD difere fundamentalmente da validação de modelos estatísticos inferenciais. Enquanto modelos preditivos ou causais exigem rigorosos testes de hipóteses, validação cruzada e métricas de erro, a validação do IRD é primariamente conceitual e de sensibilidade.
 
-Para o cálculo do IRD, foram consideradas as seguintes proporções populacionais brasileiras:
+O IRD não é um modelo que busca prever ou explicar uma variável dependente a partir de variáveis independentes. Pelo contrário, ele é um índice determinístico, construído a partir de uma fórmula matemática explícita e transparente, detalhada no apêndice \ref{appendix:ird}. As entradas (distribuições demográficas da população e dos parlamentares) geram uma saída única e previsível, sem componentes estocásticos ou erros a serem minimizados.
 
-\begin{itemize}
-    \item \textbf{Gênero}: 
-    \begin{itemize}
-        \item Feminino (F): 52\% da população
-        \item Masculino (M): 48\% da população
-    \end{itemize}
-    \item \textbf{Raça/Cor}:
-    \begin{itemize}
-        \item Branca: 20\% da população
-        \item Não-branca: 80\% da população (incluindo pretos, pardos, indígenas e amarelos)
-    \end{itemize}
-\end{itemize}
+Em suma, a robustez do IRD não reside em sua capacidade preditiva, mas em sua transparência metodológica e em sua habilidade de traduzir, de forma consistente e conceitualmente válida, a complexa ideia de representatividade descritiva em uma única métrica quantitativa.
 
-Essas proporções são baseadas nos dados demográficos do Instituto Brasileiro de Geografia e Estatística (IBGE) e servem como parâmetro de referência para avaliar a representatividade parlamentar.
+A validação empírica, portanto, foca em confirmar se o índice se comporta como esperado. Para tal, o IRD é calculado com base nas proporções da população brasileira (52\% de mulheres, 48\% de homens, 20\% de brancos e 80\% de não-brancos, segundo o IBGE) e aplicado aos dados históricos da Câmara dos Deputados. A Figura \ref{fig:ird_time} demonstra a evolução do índice ao longo das legislaturas, revelando uma clara tendência de crescimento que acompanha o aumento gradual da representação de mulheres e pessoas não-brancas. Esta correlação positiva valida a sensibilidade do IRD às mudanças na composição demográfica e confirma a robustez de sua metodologia de ponderação, estabelecendo-o como uma ferramenta eficaz para monitorar a representação descritiva.
 
-A análise da Figura \ref{fig:ird_time} revela que o IRD apresenta uma correlação positiva com o aumento da diversidade demográfica no parlamento:
 
-\begin{itemize}
-    \item \textbf{Tendência de Crescimento}: O IRD mostra tendência de crescimento ao longo das legislaturas, refletindo o aumento gradual da representação de mulheres e pessoas não-brancas
-    \item \textbf{Sensibilidade às Mudanças}: O índice responde adequadamente às variações na composição demográfica, validando sua capacidade de capturar mudanças na representação
-    \item \textbf{Estabilidade Metodológica}: A consistência do comportamento do IRD confirma a robustez da metodologia de ponderação e normalização
-\end{itemize}
-
-O IRD demonstra forte correlação com:
-\begin{itemize}
-    \item Proporção de mulheres parlamentares
-    \item Proporção de parlamentares não-brancos
-    \item Índice de diversidade demográfica geral
-\end{itemize}
-
-Esta validação confirma que o IRD é uma ferramenta eficaz para monitorar e avaliar a evolução da representação descritiva no sistema político brasileiro.
-
-\begin{figure}
+\begin{figure}[h!]
     \centering
     \includegraphics[width=0.8\textwidth]{figures/ird_vs_time.png}
-    \caption{Evolução do Índice de Representação Descritiva (IRD) ao longo das legislaturas, demonstrando a correlação com o aumento da representação demográfica}
+    \caption{Evolução do Índice de Representação Descritiva (IRD) ao longo das legislaturas.}
     \label{fig:ird_time}
 \end{figure}
 
-\subsubsection{Distribuição e Características do IRD}
+\subsubsection{Distribuição e Características do Índice}
 
-A Figura \ref{fig:ird_distribution} apresenta a distribuição dos valores do IRD, permitindo analisar suas características estatísticas e a variabilidade entre diferentes períodos legislativos.
+A análise da distribuição do IRD, apresentada na Figura \ref{fig:ird_distribution}, oferece insights sobre os padrões de representatividade no parlamento. A distribuição exibe uma forte assimetria positiva, indicando que a maioria dos valores se concentra em níveis mais baixos de representação. Este padrão sugere que a sub-representação de grupos demográficos é um desafio estrutural e persistente.
 
-\begin{figure}
+
+\begin{figure}[h!]
     \centering
     \includegraphics[width=0.8\textwidth]{figures/ird_distribution.png}
-    \caption{Distribuição do Índice de Representação Descritiva (IRD) mostrando a variabilidade e padrões de representação demográfica ao longo do tempo}
+    \caption{Distribuição do Índice de Representação Descritiva (IRD).}
     \label{fig:ird_distribution}
 \end{figure}
 
-A análise da distribuição do IRD revela padrões importantes sobre a representação descritiva no parlamento brasileiro:
+A Figura \ref{fig:ird_distribution} apresenta a distribuição dos pesos individuais normalizados, que são a base para o cálculo do IRD. Este histograma é fundamental para compreender como o mecanismo de ponderação funciona para corrigir os desequilíbrios de representatividade.
 
-\begin{itemize}
-    \item \textbf{Forma da Distribuição}: A distribuição apresenta assimetria positiva, indicando que a maioria dos valores está concentrada em níveis mais baixos de representação descritiva
-    \item \textbf{Variabilidade}: Existe considerável variabilidade nos valores do IRD, refletindo diferenças significativas na representação demográfica entre diferentes períodos e contextos políticos
-    \item \textbf{Concentração}: Os valores tendem a se concentrar em faixas específicas, sugerindo padrões consistentes de representação ao longo do tempo
-\end{itemize}
+Observa-se uma distribuição multimodal. A primeira moda, com frequência muito elevada (acima de 2500), está concentrada em valores de peso abaixo de 1. Esta barra representa os indivíduos de grupos demográficos super-representados no parlamento (como homens brancos), aos quais o modelo atribui um peso menor para diminuir sua influência na análise.
 
-Os valores do IRD podem ser interpretados da seguinte forma:
+Outras modas, mais dispersas e com frequências menores, abrange valores acima de 1. Estas barras representam os indivíduos de grupos sub-representados (como mulheres e pessoas não-brancas). O modelo atribui a eles pesos maiores para ampliar sua importância e compensar a baixa representatividade. A longa cauda à direita, com pesos que chegam a valores como 4 ou 5, indica a existência de perfis demográficos extremamente sub-representados, que requerem uma correção de peso mais intensa.
 
-\begin{itemize}
-    \item \textbf{Valores Baixos (0.0 - 0.3)}: Indicam baixa representação descritiva, com significativa sub-representação de grupos demográficos
-    \item \textbf{Valores Médios (0.3 - 0.7)}: Representam representação moderada, com algum equilíbrio entre grupos demográficos
-    \item \textbf{Valores Altos (0.7 - 1.0)}: Indicam alta representação descritiva, com boa proporcionalidade demográfica
-\end{itemize}
+Em suma, a distribuição dos pesos valida o funcionamento do modelo de ponderação. Ele efetivamente diminui o peso dos grupos majoritários e aumenta o peso dos minoritários, um passo essencial para construir um índice que reflita de forma mais justa a diversidade da população brasileira.
 
-A distribuição do IRD revela importantes implicações para a democracia brasileira:
-
-\begin{itemize}
-    \item \textbf{Desafios Persistentes}: A concentração de valores em faixas mais baixas indica que a sub-representação demográfica persiste como um desafio estrutural
-    \item \textbf{Progresso Gradual}: A presença de valores mais altos em alguns períodos sugere que mudanças positivas são possíveis
-    \item \textbf{Necessidade de Políticas}: A variabilidade observada sugere que políticas públicas podem efetivamente influenciar a representação descritiva
-\end{itemize}
-
-Comparando a distribuição do IRD com outros indicadores de representação:
