@@ -1,39 +1,50 @@
 \appendix
 \label{appendix:ird}
 \section{Apêndice}
-Considere um conjunto de $N$ indivíduos, cada um com um peso $w_i \in [0,N]$, obedecendo a restrição $\sum_{i} w_i = N$. 
-Além disso, considere um valor $d$ que represente a distância média dos pesos $w$ em relação ao valor de referência $1$. Esse valor, portanto, é dado por:
+
+Considere um conjunto de $N$ indivíduos, cada um associado a um peso $w_i \in [0,N]$, sujeito à restrição $\sum_{i=1}^{N} w_i = N$. 
+Definimos a distância média $d$ como a medida do desvio absoluto dos pesos em relação ao valor de referência $1$:
 
 \begin{equation}
-    d = \frac{1}{N} \sum_{i} |w_i - 1|
+    d = \frac{1}{N} \sum_{i=1}^{N} |w_i - 1|.
 \end{equation}
 
-Analisando o limite inferior de $d$, se dá quando $\sum_{i} |w_i - 1| = 0$, nesse caso quando todos os valores de $w_i$ forem iguais a $1$. Assim, temos o limite inferior de $d$ igual a $0$.
+\subsection*{Limites de $d$}
 
-Por outro lado, para encontrarmos o limite superior de $d$, devemos considerar o caso extremo da desigualdade, quando um peso $w_i = N$ e os demais $w_n = 0$, o que fornece:
+O limite inferior de $d$ ocorre quando todos os indivíduos apresentam pesos iguais a $1$, de modo que $\sum_{i=1}^{N} |w_i - 1| = 0$. Nesse caso, tem-se simplesmente:
 
-\begin{equation}
-    \begin{aligned}
-        d_{max} &= \frac{1}{N} (|N - 1| + (N-1) |0 - 1|) \\
-        &= \frac{1}{N} ((N - 1) + (N-1)) \\
-        &= \frac{1}{N} (2 (N - 1)) \\
-        &= 2 \left(1 - \tfrac{1}{N}\right)
-    \end{aligned}
-\end{equation}
+\[
+d_{\min} = 0.
+\]
 
-Portanto, o limite superior de $d$ é dado por $2 \left(1 - \tfrac{1}{N}\right)$.
-
-Considerando, então, esse limite superior, podemos obter o fator de normalização do índice IRD, que é dado por:
+Já o limite superior é obtido em uma situação de desigualdade extrema, em que um único indivíduo concentra todo o peso ($w_i = N$) e os demais apresentam peso nulo ($w_j = 0$, para $j \neq i$). Assim:
 
 \begin{equation}
     \begin{aligned}
-        IRD &= 1 - \frac{d}{d_{max}} \\
-        &= 1 - \frac{\frac{1}{N} \sum_{i} |w_i - 1|}{2 \left(1 - \tfrac{1}{N}\right)} \\
-        &= 1 - \frac{\sum_{i} |w_i - 1|}{2N \left(1 - \tfrac{1}{N}\right)}\\
-        &= 1 - \frac{\sum_{i} |w_i - 1|}{2N - 2}\\
-        &= 1 - \frac{1}{2(N - 1)}\sum_{i} |w_i - 1|
+        d_{\max} &= \frac{1}{N} \left(|N - 1| + (N-1) |0 - 1|\right) \\
+        &= \frac{1}{N} \big((N - 1) + (N-1)\big) \\
+        &= \frac{2(N - 1)}{N} \\
+        &= 2 \left(1 - \tfrac{1}{N}\right).
     \end{aligned}
 \end{equation}
 
-Assim, o fator de normalização do índice IRD é dado por $\frac{1}{2 \left(1 - \tfrac{1}{N}\right)}$. 
-O IRD, então, corresponde ao quão distante está a amostra desse máximo teórico realizando $ 1 - \frac{d}{d_{\max}} $.
+Portanto, $d$ pertence ao intervalo
+\[
+d \in \left[0,\, 2\left(1 - \tfrac{1}{N}\right)\right].
+\]
+
+\subsection*{Normalização e definição do índice IRD}
+
+Com base nesse limite superior, definimos o índice de representatividade descritiva (IRD) como a distância relativa da amostra em relação ao caso de máximo desequilíbrio. Assim:
+
+\begin{equation}
+    \begin{aligned}
+        IRD &= 1 - \frac{d}{d_{\max}} \\
+        &= 1 - \frac{\frac{1}{N} \sum_{i=1}^{N} |w_i - 1|}{2 \left(1 - \tfrac{1}{N}\right)} \\
+        &= 1 - \frac{\sum_{i=1}^{N} |w_i - 1|}{2N - 2} \\
+        &= 1 - \frac{1}{2(N - 1)} \sum_{i=1}^{N} |w_i - 1|.
+    \end{aligned}
+\end{equation}
+
+O fator de normalização $\tfrac{1}{2(1 - 1/N)}$ garante que $IRD \in [0,1]$. 
+Assim, o valor do índice quantifica a proximidade da amostra em relação ao cenário ideal de representatividade, em que $IRD = 1$ indica perfeita correspondência com a população, e valores próximos a $0$ refletem forte desequilíbrio.
