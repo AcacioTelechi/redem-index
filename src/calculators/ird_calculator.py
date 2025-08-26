@@ -88,9 +88,7 @@ class IRDCalculator(BaseCalculator):
         else:
             raise ValueError(f"Unknown normalization method: {method}")
 
-    def normalize_individual_weights(
-        self, weights: pd.Series
-    ) -> pd.Series:
+    def normalize_individual_weights(self, weights: pd.Series) -> pd.Series:
         """
         Normalize individual weights to [0,1] interval using softmax function
         """
@@ -102,11 +100,6 @@ class IRDCalculator(BaseCalculator):
         """
         Original normalization: 1 - sum(abs(weights - 1)) / (2 * (n - 1))
         """
-        if not np.isclose(weights.sum(), len(weights), rtol=1e-6, atol=1e-8):
-            raise ValueError(
-                f"Weights do not sum to the number of individuals (within tolerance): {weights.sum()} != {len(weights)}"
-            )
-
         n = len(weights)
         normalizer_factor = 1 / (2 * (n - 1))
         i_ = np.sum(np.abs(weights - 1))
@@ -174,10 +167,8 @@ class IRDCalculator(BaseCalculator):
 
         # Normalize individual weights
         weights_series = pd.Series(self.weights)
-        
-        normalized_weights = self.normalize_individual_weights(
-            weights_series
-        )
+
+        normalized_weights = self.normalize_individual_weights(weights_series)
         self.df["equality_weight_normalized"] = normalized_weights
 
         # Calculate normalized equality index
@@ -195,9 +186,31 @@ if __name__ == "__main__":
     import sys
     import os
     import matplotlib.pyplot as plt
+    import pandas as pd
 
     sys.path.append(os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
+    # df_for_equality = pd.read_csv("./outputs/df_for_ird.csv")
+    # df_for_equality.set_index(["id", "idLegislatura"], inplace=True)
+
+    # df_legislatura = df_for_equality.loc[pd.IndexSlice[:, 56], :]
+
+    # population_proportions = {
+    #     "F": 0.52,
+    #     "M": 0.48,
+    #     "branca": 0.2,
+    #     "n_branca": 0.8,
+    # }
+
+    # calculator = IRDCalculator()
+    # df_calc = calculator.calculate(
+    #     df_legislatura,
+    #     population_proportions,
+    # )
+
+    # print(df_calc)
+
+    
     n_a = 1000
     n_b = 1000
 
