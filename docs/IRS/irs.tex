@@ -1,6 +1,8 @@
-\section{Índice de Representação Substantiva (IRS)}
+\section{Dimensão Representação Substantiva (Coesão Representativa Individual)}
 
 A dimensão \textit{Representação Substantiva} aborda como os deputados buscam representar seus constituintes de maneira substantiva, isto é, como eles atuam (ou melhor, \textit{dizem atuar}) na defesa e ação concreta de determinadas pautas. Assim, preocupação de maior magnitude é entender como eles se reivindicam representantes de determinados grupos ou valores. Propomos, assim, a construção de um índice que mensure, individualmente, os níveis de coesão das pautas defendidas por cada deputado em suas páginas nas redes sociais, especificamente o Instagram.
+
+\subsection*{Cálculo do Índice}
 
 Para isso, extraímos os textos de 306.680 postagens de 495 perfis de deputados federais da 57ª Legislatura, em 2023. Optamos por um ano não eleitoral, por acreditarmos que a proximidade com o pleito poderia enviesar o conteúdo das postagens feitas pelos deputados. A fim de excluir postagens nas quais os deputados não buscavam representar seus eleitorados, os textos foram tratados e filtrados a partir da presença de determinados conjuntos de termos. Nesse sentido, incluímos em nosso universo de análise, apenas as postagens nas quais haviam termos que I) referenciam determinados grupos sociais (população, mulheres, brasileiros, pobres, médicos, etc.) e II) mobilizam alguma relação de representação política (lutar, representar, defender, etc.).
 Restaram, dessa forma, 44.073 postagens ao todo.
@@ -13,12 +15,13 @@ X_1 \leftrightarrow X_2; X_1 \leftrightarrow X_3; X_1 \leftrightarrow X_n; \ldot
 Ao final, obtivemos uma matriz para cada deputado. Os valores do índice de coesão individual dos deputados derivaram da média dos valores dessas matrizes. A coesão representativa individual ($RC_x$), portanto, foi definida como a média das similaridades cosseno entre todos os pares de postagens de um mesmo deputado. Essa medida resume o quão semanticamente consistentes são as pautas defendidas pelo parlamentar ao longo do tempo.
 
 \begin{equation}
-RC_x = \frac{1}{n} \sum LSA_i
+RS = \frac{1}{n} \sum LSA_i
 \end{equation}
 
 Onde:
 \begin{itemize}
-    \item $RC_x$: Representative Cohesion Index;
+    \item $RS$: Representative Cohesion Index;
     \item $LSA_i$: Valores das matrizes das postagens de determinado deputado.
 \end{itemize}
 
+\input{IRS/validacao_e_aplicacao.tex}
