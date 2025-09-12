@@ -10,6 +10,7 @@ node_modules
 #Large files
 2023_Completo_redem_0304.xlsx
 studies/fake_news/df_res.csv
+2023_Completo_posts_limpos_v6.xlsx
 
 #Chroma
 *.chroma_db
