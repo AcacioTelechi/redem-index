@@ -45,6 +45,10 @@ redem-index/
 
 ## 🚀 Como Usar
 
+### 0. **Download dos dados**
+Os dados podem ser baixados por este [link](https://1drv.ms/u/c/c66f0a8fee5f3530/EbY6beqUzFBOvhIP13exGJgBZ3D3HlD7y13NTU0HjWNWlQ?e=mc3XW7).
+Salvar a pasta 'data' dentro da pasta raiz do repositório.
+
 ### 1. **Instalação de Dependências**
 
 ```bash
@@ -61,7 +65,7 @@ cd docs
 pdflatex main.tex
 ```
 
-### 3. **Extração de Dados**
+### 3. **Extração de Dados (opcional)**
 
 ```python
 from extraction import main
@@ -159,10 +163,10 @@ Para contribuir com o projeto:
 
 Este projeto é desenvolvido para fins de pesquisa acadêmica. Consulte os autores para uso comercial ou redistribuição.
 
-## 👥 Autores
+<!-- ## 👥 Autores
 
-<!-- - **Maria Cecília Eduardo**
-- **Acácio Telechi** -->
+- **Acácio Telechi**: acaciotelechi@gmail.com
+- **Nilton -->
 
 ## 📞 Contato
 
