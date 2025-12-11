@@ -1,45 +1,89 @@
 \section{Índice de Falar Sincero (IFS)}
 
-O Índice de Falar Sincero (IFS) é uma medida projetada para avaliar o comportamento dos parlamentares em relação à disseminação de desinformação. A premissa central é quantificar a frequência e a intensidade com que um parlamentar propaga conteúdos semelhantes a narrativas comprovadamente falsas. A metodologia consiste em comparar as postagens de cada parlamentar com uma base vetorial de conteúdos previamente verificados como falsos por agências de checagem.
+O Índice de Falar Sincero (IFS) é uma medida projetada para avaliar o comportamento dos parlamentares em relação à disseminação de desinformação. A premissa central é quantificar a frequência e a intensidade com que um parlamentar propaga conteúdos semelhantes a narrativas comprovadamente falsas. A metodologia utiliza um detector de fake news aumentado por recuperação (\textit{retrieval-augmented}) que combina um modelo de transformador BERT específico para português com um classificador de múltiplas camadas (MLP) e recuperação opcional de alegações verificadas de um banco de dados ChromaDB.
 
 O processo de cálculo envolve as seguintes etapas:
 \begin{enumerate}
-    \item \textbf{Construção de um corpus de referência}: Criação de uma base vetorial a partir de conteúdos rotulados como falsos, que serve como referência para a detecção de desinformação.
+    \item \textbf{Construção de um corpus de referência}: Criação de uma base de dados ChromaDB a partir de conteúdos rotulados como falsos e verificados por agências de checagem, que serve como referência para a detecção de desinformação. As alegações são incorporadas usando \texttt{SentenceTransformerEmbeddingFunction} para suportar recuperação por similaridade de cosseno.
     \item \textbf{Curadoria do corpus}: O material é filtrado para garantir a qualidade, com a remoção de duplicatas, ruídos e a seleção de alegações centrais.
-    \item \textbf{Medição de similaridade}: As postagens de cada parlamentar são transformadas em embeddings e comparadas com os vetores do corpus de referência, utilizando a similaridade do cosseno.
-    \item \textbf{Detecção de propagação}: Para cada postagem, identifica-se o grau de alinhamento com a desinformação. Uma postagem é considerada como potencialmente propagadora de conteúdo falso se sua similaridade máxima com alguma alegação do corpus ultrapassar um limiar $\tau$. Adicionalmente, um classificador de \textit{stance} é utilizado para distinguir se a postagem \textit{propaga} ou \textit{denuncia} o conteúdo.
+    \item \textbf{Recuperação de alegações}: Para cada postagem, o sistema consulta o ChromaDB para recuperar as $k$ alegações verificadas mais similares (por padrão, $k=3$). As distâncias $d$ são convertidas em escores de similaridade $s = 1 - d$, e candidatos abaixo de um limiar de similaridade (padrão 0,6) são descartados.
+    \item \textbf{Classificação binária}: A postagem e as alegações recuperadas são concatenadas com o separador literal ``\texttt{[SEP]}'' e processadas por um modelo BERT baseado em \texttt{neuralmind/bert-base-portuguese-cased}. O modelo utiliza um classificador MLP configurável para produzir rótulos binários (\textit{fake}, \textit{not fake}) juntamente com probabilidades de classe calibradas.
 \end{enumerate}
+
+\subsection{Arquitetura do Modelo}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{IFS/neural_net_architecture.pdf}
+    \caption{Arquitetura de ponta a ponta mostrando recuperação, processamento do cross-encoder e a head classifier MLP.}
+    \label{fig:arquitetura}
+\end{figure}
+
+O detector utiliza uma arquitetura de \textit{cross-encoder} com as seguintes componentes:
+
+\subsubsection{Backbone de Transformador}
+
+O modelo instancia \texttt{AutoModel.from\_pretrained("neuralmind/bert-base-portuguese-cased")}. Dado um input tokenizado $\mathbf{x}$, o modelo produz estados ocultos contextuais $\mathbf{H} \in \mathbb{R}^{L \times d}$ e uma representação agregada $\mathbf{h}_{\text{[CLS]}} \in \mathbb{R}^{d}$, onde $d = 768$ e $L$ é o comprimento da sequência (máximo de 512 tokens).
+
+\subsubsection{Head Classificador MLP}
+
+Para aumentar a expressividade além de uma única camada linear, o classificador é um MLP configurável implementado em \texttt{models.fake\_news\_model.ClassifierHead}. As larguras das camadas ocultas são definidas por padrão como \texttt{config.CLASSIFIER\_HIDDEN\_DIMS} (por exemplo, $[768, 384, 192]$). Para cada camada oculta $k$:
+
+\begin{equation}
+    \mathbf{h}_{k+1} = \text{Dropout}\left(\text{ReLU}\left(\mathbf{W}_{k} \mathbf{h}_{k} + \mathbf{b}_{k}\right)\right),
+\end{equation}
+
+com probabilidade de dropout \texttt{config.DROPOUT} (0,5). Uma projeção linear final produz logits $\mathbf{z} = (z_0, z_1)$ correspondentes às classes \textit{not fake} e \textit{fake}.
+
+\subsubsection{Função de Perda}
+
+O modelo utiliza perda focal (\textit{focal loss}) para lidar com desbalanceamento de classes, com $\alpha = 0.25$ e $\gamma = 2.0$:
+
+\begin{equation}
+    \mathcal{L}_{\text{focal}} = - \alpha (1 - p_y)^{\gamma} \log p_y,
+\end{equation}
+
+onde $p_y$ é a probabilidade prevista para a classe verdadeira $y$. Isso enfatiza exemplos mal classificados e contrabalança o desbalanceamento de classes.
+
+\subsubsection{Estratégia de Agregação}
+
+Quando múltiplas alegações são recuperadas, o sistema agrega probabilidades usando operadores de máximo ou média. Trabalhos futuros visam agregação baseada em atenção usando atenção multi-cabeça.
+
 
 \subsection{Definição Operacional e Pontuação}
 
-Para um parlamentar $i$, seja $\mathcal{S}_i$ o conjunto de pontuações de similaridade de suas postagens que foram classificadas como propagadoras de desinformação:
+Para cada postagem $t$ do parlamentar $i$, o modelo produz um rótulo binário $f_{it} \in \{0, 1\}$ (onde $f_{it} = 1$ indica classificação como \textit{fake}) e uma probabilidade $p_{it} = P(\text{fake} \mid \text{post}_{it}, \text{claims}_{it})$ de ser falsa. O \textit{score} de cada postagem é calculado como o produto do rótulo binário pela probabilidade:
+
 \[
-    \mathcal{S}_i = \Big\{ s_{it} \;:\; s_{it} = \max_j \cos\big(e(\text{post}_{it}), e(\text{claim}_j)\big) \geq \tau \text{ e } \text{stance}_{it} = \text{propaga} \Big\}.
+    \text{score}_{it} = f_{it} \times p_{it}.
 \]
-Com base nesse conjunto, e sendo $P_i$ o total de postagens analisadas e $c_i = |\mathcal{S}_i|$ o número de postagens que propagam desinformação, duas formas de pontuação estão em avaliação. Ambas são orientadas de forma que, \textit{quanto maior o índice, melhor} o desempenho do parlamentar.
 
-\begin{description}
-    \item[A) Incidência (Taxa)] Pontua a ocorrência de propagação. O índice é maior quanto menor a taxa de postagens propagadoras.
-    \[
-        r_i = \frac{c_i}{P_i} \quad \Rightarrow \quad \mathrm{IFS}_i^{\text{taxa}} = 1 - r_i.
-    \]
+Uma postagem é considerada como propagadora de desinformação se $\text{score}_{it} > 0$, ou seja, quando $f_{it} = 1$ (classificada como fake) e $p_{it} > 0$.
 
-    \item[B) Distância (Similaridade Média)] Penaliza postagens que são vetorialmente mais próximas das alegações falsas.
-    \[
-        \bar{s}_i = \begin{cases}
-            \frac{1}{c_i}\sum_{s \in \mathcal{S}_i} s, & \text{se } c_i > 0, \\
-            0, & \text{se } c_i = 0
-        \end{cases}
-        \quad \Rightarrow \quad \mathrm{IFS}_i^{\text{dist}} = 1 - \bar{s}_i.
-    \]
-\end{description}
+Para um parlamentar $i$, seja $\mathcal{S}_i$ o conjunto de scores de suas postagens que foram classificadas como falsas:
 
-\subsection{Desafios Metodológicos}
-A implementação do IFS enfrenta alguns desafios que exigem calibração e validação contínuas:
-\begin{itemize}
-    \item \textbf{Polaridade}: Distinguir com precisão entre \textit{denúncia} e \textit{propagação} de desinformação é um dos principais desafios, demandando modelos robustos de \textit{stance detection}.
-    \item \textbf{Limiar de similaridade ($\tau$)}: A definição do limiar $\tau$ é um ponto crítico que afeta diretamente a sensibilidade e a especificidade do índice. Sua calibração deve ser realizada por meio de análises de curvas ROC/PR e validação com anotação humana para mitigar falsos positivos e negativos.
-    \item \textbf{Cobertura do corpus}: A qualidade do índice depende da representatividade e da atualização contínua do corpus de referência, que deve abranger diferentes temas e períodos.
-\end{itemize}
+\[
+    \mathcal{S}_i = \Big\{ \text{score}_{it} \;:\; \text{score}_{it} = f_{it} \times p_{it} > 0 \Big\},
+\]
 
-% \input{IFS/validacao_e_aplicacao.tex}
+onde $f_{it}$ é o rótulo binário previsto pelo modelo e $p_{it}$ é a probabilidade de ser fake para a postagem $t$ do parlamentar $i$.
+
+Com base nesse conjunto, e sendo $P_i$ o total de postagens analisadas e $c_i = |\mathcal{S}_i|$ o número de postagens com score positivo (classificadas como fake), o Índice de Falar Sincero é calculado como:
+
+\[
+    r_i = \frac{c_i}{P_i} \quad \Rightarrow \quad \mathrm{IFS}_i = 1 - r_i,
+\]
+
+onde $r_i$ é a taxa de postagens classificadas como falsas. O índice é orientado de forma que, \textit{quanto maior o IFS, melhor} o desempenho do parlamentar (menor propagação de desinformação).
+
+% \subsection{Desafios Metodológicos}
+% A implementação do IFS enfrenta alguns desafios que exigem calibração e validação contínuas:
+% \begin{itemize}
+%     \item \textbf{Calibração de probabilidades}: As probabilidades produzidas pelo modelo devem ser calibradas para refletir confiança real. Curvas de calibração (diagramas de confiabilidade) são essenciais para validar a qualidade das estimativas probabilísticas.
+%     \item \textbf{Limiar de similaridade}: A definição do limiar de similaridade para recuperação de alegações (padrão 0,6) é um ponto crítico que afeta diretamente a sensibilidade e a especificidade do índice. Sua calibração deve ser realizada por meio de análises de curvas ROC/PR e validação com anotação humana para mitigar falsos positivos e negativos.
+%     \item \textbf{Cobertura do corpus}: A qualidade do índice depende da representatividade e da atualização contínua do corpus de referência no ChromaDB, que deve abranger diferentes temas e períodos. Deriva de domínio pode prejudicar a precisão.
+%     \item \textbf{Interpretabilidade}: Embora a recuperação ofereça insight qualitativo, o MLP permanece um classificador de caixa preta sem atribuição de granularidade fina. Trabalhos futuros visam melhorar explicações com atribuições em nível de token ou pontuação de relevância de alegações.
+%     \item \textbf{Desbalanceamento de classes}: Apesar do uso de perda focal, o desbalanceamento entre classes fake e not fake requer monitoramento contínuo e possivelmente ajustes nos hiperparâmetros $\alpha$ e $\gamma$.
+% \end{itemize}
+
+\input{IFS/validacao_e_aplicacao.tex}

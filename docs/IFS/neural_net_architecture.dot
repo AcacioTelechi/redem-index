@@ -1,0 +1,56 @@
+digraph FakeNewsDetector {
+    rankdir=TB;
+    fontsize=12;
+    labelloc="t";
+    label="Arquitetura do modelo de detecção de fake news";
+
+    node [shape=rectangle, style=filled, fillcolor="#f0f4ff", fontname="Helvetica"];
+
+    Post [label="Post Text"];
+    Claim [label="Retrieved / Provided Claim"];
+    SepConcat [label="Concatenate with [SEP]"];
+    Tokenizer [label="Tokenizer\n(HF AutoTokenizer)"];
+    InputIDs [label="input_ids"];
+    AttentionMask [label="attention_mask"];
+    BERT [label="BERT Encoder\n(neuralmind/bert-base-portuguese-cased)", fillcolor="#d9e8fb"];
+    CLS [label="[CLS] Pooled Output"];
+    Dropout [label="Dropout (p = config.DROPOUT)"];
+
+    subgraph cluster_mlp {
+        label="MLP Classifier Head";
+        style=rounded;
+        color="#b3c7f9";
+        fontname="Helvetica";
+        fontsize=11;
+
+        Hidden1 [label="Linear → ReLU → Dropout\n(dim = CLASSIFIER_HIDDEN_DIMS[0])"];
+        Hidden2 [label="Linear → ReLU → Dropout\n(dim = CLASSIFIER_HIDDEN_DIMS[1])"];
+        Hidden3 [label="Linear → ReLU → Dropout\n(dim = CLASSIFIER_HIDDEN_DIMS[2])"];
+        Logits [label="Linear → Logits (2)"];
+    }
+
+    Softmax [label="Softmax"];
+    Output [label="Probabilities & Prediction"];
+
+    Retrieval [label="ClaimRetriever\n(ChromaDB)", shape=rectangle, fillcolor="#e4f6e8"];
+
+    Post -> SepConcat;
+    Claim -> SepConcat;
+
+    Retrieval -> Claim [label="top_k claims", style=dashed];
+
+    SepConcat -> Tokenizer;
+    Tokenizer -> InputIDs;
+    Tokenizer -> AttentionMask;
+
+    {InputIDs AttentionMask} -> BERT;
+    BERT -> CLS;
+    CLS -> Dropout;
+    Dropout -> Hidden1;
+    Hidden1 -> Hidden2;
+    Hidden2 -> Hidden3;
+    Hidden3 -> Logits;
+    Logits -> Softmax;
+    Softmax -> Output;
+}
+

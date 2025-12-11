@@ -1,19 +1,18 @@
 \subsection{Validação e Aplicação}
 
-Como parte da validação preliminar, foi realizada uma análise manual de postagens com base em checagens da agência Aos Fatos. As tabelas abaixo apresentam os resultados agregados por parlamentar e partido.
+Como parte da validação preliminar, foi realizada uma análise de postagens do ano de 2023 utilizando o detector de fake news aumentado por recuperação. O corpus de referência é populado a partir do arquivo \texttt{Analise manual Aos fatos\_v2.xlsx} e armazenado na coleção ChromaDB \texttt{checks\_v2\_rewrite\_cosine\_sentence\_transformer}.
 
-\begin{table}[h!]
+\subsubsection{Resultados Preliminares}
+
+Foram analisados \textbf{91.250 postagens} do ano de 2023. Considerando apenas o rótulo binário do modelo (classificação como fake quando a probabilidade $p_{it} > 0,5$), foram identificadas \textbf{6.910 postagens classificadas como falsas}, representando \textbf{7,57\%} do total.
+
+Ao utilizar o \textit{score} ($f_{it} \times p_{it}$) em vez do rótulo binário isolado, o número de postagens consideradas como falsas foi reduzido para \textbf{4.848 postagens}, representando \textbf{5,31\%} do total. Essa redução reflete uma abordagem mais conservadora que considera não apenas a classificação binária, mas também a confiança (probabilidade) do modelo na classificação.
+
+A Figura~\ref{fig:hist_ifs} apresenta o histograma da distribuição do IFS entre os parlamentares, ilustrando a dispersão e a concentração dos valores do índice. A distribuição permite identificar padrões de comportamento em relação à propagação de desinformação.
+
+\begin{figure}[H]
     \centering
-    \caption{Resultados Preliminares do IFS por Parlamentar}
-    \input{tables/ifs_parls.tex}
-\end{table}
-
-\begin{table}[h!]
-    \centering
-    \caption{Resultados Preliminares do IFS por Partido}
-    \input{tables/ifs_partidos.tex}
-\end{table}
-
-\subsection{Análise da Distribuição}
-
-A análise da distribuição do IFS, incluindo histogramas e boxplots, será detalhada nesta seção para ilustrar a dispersão e a concentração dos valores do índice entre os parlamentares.
+    \includegraphics[width=\textwidth]{IFS/hist_ifs.png}
+    \caption{Histograma da distribuição do IFS entre os parlamentares.}
+    \label{fig:hist_ifs}
+\end{figure}
