@@ -8,8 +8,8 @@ from pathlib import Path
 BASE_DIR = Path(__file__).parent / "studies/fake_news"
 DATA_DIR = Path(__file__).parent / "data/ifs"
 MODEL_DIR = BASE_DIR / "models"
-CHECKPOINT_DIR = BASE_DIR / "checkpoints"
 
+CHECKPOINT_DIR = DATA_DIR / "checkpoints"
 CHROMA_DB_PATH = DATA_DIR / ".chroma_db"
 
 # Dataset paths
