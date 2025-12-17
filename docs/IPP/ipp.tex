@@ -29,10 +29,10 @@ No caso das variáveis de contagem \(\mathrm{Relatoria}_{it}\) e \(\mathrm{Tempo
 \tilde{X}_{ijt}, & \text{caso contrário.}
 \end{cases}
 \]
-Na etapa seguinte, cada variável é normalizada para o intervalo \([0,1]\) pelo método \textit{min--max}:
+Na etapa seguinte, cada variável é normalizada para o intervalo \([0,1]\) pelo método \textit{min--max}\footnote{Note que os valores mínimos e máximos são calculados para cada variável \(j\) ao longo de todas as legislaturas \(t\), de forma a manter a consistência da normalização.}:
 \[
-X_{ijt}^{\mathrm{norm}} = \frac{X_{ijt} - X_{jt}^{\min}}{X_{jt}^{\max} - X_{jt}^{\min}},
-\]
+X_{ijt}^{\mathrm{norm}} = \frac{X_{ijt} - X_{j}^{\min}}{X_{j}^{\max} - X_{j}^{\min}},
+\] 
 e ponderada pelo peso definido no quadro \ref{tab:ipp_vars}:
 \[
 X_{ijt}^{w} = X_{ijt}^{\mathrm{norm}} \times w_j.
