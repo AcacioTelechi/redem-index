@@ -1,0 +1,70 @@
+\appendix
+\section{Apêndice A: Derivação do IRD}
+
+Considere uma amostra composta por $N$ indivíduos, classificados segundo $q$ características categóricas. Cada característica particiona o conjunto de indivíduos em categorias mutuamente exclusivas. Denote por $C$ o número total de categorias consideradas ao longo de todas as características.
+
+Defina $X_{ic}$ como uma variável binária tal que $X_{ic} = 1$ se o indivíduo $i$ pertence à categoria $c$, e $X_{ic} = 0$ caso contrário. Por construção, cada indivíduo pertence exatamente a uma categoria por característica, de modo que:
+
+\begin{equation}
+    \sum_{c=1}^{C} X_{ic} = 1, \quad \forall i
+\end{equation}
+
+Sejam $p_c$ e $n_c$ as proporções da categoria $c$ na população e na amostra, respectivamente, satisfazendo:
+
+\begin{equation}
+    \sum_{c=1}^{C} p_c = \sum_{c=1}^{C} n_c = q
+\end{equation}
+
+O objetivo da ponderação é assegurar que, após a aplicação de pesos individuais 
+$w_i$, as distribuições marginais da amostra ponderada coincidam com as proporções populacionais de interesse. Formalmente, impõe-se a condição de calibração:
+
+\begin{equation}
+    \frac{\sum_{i=1}^{N} w_i X_{ic}}{\sum_{i=1}^{N} w_i} = p_c, \quad \forall c = 1, \ldots, C
+\end{equation}
+
+Para simplificar a derivação, introduzem-se pesos não normalizados 
+$\widetilde{w_i}$, de forma que a normalização posterior não altere as proporções relativas entre categorias. Assim, requer-se apenas que:
+
+\begin{equation}
+    \sum_{i=1}^{N} \widetilde{w_i} X_{ic} \propto p_c.
+\end{equation}
+
+\subsubsection*{Correção por uma característica}
+
+Considere inicialmente o caso de uma única característica categórica. Supondo pesos constantes dentro de cada categoria, isto é, $\widetilde{w_i} = a_c$ para todo indivíduo pertencente à categoria $c$, obtém-se:
+$\widetilde{w_i} = a_c$ para todo indivíduo pertencente à categoria $c$, obtém-se:
+
+\begin{equation}
+    \sum_{i=1}^{N} \widetilde{w_i} X_{ic} = a_c \sum_{i=1}^{N} X_{ic} = a_c N n_c.
+\end{equation}
+
+Para que essa quantidade seja proporcional a $p_c$, é necessário que:
+
+\begin{equation}
+    a_c N n_c \propto p_c.
+\end{equation}
+
+o que implica:
+
+\begin{equation}
+    a_c = \frac{p_c}{n_c}.
+\end{equation}
+
+Esse resultado estabelece que o fator de correção associado a cada categoria é dado pela razão entre sua proporção populacional e sua proporção observada na amostra.
+
+\subsubsection*{Extensão para múltiplas características}
+
+No caso geral, cada indivíduo pertence simultaneamente a $q$ categorias, uma para cada característica considerada. Assim, o peso individual deve refletir a contribuição de todas as categorias às quais o indivíduo pertence.
+
+Uma forma linear e aditiva de combinar os fatores de correção é dada por:
+
+\begin{equation}
+    \widetilde{w_i} = \sum_{c=1}^{C} X_{ic} \frac{p_c}{n_c}.
+\end{equation}
+
+
+Essa especificação atribui a cada indivíduo a soma dos fatores de correção correspondentes às categorias que o caracterizam, preservando a contribuição independente de cada característica e evitando a amplificação excessiva dos pesos.
+
+Observa-se que, dado que cada indivíduo contribui com exatamente $q$ termos na soma acima, a restrição $\sum_{c=1}^{C} p_c = \sum_{c=1}^{C} n_c = q$ garante a comparabilidade dos pesos entre indivíduos.
+
+Após a normalização dos pesos $\widetilde{w_i}$, a condição de calibração é satisfeita, assegurando que as distribuições marginais da amostra ponderada reproduzam as proporções populacionais especificadas.
