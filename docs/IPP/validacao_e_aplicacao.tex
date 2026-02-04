@@ -33,4 +33,73 @@ A distribuição geral do IPP, apresentada no histograma da Figura \ref{fig:ipp_
 
 Com base nesta análise, os valores do IPP podem ser interpretados em faixas de desempenho: escores baixos (0.0 a 0.3) sugerem uma profissionalização limitada; valores médios (0.3 a 0.7) indicam um perfil moderado e equilibrado; e pontuações altas (0.7 a 1.0) caracterizam parlamentares com uma carreira consolidada e alto engajamento institucional.
 
-% \input{IFS/validacao_e_aplicacao.tex}
+\subsubsection{Análise Fatorial Confirmatória}
+
+Para validar a estrutura teórica do IPP, conduziu-se uma Análise Fatorial Confirmatória (AFC) testando o modelo de dois fatores proposto: \textit{Especiallização Legislativo} (Mesa Diretora, Colégio de Líderes, Presidência de Comissão e Relatoria) e \textit{Carreira Parlamentar} (Tempo de Atuação e Fidelidade ao Congresso).
+
+O modelo foi especificado conforme a seguinte estrutura:
+\begin{align*}
+\text{Especialização} &=\sim \text{Mesa} + \text{PosLider} + \text{PresComissao} + \text{Relatoria} \\
+\text{Carreira} &=\sim \text{TempoAtuacao} + \text{FidGerais}
+\end{align*}
+
+Os resultados da AFC indicam um ajuste adequado do modelo aos dados. As cargas fatoriais padronizadas, apresentadas na Tabela \ref{tab:cfa_loadings}, demonstram que todas as variáveis observadas carregam significativamente em seus respectivos fatores latentes. Cargas fatoriais acima de 0.30 são consideradas aceitáveis na literatura, enquanto valores superiores a 0.50 indicam uma associação substancial entre o indicador e o construto latente.
+
+\begin{table}[h!]
+\centering
+\caption{Cargas Fatoriais Padronizadas da AFC}
+\label{tab:cfa_loadings}
+\begin{tabular}{llcc}
+\hline
+\textbf{Fator} & \textbf{Variável} & \textbf{Carga Padronizada} & \textbf{p-valor} \\
+\hline
+\multirow{4}{*}{Especialização} & Mesa Diretora & 0.24 & $<$0.001 \\
+& Colégio de Líderes & 0.39 & $<$0.001 \\
+& Presidência de Comissão & 0.53 & $<$0.001 \\
+& Relatoria & 0.77 & $<$0.001 \\
+\hline
+\multirow{3}{*}{Carreira} & Tempo de Atuação & 0.61 & $<$0.001 \\
+& Fidelidade Gerais & 0.97 & $<$0.001 \\
+\hline
+\end{tabular}
+\end{table}
+
+Os índices de ajuste do modelo corroboram a validade da estrutura bifatorial. O CFI (\textit{Comparative Fit Index}) e o TLI (\textit{Tucker-Lewis Index}) apresentam valores adequados - ambos acima de 0.99 -, enquanto o RMSEA (\textit{Root Mean Square Error of Approximation}) indica um erro de aproximação dentro dos limites aceitáveis (valor obtido foi menor que 0.04). Estes resultados confirmam que a divisão teórica do IPP em duas dimensões --- especialização legislativa e carreira parlamentar --- é empiricamente sustentada pelos dados.
+
+\subsubsection{Análise de Sensibilidade dos Pesos}
+
+Uma questão central na construção de índices compostos refere-se à escolha dos pesos atribuídos a cada variável. Para avaliar a robustez do IPP frente a diferentes esquemas de ponderação, conduziu-se uma análise de sensibilidade comparando três abordagens distintas:
+
+\begin{enumerate}
+    \item \textbf{Pesos iguais}: todas as variáveis recebem peso unitário ($w_j = 1$);
+    \item \textbf{Pesos teóricos}: derivados da importância relativa atribuída por especialistas (5, 4, 3, 2, 1, 1);
+    \item \textbf{Pesos empíricos}: obtidos a partir das cargas fatoriais da análise fatorial exploratória.
+\end{enumerate}
+
+A Tabela \ref{tab:sensitivity} apresenta as correlações de Pearson e Spearman entre os rankings gerados por cada esquema de ponderação. A correlação de Spearman é particularmente relevante, pois avalia a concordância ordinal entre os rankings, independentemente de transformações monotônicas nos valores do índice.
+
+\begin{table}[h!]   
+\centering
+\caption{Correlações entre Esquemas de Ponderação do IPP}
+\label{tab:sensitivity}
+\begin{tabular}{lccc}
+\hline
+\textbf{Comparação} & \textbf{Pearson ($r$)} & \textbf{Spearman ($\rho$)} \\
+\hline
+Pesos Iguais vs. Teóricos & 0.94 & 0.93 \\
+Pesos Iguais vs. Fatoriais & 0.96 & 0.95 \\
+Pesos Teóricos vs. Fatoriais & 0.98 & 0.97 \\
+\hline
+\end{tabular}
+\end{table}
+
+Os resultados indicam correlações muito elevadas ($\rho > 0.90$) entre todos os pares de esquemas de ponderação, sugerindo que o ranking dos parlamentares é estável independentemente da escolha dos pesos. Esta robustez é particularmente importante para a validade do índice, pois demonstra que as conclusões derivadas do IPP não são artefatos de uma escolha arbitrária de ponderação.
+
+A Figura \ref{fig:sensitivity_scatter} ilustra graficamente a concordância entre os diferentes esquemas. A proximidade dos pontos à diagonal principal ($y = x$) confirma a consistência dos rankings. Análises complementares de sobreposição dos \textit{top-N} parlamentares revelam que aproximadamente 85\% dos 100 parlamentares mais bem classificados permanecem no topo independentemente do esquema de pesos utilizado.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.95\textwidth]{figures/ipp_sensitivity_scatter.png}
+    \caption{Comparação dos valores do IPP sob diferentes esquemas de ponderação. A alta correlação entre os pares indica robustez do índice à escolha dos pesos.}
+    \label{fig:sensitivity_scatter}
+\end{figure}
