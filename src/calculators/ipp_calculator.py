@@ -9,22 +9,22 @@ class IPPCalculator(BaseCalculator):
         self.weights = {
             "tempo_atuacao_dias_cum_ln_norm": 1,
             "relatorias_ln_cum_norm": 2,
-            "pos_lider_cum_norm": 4,
+            # "pos_lider_cum_norm": 4,
             "pos_comiss_pr_cum_norm": 3,
-            "mesa_cum_norm": 5,
-            "mandatos_cum_norm": 1,
+            # "mesa_cum_norm": 5,
+            # "mandatos_cum_norm": 1,
             "fid_gerais_cum_norm": 1,
         }
 
         self.dimensoes = {
             "dim_comprometimento": [
-                "mesa_cum_norm_w",
-                "pos_lider_cum_norm_w",
+                # "mesa_cum_norm_w",
+                # "pos_lider_cum_norm_w",
                 "pos_comiss_pr_cum_norm_w",
                 "relatorias_ln_cum_norm",
             ],
             "dim_carreira": [
-                "mandatos_cum_norm_w",
+                # "mandatos_cum_norm_w",
                 "fid_gerais_cum_norm_w",
                 "tempo_atuacao_dias_cum_ln_norm_w",
             ],
