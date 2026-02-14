@@ -86,9 +86,9 @@ A Tabela \ref{tab:sensitivity} apresenta as correlações de Pearson e Spearman 
 \hline
 \textbf{Comparação} & \textbf{Pearson ($r$)} & \textbf{Spearman ($\rho$)} \\
 \hline
-Pesos Iguais vs. Teóricos & 0.94 & 0.93 \\
-Pesos Iguais vs. Fatoriais & 0.96 & 0.95 \\
-Pesos Teóricos vs. Fatoriais & 0.98 & 0.97 \\
+Pesos Iguais vs. Teóricos & 0.998 & 0.998 \\
+Pesos Iguais vs. Fatoriais & 0.996 & 0.996 \\
+Pesos Teóricos vs. Fatoriais & 0.991 & 0.991 \\
 \hline
 \end{tabular}
 \end{table}
@@ -103,3 +103,19 @@ A Figura \ref{fig:sensitivity_scatter} ilustra graficamente a concordância entr
     \caption{Comparação dos valores do IPP sob diferentes esquemas de ponderação. A alta correlação entre os pares indica robustez do índice à escolha dos pesos.}
     \label{fig:sensitivity_scatter}
 \end{figure}
+
+Outra etapa crucial de validação consiste na confrontação dos resultados com eventos factuais e expectativas teóricas consolidadas na literatura especializada. Se o IPP é um indicador robusto da profissionalização parlamentar, suas flutuações devem refletir as dinâmicas políticas reais observadas no período. Uma hipótese central, fundamentada na literatura sobre recrutamento e renovação política no Brasil, postula que o nível médio de profissionalização deveria sofrer um declínio na 56ª Legislatura (2019-2023). Essa expectativa decorre da taxa de renovação histórica registrada nas eleições de 2018, a maior em mais de duas décadas (Silveira e Miranda, 2018; Campos, 2018), que resultou no ingresso de um expressivo contingente de novatos, muitos dos quais "outsiders" políticos sem trajetória prévia na Câmara ou em cargos eletivos.
+
+A Figura \ref{fig:ipp_quartis_e_extremos} apresenta a evolução das medidas de tendência central e dispersão (mínimo, quartis e máximo) do IPP ao longo das legislaturas. 
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.95\textwidth]{figures/ipp_quartis_e_extremos.png}
+    \caption{Evolução dos quartis e valores extremos do IPP por legislatura.}
+    \label{fig:ipp_quartis_e_extremos}
+\end{figure}
+
+A análise visual confirma aderência à expectativa teórica. Observa-se uma trajetória ascendente da mediana e do terceiro quartil até a 55ª Legislatura (2015-2019), momento em que o índice atinge seu pico de maturação, com a mediana em 0.38 e o valor máximo chegando a 0.92. Contudo, a transição para a 56ª Legislatura marca um ponto de inflexão. Há uma retração generalizada nos indicadores: a mediana recua para 0.34, retornando ao patamar observado no início da série (52ª Legislatura), e o terceiro quartil cai de 0.48 para 0.46. Essa tendência de queda se acentua na 57ª Legislatura, onde a mediana atinge o menor valor da série (0.31) e o primeiro quartil recua para 0.23. O comportamento dos valores extremos superiores também acompanha esse movimento, com o máximo caindo de 0.92 na 55ª para 0.85 na 56ª. Esses dados corroboram a hipótese de que o choque de renovação de 2018 impactou negativamente o acúmulo de capital político e a especialização medida pelo índice, validando a sensibilidade do IPP às alterações na composição da Casa.
+
+
+
