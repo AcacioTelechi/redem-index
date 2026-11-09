@@ -148,7 +148,7 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.9em;back
 
 <section>
   <h2>6. Evolução ao longo das legislaturas</h2>
-  <p class="prose">O IPP médio cresce da 48ª à 55ª legislatura e recua nas duas últimas, acompanhando a renovação da Casa. O índice de ajuste do IRD sobe continuamente desde a 52ª: a Câmara se aproxima da população em gênero e raça, embora ainda com 18% de mulheres e 28% de não-brancos na 57ª.</p>
+  <p class="prose">O IPP médio cresce da 48ª à 55ª legislatura e recua nas duas últimas, acompanhando a renovação da Casa. O índice de ajuste do IRD (1 = Câmara com a mesma composição da população) sobe continuamente, de 0,48 na 52ª para 0,63 na 57ª: a Câmara se aproxima da população em gênero e raça, embora ainda com 18% de mulheres e 28% de não-brancos na 57ª.</p>
   <div class="grid c3">
     <div class="card"><div class="head"><h3>IPP médio por legislatura</h3><button class="btn" data-tv="t-ipp">Tabela</button></div><div class="chart" id="t-ipp"></div><div class="tablewrap tv" id="t-ipp-tv"></div></div>
     <div class="card"><div class="head"><h3>Índice de ajuste do IRD</h3><button class="btn" data-tv="t-ird">Tabela</button></div><p class="sub">Maior = mais próximo da população</p><div class="chart" id="t-ird"></div><div class="tablewrap tv" id="t-ird-tv"></div></div>
@@ -173,7 +173,7 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.9em;back
     <li><b>CO2:</b> 587 de 587 deputados casados, atribuídos à 56ª legislatura.</li>
     <li><b>IPIPE:</b> 232 de 232 casados. O valor normalizado <code>IPIPE</code> existe só para 113 (status <code>SCORE_COMPLETO</code>); por isso o relatório usa o <code>score_exposicao_ipipe</code>, disponível para 223.</li>
     <li><b>IFS:</b> 598 perfis de Instagram; 517 deputados casados. Os 81 restantes são senadores, sem id na Câmara. Um mesmo deputado com dois perfis teve as postagens somadas. A tabela também traz a variante da planilha original (1 − soma dos scores ÷ postagens), que correlaciona 0,998 com a fórmula documentada.</li>
-    <li><b>IRD:</b> o valor por deputado é o peso de ponderação; o índice propriamente dito é por legislatura. Os dois estão na tabela.</li>
+    <li><b>IRD:</b> o valor por deputado é o peso de ponderação; o índice de ajuste é por legislatura e foi recalculado a partir dos pesos com a fórmula documentada, 1 − Σ|w − 1| / (2(N − 1)), que fica em [0, 1]. O arquivo <code>df_ird_agg_legislatura.csv</code> usava a versão antiga (1 − média|w − 1|), que resulta em valores negativos.</li>
     <li>As correlações usam Spearman por causa das caudas longas de IRD, IPIPE e CO2.</li>
   </ul>
   </div>
@@ -286,7 +286,7 @@ function lineChart(id,series,opts){chart(id,(c,W)=>{const L=46,R=14,T=16,B=30,h=
    if(i===pts.length-1)txt(xs(p.leg)-8,ys(p.v)-9,opts.pct?pct(p.v):fmt(p.v,2),{class:'lbl','font-size':11,'text-anchor':'end'},s);});});
  table(id,[{l:'Legislatura',k:'leg'},...series.map(sr=>({l:sr.name,k:sr.name,num:1}))],D.time.map(t=>Object.assign({leg:t.leg+'ª'},Object.fromEntries(series.map(sr=>{const p=sr.pts.find(q=>q.leg===t.leg);return [sr.name,p&&p.v!=null?(opts.pct?pct(p.v):fmt(p.v,3)):'–'];})))));});}
 lineChart('t-ipp',[{name:'IPP médio',color:cssVar('--accent'),pts:D.time.map(t=>({leg:t.leg,v:t.ipp_mean}))}],{label:'IPP médio por legislatura',zero:true});
-lineChart('t-ird',[{name:'Índice de ajuste',color:cssVar('--accent'),pts:D.time.map(t=>({leg:t.leg,v:t.ird}))}],{label:'Índice de ajuste do IRD por legislatura'});
+lineChart('t-ird',[{name:'Índice de ajuste',color:cssVar('--accent'),pts:D.time.map(t=>({leg:t.leg,v:t.ird}))}],{label:'Índice de ajuste do IRD por legislatura',zero:true});
 lineChart('t-comp',[{name:'Mulheres',color:cssVar('--accent'),pts:D.time.map(t=>({leg:t.leg,v:t.pF}))},{name:'Não-brancos',color:cssVar('--s2'),pts:D.time.map(t=>({leg:t.leg,v:t.pNB}))}],{label:'Participação de mulheres e não-brancos por legislatura',pct:true,zero:true});
 
 // ---- rankings

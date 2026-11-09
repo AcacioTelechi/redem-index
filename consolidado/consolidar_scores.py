@@ -120,9 +120,15 @@ def load_ird() -> pd.DataFrame:
     ird = pd.read_csv(SCORES / "IRD" / "df_equality_index.csv").rename(
         columns={"parl_id": "id_camara", "weights": "ird_peso"}
     )
-    agg = pd.read_csv(SCORES / "IRD" / "df_ird_agg_legislatura.csv").rename(
-        columns={"adjustment_index": "ird_ajuste_legislatura"}
-    )[["legislatura", "ird_ajuste_legislatura"]]
+    # Índice de ajuste por legislatura, recalculado dos pesos com a fórmula documentada
+    # (docs/IRD/ird.tex): I = 1 - sum|w-1| / (2(N-1)), em [0, 1]. O valor que está em
+    # df_ird_agg_legislatura.csv usa 1 - media|w-1|, versão antiga que fica negativa.
+    agg = (
+        ird.groupby("legislatura")["ird_peso"]
+        .apply(lambda w: 1 - (w - 1).abs().sum() / (2 * (len(w) - 1)))
+        .rename("ird_ajuste_legislatura")
+        .reset_index()
+    )
     return ird.merge(agg, on="legislatura", how="left")
 
 
