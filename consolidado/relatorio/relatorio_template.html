@@ -1,0 +1,307 @@
+<title>Scores Consolidados REDEM</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&display=swap">
+<style>
+/* Layout: a single reading column (72ch) for prose, charts break out to 1080px; cards only around charts. */
+:root{
+  --bg:#f3f5f8; --surface:#fcfcfb; --fg:#0b0b0b; --fg2:#52514e; --muted:#898781;
+  --grid:#e1e0d9; --axis:#c3c2b7; --ring:rgba(11,11,11,.10);
+  --accent:#2a78d6; --s2:#eb6834; --s3:#1baf7a;
+  --seq1:#cde2fb; --seq2:#9ec5f4; --seq3:#5598e7; --seq4:#256abf; --seq5:#0d366b;
+  --div-neg:#2a78d6; --div-mid:#f0efec; --div-pos:#e34948;
+  --tip-bg:#0b0b0b; --tip-fg:#fcfcfb;
+  --display:"Archivo",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --body:"Source Sans 3",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --data:system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#0d0d0d; --surface:#1a1a19; --fg:#f0efec; --fg2:#c3c2b7; --muted:#898781;
+  --grid:#2c2c2a; --axis:#383835; --ring:rgba(255,255,255,.10);
+  --accent:#3987e5; --s2:#d95926; --s3:#199e70;
+  --seq1:#184f95; --seq2:#1c5cab; --seq3:#3987e5; --seq4:#86b6ef; --seq5:#cde2fb;
+  --div-neg:#3987e5; --div-mid:#383835; --div-pos:#e66767;
+  --tip-bg:#f0efec; --tip-fg:#0b0b0b; color-scheme:dark } }
+:root[data-theme="dark"]{
+  --bg:#0d0d0d; --surface:#1a1a19; --fg:#f0efec; --fg2:#c3c2b7; --muted:#898781;
+  --grid:#2c2c2a; --axis:#383835; --ring:rgba(255,255,255,.10);
+  --accent:#3987e5; --s2:#d95926; --s3:#199e70;
+  --seq1:#184f95; --seq2:#1c5cab; --seq3:#3987e5; --seq4:#86b6ef; --seq5:#cde2fb;
+  --div-neg:#3987e5; --div-mid:#383835; --div-pos:#e66767;
+  --tip-bg:#f0efec; --tip-fg:#0b0b0b; color-scheme:dark }
+
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:17px;line-height:1.55;
+  padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 64px}
+*{box-sizing:border-box}
+.wrap{max-width:1080px;margin:0 auto}
+.prose{max-width:72ch}
+h1,h2,h3{font-family:var(--display);text-wrap:balance;line-height:1.15;margin:0}
+h1{font-size:clamp(30px,4.5vw,44px);font-weight:700;letter-spacing:-.01em}
+h2{font-size:clamp(22px,3vw,28px);font-weight:600;margin-top:56px;padding-top:24px;border-top:1px solid var(--grid)}
+h3{font-size:17px;font-weight:600}
+p{margin:12px 0}
+.eyebrow{font-family:var(--display);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--fg2);font-weight:600}
+header{padding-block:48px 8px}
+header .lede{font-size:19px;color:var(--fg2);max-width:62ch}
+.tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:28px 0 8px}
+.tile{background:var(--surface);border:1px solid var(--ring);border-radius:8px;padding:14px 16px;min-width:0}
+.tile .lab{font-size:13px;color:var(--fg2)}
+.tile .val{font-family:var(--data);font-weight:600;font-size:30px;line-height:1.1;margin-top:4px}
+.tile.hero .val{font-size:48px}
+.tile .sub{font-size:13px;color:var(--muted);margin-top:4px}
+.grid{display:grid;gap:16px;margin-top:16px}
+.grid.c2{grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr))}
+.grid.c3{grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr))}
+.card{background:var(--surface);border:1px solid var(--ring);border-radius:8px;padding:16px;min-width:0;display:flex;flex-direction:column;gap:8px}
+.card .head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
+.card .sub{font-size:14px;color:var(--fg2);margin:0}
+.card .note{font-size:13px;color:var(--muted);margin:0}
+.chart{position:relative;min-width:0}
+.chart svg{display:block;width:100%;height:auto;font-family:var(--data);font-size:12px;overflow:visible}
+.chart text{fill:var(--fg2)}
+.chart .tick{fill:var(--muted);font-variant-numeric:tabular-nums}
+.chart .gl{stroke:var(--grid);stroke-width:1}
+.chart .ax{stroke:var(--axis);stroke-width:1}
+.chart .lbl{fill:var(--fg);font-weight:600}
+.btn{font:600 12px var(--display);letter-spacing:.04em;text-transform:uppercase;color:var(--fg2);background:none;border:1px solid var(--ring);border-radius:6px;padding:4px 10px;cursor:pointer}
+.btn:hover{color:var(--fg);border-color:var(--axis)}
+.btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+.btn[aria-pressed="true"]{background:var(--accent);color:#fff;border-color:var(--accent)}
+.seg{display:flex;gap:6px;flex-wrap:wrap;margin:16px 0 8px}
+table{border-collapse:collapse;width:100%;font-size:14px;font-family:var(--data)}
+th,td{padding:6px 8px;text-align:left;border-bottom:1px solid var(--grid);vertical-align:top}
+th{font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--fg2);font-weight:600}
+td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+.tablewrap{overflow-x:auto;min-width:0}
+.tv{display:none}.tv.on{display:block}
+.legend{display:flex;gap:16px;flex-wrap:wrap;font-size:13px;color:var(--fg2)}
+.legend span{display:inline-flex;align-items:center;gap:6px}
+.legend i{width:14px;height:3px;border-radius:2px;display:inline-block}
+.scale{display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted)}
+.scale .bar{height:8px;flex:1;max-width:160px;border-radius:4px}
+#tip{position:fixed;pointer-events:none;background:var(--tip-bg);color:var(--tip-fg);font:13px/1.4 var(--data);padding:6px 9px;border-radius:6px;max-width:260px;z-index:20;opacity:0;transition:opacity .08s}
+#tip b{font-weight:600}
+dl.defs{display:grid;grid-template-columns:max-content 1fr;gap:6px 16px;margin:12px 0;font-size:15px}
+dl.defs dt{font-family:var(--display);font-weight:600}
+dl.defs dd{margin:0;color:var(--fg2)}
+@media (max-width:520px){dl.defs{grid-template-columns:1fr}dl.defs dd{margin-bottom:6px}}
+ul.flat{padding-left:20px;margin:8px 0}
+.rk{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:16px}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.9em;background:var(--surface);border:1px solid var(--ring);padding:0 4px;border-radius:4px}
+@media (prefers-reduced-motion:reduce){#tip{transition:none}}
+</style>
+
+<div class="wrap">
+<header>
+  <div class="eyebrow">REDEM · Câmara dos Deputados · legislaturas 48ª a 57ª</div>
+  <h1 style="margin-top:8px">Scores Consolidados REDEM</h1>
+  <p class="lede">Cinco índices sobre deputados federais — profissionalização (IPP), representação descritiva (IRD), emissões na atividade legislativa (CO2-Index), exposição a processos eleitorais (IPIPE) e desinformação (IFS) — reunidos em uma única tabela por parlamentar e legislatura.</p>
+  <div class="tiles" id="tiles"></div>
+  <p class="note" style="font-size:13px;color:var(--muted)">Fonte: <code>consolidado/scores_consolidados.csv</code>, gerado por <code>consolidar_scores.py</code> em 9 nov 2026.</p>
+</header>
+
+<section>
+  <h2>1. O que cada índice mede</h2>
+  <div class="prose">
+  <dl class="defs">
+    <dt>IPP</dt><dd>Índice de Profissionalização do Parlamentar (0 a 1). Combina especialização legislativa (Mesa, Colégio de Líderes, presidência de comissão, relatorias) e carreira (tempo de atuação, fidelidade ao Congresso). Maior = mais profissionalizado.</dd>
+    <dt>IRD</dt><dd>Índice de Representação Descritiva. O valor por deputado é o peso individual que corrige a sub ou super-representação do seu perfil de gênero e raça frente à população (peso 1 = perfil já proporcional). Por legislatura, o índice de ajuste resume o quanto a Câmara se afasta da população.</dd>
+    <dt>CO2-Index</dt><dd>Emissões líquidas de CO2 associadas a votações, discursos e projetos do deputado, cada variável em z-score. Positivo = perfil emissor; negativo = mitigador.</dd>
+    <dt>IPIPE</dt><dd>Exposição a processos eleitorais (TSE), ponderada por gravidade e imputação e com desconto por recorrência. Maior = mais exposição.</dd>
+    <dt>IFS</dt><dd>Índice de Falar Sincero: 1 − (postagens classificadas como desinformação ÷ total de postagens) no Instagram em 2023. Maior = melhor.</dd>
+  </dl>
+  </div>
+</section>
+
+<section>
+  <h2>2. Cobertura por legislatura</h2>
+  <p class="prose">Cada índice cobre um recorte diferente. IPP e IRD foram calculados para toda a série histórica disponível; CO2 e IPIPE referem-se à 56ª legislatura; o IFS usa postagens de 2023, portanto a 57ª. Nenhuma legislatura tem os cinco índices ao mesmo tempo.</p>
+  <div class="card">
+    <div class="head"><h3>Deputados com valor em cada índice, por legislatura</h3><button class="btn" data-tv="cov">Tabela</button></div>
+    <div class="chart" id="cov"></div>
+    <div class="scale"><span>0%</span><div class="bar" style="background:linear-gradient(90deg,var(--seq1),var(--seq5))"></div><span>100% dos deputados da legislatura</span></div>
+    <div class="tablewrap tv" id="cov-tv"></div>
+  </div>
+</section>
+
+<section>
+  <h2>3. Distribuição de cada índice</h2>
+  <p class="prose">Histogramas de todos os valores disponíveis. A linha vertical marca a mediana. IRD e IPIPE têm cauda longa à direita: poucos deputados com peso ou exposição muito altos. O IFS concentra-se perto de 1, já que a maioria dos perfis tem poucas postagens classificadas como desinformação.</p>
+  <div class="grid c2" id="hists"></div>
+</section>
+
+<section>
+  <h2>4. Os índices se relacionam?</h2>
+  <p class="prose">Correlação de Spearman entre os índices nas legislaturas em que coexistem. Todas as correlações são fracas (|ρ| &lt; 0,25): os índices capturam dimensões distintas do mandato. A maior em módulo é IPP × IRD na 57ª (−0,20): deputados de perfis sub-representados tendem a ser um pouco menos profissionalizados, o que é coerente com carreiras mais recentes.</p>
+  <div class="grid c2">
+    <div class="card"><div class="head"><h3>56ª legislatura</h3><button class="btn" data-tv="c56">Tabela</button></div><p class="sub">IPP, IRD, CO2 e IPIPE · n entre 213 e 613 pares</p><div class="chart" id="c56"></div><div class="tablewrap tv" id="c56-tv"></div></div>
+    <div class="card"><div class="head"><h3>57ª legislatura</h3><button class="btn" data-tv="c57">Tabela</button></div><p class="sub">IPP, IRD e IFS · n entre 517 e 595 pares</p><div class="chart" id="c57"></div><div class="tablewrap tv" id="c57-tv"></div></div>
+  </div>
+  <div class="scale" style="margin-top:10px"><span>−1</span><div class="bar" style="background:linear-gradient(90deg,var(--div-neg),var(--div-mid),var(--div-pos))"></div><span>+1</span><span style="margin-left:8px">ρ de Spearman</span></div>
+</section>
+
+<section>
+  <h2>5. Médias por partido</h2>
+  <p class="prose">Média do índice entre os deputados de cada partido na legislatura escolhida. Partidos com poucos deputados foram omitidos (mínimo indicado em cada gráfico). As barras são ordenadas pelo valor; passe o mouse para ver o número de deputados e a mediana. Só aparecem os índices com dados na legislatura.</p>
+  <div class="seg" id="pt-leg" role="tablist" aria-label="Legislatura"><span class="eyebrow" style="align-self:center;margin-right:4px">Legislatura</span></div>
+  <div class="grid c2" id="parties"></div>
+</section>
+
+<section>
+  <h2>6. Evolução ao longo das legislaturas</h2>
+  <p class="prose">O IPP médio cresce da 48ª à 55ª legislatura e recua nas duas últimas, acompanhando a renovação da Casa. O índice de ajuste do IRD sobe continuamente desde a 52ª: a Câmara se aproxima da população em gênero e raça, embora ainda com 18% de mulheres e 28% de não-brancos na 57ª.</p>
+  <div class="grid c3">
+    <div class="card"><div class="head"><h3>IPP médio por legislatura</h3><button class="btn" data-tv="t-ipp">Tabela</button></div><div class="chart" id="t-ipp"></div><div class="tablewrap tv" id="t-ipp-tv"></div></div>
+    <div class="card"><div class="head"><h3>Índice de ajuste do IRD</h3><button class="btn" data-tv="t-ird">Tabela</button></div><p class="sub">Maior = mais próximo da população</p><div class="chart" id="t-ird"></div><div class="tablewrap tv" id="t-ird-tv"></div></div>
+    <div class="card"><div class="head"><h3>Composição da Câmara</h3><button class="btn" data-tv="t-comp">Tabela</button></div><div class="legend"><span><i style="background:var(--accent)"></i>Mulheres</span><span><i style="background:var(--s2)"></i>Não-brancos</span></div><div class="chart" id="t-comp"></div><div class="tablewrap tv" id="t-comp-tv"></div></div>
+  </div>
+</section>
+
+<section>
+  <h2>7. Extremos de cada índice</h2>
+  <p class="prose">Os dez maiores e os dez menores valores de cada índice na legislatura escolhida. Índices sem dados na legislatura aparecem desativados.</p>
+  <div class="seg" id="rk-leg" role="tablist" aria-label="Legislatura"><span class="eyebrow" style="align-self:center;margin-right:4px">Legislatura</span></div>
+  <div class="seg" id="rk-seg" role="tablist" aria-label="Índice" style="margin-top:0"><span class="eyebrow" style="align-self:center;margin-right:4px">Índice</span></div>
+  <p class="note" id="rk-note" style="font-size:13px;color:var(--muted);margin:0 0 8px"></p>
+  <div class="rk" id="rk"></div>
+</section>
+
+<section>
+  <h2>8. Método e limitações</h2>
+  <div class="prose">
+  <p>A base é <code>data/df_parlamentares_por_legislatura.csv</code>: uma linha por id da Câmara e legislatura. IPP e IRD já traziam esse id. CO2, IPIPE e IFS foram casados por nome normalizado (sem acentos, caixa alta) contra todas as variantes de nome registradas pela Câmara, depois contra o nome civil; 17 casos restantes foram resolvidos à mão em <code>depara_nomes.csv</code>.</p>
+  <ul class="flat">
+    <li><b>CO2:</b> 587 de 587 deputados casados, atribuídos à 56ª legislatura.</li>
+    <li><b>IPIPE:</b> 232 de 232 casados. O valor normalizado <code>IPIPE</code> existe só para 113 (status <code>SCORE_COMPLETO</code>); por isso o relatório usa o <code>score_exposicao_ipipe</code>, disponível para 223.</li>
+    <li><b>IFS:</b> 598 perfis de Instagram; 517 deputados casados. Os 81 restantes são senadores, sem id na Câmara. Um mesmo deputado com dois perfis teve as postagens somadas. A tabela também traz a variante da planilha original (1 − soma dos scores ÷ postagens), que correlaciona 0,998 com a fórmula documentada.</li>
+    <li><b>IRD:</b> o valor por deputado é o peso de ponderação; o índice propriamente dito é por legislatura. Os dois estão na tabela.</li>
+    <li>As correlações usam Spearman por causa das caudas longas de IRD, IPIPE e CO2.</li>
+  </ul>
+  </div>
+</section>
+</div>
+<div id="tip" role="tooltip"></div>
+
+<script id="data" type="application/json">__DATA__</script>
+<script>
+(function(){
+const D=JSON.parse(document.getElementById('data').textContent);
+const IDX=[['ipp','IPP'],['ird','IRD (peso)'],['co2','CO2-Index'],['ipipe','IPIPE (exposição)'],['ifs','IFS']];
+const NAME=Object.fromEntries(IDX);
+const fmtN=n=>n.toLocaleString('pt-BR');
+const fmt=(v,d=2)=>v==null?'–':v.toLocaleString('pt-BR',{minimumFractionDigits:d,maximumFractionDigits:d});
+const pct=v=>(v*100).toLocaleString('pt-BR',{maximumFractionDigits:1})+'%';
+const SVGNS='http://www.w3.org/2000/svg';
+function el(tag,attrs,parent){const e=document.createElementNS(SVGNS,tag);for(const k in attrs)e.setAttribute(k,attrs[k]);if(parent)parent.appendChild(e);return e;}
+function txt(x,y,s,attrs,parent){const t=el('text',Object.assign({x,y},attrs),parent);t.textContent=s;return t;}
+function cssVar(n){return getComputedStyle(document.documentElement).getPropertyValue(n).trim();}
+function ticks(min,max,n){const span=max-min,raw=span/n,p=Math.pow(10,Math.floor(Math.log10(raw)));const c=[1,2,2.5,5,10].map(m=>m*p).find(s=>span/s<=n)||p*10;const out=[];for(let v=Math.ceil(min/c)*c;v<=max+1e-9;v+=c)out.push(+v.toFixed(6));return out;}
+// tooltip
+const tip=document.getElementById('tip');
+function showTip(html,ev){tip.innerHTML=html;tip.style.opacity=1;moveTip(ev);}
+function moveTip(ev){const r=tip.getBoundingClientRect();let x=ev.clientX+14,y=ev.clientY+14;if(x+r.width>innerWidth-8)x=ev.clientX-r.width-14;if(y+r.height>innerHeight-8)y=ev.clientY-r.height-14;tip.style.left=x+'px';tip.style.top=y+'px';}
+function hideTip(){tip.style.opacity=0;}
+function hover(node,html){node.addEventListener('mouseenter',e=>showTip(html,e));node.addEventListener('mousemove',moveTip);node.addEventListener('mouseleave',hideTip);node.setAttribute('tabindex','0');node.addEventListener('focus',()=>{const r=node.getBoundingClientRect();showTip(html,{clientX:r.left+r.width/2,clientY:r.top+r.height/2});});node.addEventListener('blur',hideTip);}
+// color helpers
+function hex2rgb(h){h=h.replace('#','');if(h.length===3)h=h.split('').map(c=>c+c).join('');return [parseInt(h.slice(0,2),16),parseInt(h.slice(2,4),16),parseInt(h.slice(4,6),16)];}
+function mix(a,b,t){const A=hex2rgb(a),B=hex2rgb(b);return `rgb(${A.map((v,i)=>Math.round(v+(B[i]-v)*t)).join(',')})`;}
+function seq(t){const s=['--seq1','--seq2','--seq3','--seq4','--seq5'].map(cssVar);const p=Math.min(3.999,Math.max(0,t*4)),i=Math.floor(p);return mix(s[i],s[i+1],p-i);}
+function div(r){const neg=cssVar('--div-neg'),mid=cssVar('--div-mid'),pos=cssVar('--div-pos');return r<0?mix(mid,neg,Math.min(1,-r)):mix(mid,pos,Math.min(1,r));}
+// table view
+function table(id,cols,rows){const w=document.getElementById(id+'-tv');w.innerHTML='';const t=document.createElement('table');t.innerHTML='<thead><tr>'+cols.map(c=>`<th class="${c.num?'num':''}">${c.l}</th>`).join('')+'</tr></thead><tbody>'+rows.map(r=>'<tr>'+cols.map(c=>`<td class="${c.num?'num':''}">${r[c.k]==null?'–':r[c.k]}</td>`).join('')+'</tr>').join('')+'</tbody>';w.appendChild(t);}
+document.addEventListener('click',e=>{const b=e.target.closest('[data-tv]');if(!b)return;const w=document.getElementById(b.dataset.tv+'-tv');const on=!w.classList.contains('on');w.classList.toggle('on',on);b.setAttribute('aria-pressed',on);b.textContent=on?'Gráfico':'Tabela';});
+
+// responsive renderer
+// Each chart re-renders whenever its container's width changes (grid reflow after
+// sibling cards are added, window resize, table toggles), so it is never drawn at a stale width.
+const ro=typeof ResizeObserver!=='undefined'?new ResizeObserver(entries=>{for(const e of entries){const r=e.target._render;if(r)r();}}):null;
+function chart(id,fn){const c=document.getElementById(id);let last=-1;const r=()=>{if(!c.isConnected){if(ro)ro.unobserve(c);return;}const W=c.clientWidth||600;if(W===last)return;last=W;c.innerHTML='';fn(c,W);};c._render=r;r();if(ro)ro.observe(c);}
+if(!ro){let rt;addEventListener('resize',()=>{clearTimeout(rt);rt=setTimeout(()=>document.querySelectorAll('.chart').forEach(c=>c._render&&c._render()),120);});}
+
+// ---- tiles
+(function(){const m=D.meta,t=document.getElementById('tiles');const tiles=[
+ ['Parlamentar-legislaturas',fmtN(m.rows),'linhas na tabela final',true],
+ ['Deputados distintos',fmtN(m.deputados),'48ª a 57ª legislatura'],
+ ['Índices',IDX.length,'IPP · IRD · CO2 · IPIPE · IFS'],
+ ['Casamento CO2 e IPIPE','100%',`${m.co2} e ${m.ipipe} deputados`],
+ ['Casamento IFS',`${m.ifs_matched} / ${m.ifs_profiles}`,`${m.ifs_senators} perfis são de senadores`]];
+ t.innerHTML=tiles.map(([l,v,s,h])=>`<div class="tile${h?' hero':''}"><div class="lab">${l}</div><div class="val">${v}</div><div class="sub">${s}</div></div>`).join('');})();
+
+// ---- coverage heatmap
+chart('cov',(c,W)=>{const legs=D.coverage.legs,base=D.coverage.base;const cols=IDX;const L=64,T=28,cw=Math.max(44,Math.min(120,(W-L)/cols.length)),ch=30,R=10;const w=L+cw*cols.length+R,h=T+ch*legs.length+4;const s=el('svg',{viewBox:`0 0 ${w} ${h}`,width:w,height:h,role:'img','aria-label':'Mapa de calor: deputados com valor por índice e legislatura'},c);
+ cols.forEach(([k,n],j)=>txt(L+cw*j+cw/2,18,n.replace(/ \(.*\)/,''),{'text-anchor':'middle',class:'lbl','font-size':12},s));
+ legs.forEach((lg,i)=>{txt(L-8,T+ch*i+ch/2+4,lg+'ª',{'text-anchor':'end',class:'tick'},s);
+  cols.forEach(([k],j)=>{const v=D.coverage.idx[k][i],sh=v/base[i];const g=el('g',{},s);el('rect',{x:L+cw*j+1,y:T+ch*i+1,width:cw-2,height:ch-2,rx:3,fill:sh>0?seq(sh):'none',stroke:sh>0?'none':cssVar('--grid')},g);
+   if(v>0)txt(L+cw*j+cw/2,T+ch*i+ch/2+4,fmtN(v),{'text-anchor':'middle','font-size':12,fill:sh>0.55?'#fff':cssVar('--fg'),style:'font-variant-numeric:tabular-nums'},g);
+   hover(g,`<b>${n(k)} · ${lg}ª legislatura</b><br>${fmtN(v)} de ${fmtN(base[i])} deputados (${pct(sh)})`);});});
+ function n(k){return NAME[k];}
+ table('cov',[{l:'Legislatura',k:'leg'},{l:'Deputados',k:'base',num:1},...cols.map(([k,n])=>({l:n,k,num:1}))],legs.map((lg,i)=>Object.assign({leg:lg+'ª',base:fmtN(base[i])},Object.fromEntries(cols.map(([k])=>[k,fmtN(D.coverage.idx[k][i])])))));
+});
+
+// ---- histograms
+(function(){const host=document.getElementById('hists');IDX.forEach(([k,n])=>{const H=D.hist[k];const card=document.createElement('div');card.className='card';card.innerHTML=`<div class="head"><h3>${n}</h3><button class="btn" data-tv="h-${k}">Tabela</button></div><p class="sub">n = ${fmtN(H.n)} · mediana ${fmt(H.median,k==='ipipe'?0:3)} · média ${fmt(H.mean,k==='ipipe'?0:3)} · de ${fmt(H.min,k==='ipipe'?0:2)} a ${fmt(H.max,k==='ipipe'?0:2)}</p><div class="chart" id="h-${k}"></div>${H.note?`<p class="note">${H.note}</p>`:''}<div class="tablewrap tv" id="h-${k}-tv"></div>`;host.appendChild(card);
+ chart('h-'+k,(c,W)=>{const L=44,R=12,T=18,B=30,h=220,w=Math.max(280,W);const pw=w-L-R,ph=h-T-B;const s=el('svg',{viewBox:`0 0 ${w} ${h}`,width:w,height:h,role:'img','aria-label':'Histograma de '+n},c);
+  const e=H.edges,cnt=H.counts,x0=e[0],x1=e[e.length-1],xs=v=>L+(v-x0)/(x1-x0)*pw,ymax=Math.max(...cnt),yt=ticks(0,ymax,4),ymx=yt[yt.length-1]>=ymax?yt[yt.length-1]:ymax,ys=v=>T+ph-v/ymx*ph;
+  yt.forEach(v=>{el('line',{x1:L,x2:w-R,y1:ys(v),y2:ys(v),class:'gl'},s);txt(L-6,ys(v)+4,fmtN(v),{'text-anchor':'end',class:'tick'},s);});
+  el('line',{x1:L,x2:w-R,y1:ys(0),y2:ys(0),class:'ax'},s);
+  const xt=ticks(x0,x1,W<420?4:7);xt.forEach(v=>{if(v<x0-1e-9||v>x1+1e-9)return;txt(xs(v),h-B+16,fmt(v,Number.isInteger(v)?0:(x1-x0<2?2:1)),{'text-anchor':'middle',class:'tick'},s);});
+  const acc=cssVar('--accent');cnt.forEach((v,i)=>{const a=xs(e[i]),b=xs(e[i+1]),bw=Math.max(1,b-a-2);const g=el('g',{},s);el('rect',{x:a+1,y:ys(v),width:bw,height:Math.max(0,ys(0)-ys(v)),fill:v>0?acc:'none',rx:bw>6?3:1},g);el('rect',{x:a,y:T,width:b-a,height:ph,fill:'transparent'},g);hover(g,`<b>${fmt(e[i],k==='ipipe'?0:2)} a ${fmt(e[i+1],k==='ipipe'?0:2)}</b><br>${fmtN(v)} parlamentar-legislaturas (${pct(v/H.n)})`);});
+  const mx=xs(Math.min(x1,Math.max(x0,H.median)));el('line',{x1:mx,x2:mx,y1:T-4,y2:ys(0),stroke:cssVar('--fg'),'stroke-width':1.5},s);txt(mx+5,T+6,'mediana '+fmt(H.median,k==='ipipe'?0:2),{class:'lbl','font-size':11,'text-anchor':mx>w*0.7?'end':'start',x:mx>w*0.7?mx-5:mx+5},s);
+  table('h-'+k,[{l:'Intervalo',k:'r'},{l:'Parlamentar-legislaturas',k:'c',num:1},{l:'%',k:'p',num:1}],cnt.map((v,i)=>({r:`${fmt(e[i],2)} – ${fmt(e[i+1],2)}`,c:fmtN(v),p:pct(v/H.n)})));
+ });});})();
+
+// ---- correlation matrices
+function corrChart(id,C){chart(id,(c,W)=>{const n=C.labels.length,L=48,T=26,cw=Math.min(110,Math.max(56,(W-L-8)/n)),ch=cw*0.7;const w=L+cw*n+8,h=T+ch*n+4;const s=el('svg',{viewBox:`0 0 ${w} ${h}`,width:w,height:h,role:'img','aria-label':'Matriz de correlação'},c);
+ C.labels.forEach((l,j)=>txt(L+cw*j+cw/2,17,l,{'text-anchor':'middle',class:'lbl'},s));
+ C.labels.forEach((l,i)=>{txt(L-8,T+ch*i+ch/2+4,l,{'text-anchor':'end',class:'lbl'},s);C.labels.forEach((m,j)=>{const r=C.r[i][j];const g=el('g',{},s);const diag=i===j;el('rect',{x:L+cw*j+1,y:T+ch*i+1,width:cw-2,height:ch-2,rx:3,fill:diag?cssVar('--grid'):div(r)},g);if(!diag)txt(L+cw*j+cw/2,T+ch*i+ch/2+4,fmt(r,2).replace('-','−'),{'text-anchor':'middle',fill:Math.abs(r)>0.5?'#fff':cssVar('--fg'),style:'font-variant-numeric:tabular-nums'},g);if(!diag)hover(g,`<b>${l} × ${m}</b><br>ρ = ${fmt(r,3)} · n = ${fmtN(C.n[i][j])}`);});});
+ table(id,[{l:'',k:'l'},...C.labels.map(l=>({l,k:l,num:1}))],C.labels.map((l,i)=>Object.assign({l},Object.fromEntries(C.labels.map((m,j)=>[m,i===j?'–':fmt(C.r[i][j],3)+' (n='+fmtN(C.n[i][j])+')'])))));});}
+corrChart('c56',D.corr56);corrChart('c57',D.corr57);
+
+// ---- party bars
+(function(){const host=document.getElementById('parties'),legSeg=document.getElementById('pt-leg');let leg='56';
+ function render(){host.innerHTML='';legSeg.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.leg===leg));
+ IDX.forEach(([k,n])=>{const PK=D.party[k],P=PK.legs[leg];if(!P)return;const card=document.createElement('div');card.className='card';card.innerHTML=`<div class="head"><h3>${n} · ${leg}ª legislatura</h3><button class="btn" data-tv="p-${k}">Tabela</button></div><p class="sub">Média por partido · ${P.data.length} partidos com ${PK.min} ou mais deputados · ${fmtN(P.n)} deputados com valor</p><div class="chart" id="p-${k}"></div><div class="tablewrap tv" id="p-${k}-tv"></div>`;host.appendChild(card);
+ chart('p-'+k,(c,W)=>{const rows=P.data,L=96,R=52,T=8,B=26,rh=22,w=Math.max(300,W),h=T+rh*rows.length+B,pw=w-L-R;const s=el('svg',{viewBox:`0 0 ${w} ${h}`,width:w,height:h,role:'img','aria-label':'Média de '+n+' por partido'},c);
+  const vals=rows.map(r=>r.mean),mn=Math.min(0,...vals),mxv=Math.max(0,...vals),xt=ticks(mn,mxv,5),lo=Math.min(mn,xt[0]),hi=Math.max(mxv,xt[xt.length-1]),xs=v=>L+(v-lo)/(hi-lo)*pw;
+  xt.forEach(v=>{el('line',{x1:xs(v),x2:xs(v),y1:T,y2:h-B,class:'gl'},s);txt(xs(v),h-B+16,fmt(v,k==='ipipe'?0:(hi-lo>2?1:2)),{'text-anchor':'middle',class:'tick'},s);});
+  el('line',{x1:xs(0),x2:xs(0),y1:T,y2:h-B,class:'ax'},s);const acc=cssVar('--accent');
+  rows.forEach((r,i)=>{const y=T+rh*i,v=r.mean,a=xs(Math.min(0,v)),b=xs(Math.max(0,v)),bw=Math.max(0,b-a);const g=el('g',{},s);txt(L-8,y+rh/2+4,r.partido,{'text-anchor':'end',class:'tick',fill:cssVar('--fg2')},s);
+   const rect=el('rect',{x:a,y:y+2,width:bw,height:rh-4,fill:acc},g);if(bw>8)rect.setAttribute('rx',3);el('rect',{x:L,y,width:pw+R,height:rh,fill:'transparent'},g);
+   // extremes get a direct label: right of the bar end for positives, right of the zero line for negatives (the left side holds the party names)
+   if(i===0||i===rows.length-1)txt(v>=0?b+5:xs(0)+5,y+rh/2+4,fmt(v,k==='ipipe'?0:2),{class:'lbl','font-size':11,'text-anchor':'start'},s);
+   hover(g,`<b>${r.partido}</b><br>média ${fmt(v,k==='ipipe'?0:3)} · mediana ${fmt(r.median,k==='ipipe'?0:3)}<br>${r.n} deputados`);});
+  table('p-'+k,[{l:'Partido',k:'partido'},{l:'Deputados',k:'n',num:1},{l:'Média',k:'m',num:1},{l:'Mediana',k:'md',num:1}],rows.map(r=>({partido:r.partido,n:r.n,m:fmt(r.mean,3),md:fmt(r.median,3)})));
+ });});}
+ legSeg.insertAdjacentHTML('beforeend',D.meta.legs.map(l=>`<button class="btn" role="tab" data-leg="${l}">${l}ª</button>`).join(''));
+ legSeg.addEventListener('click',e=>{const b=e.target.closest('button');if(b){leg=b.dataset.leg;render();}});
+ render();})();
+
+// ---- time series
+function lineChart(id,series,opts){chart(id,(c,W)=>{const L=46,R=14,T=16,B=30,h=200,w=Math.max(260,W),pw=w-L-R,ph=h-T-B;const s=el('svg',{viewBox:`0 0 ${w} ${h}`,width:w,height:h,role:'img','aria-label':opts.label},c);
+ const legs=D.time.map(t=>t.leg),xs=v=>L+(v-legs[0])/(legs[legs.length-1]-legs[0])*pw;const all=series.flatMap(sr=>sr.pts.map(p=>p.v).filter(v=>v!=null));const mn=Math.min(opts.zero?0:Infinity,...all),mx=Math.max(...all),yt=ticks(mn,mx,4),lo=Math.min(mn,yt[0]),hi=Math.max(mx,yt[yt.length-1]),ys=v=>T+ph-(v-lo)/(hi-lo)*ph;
+ yt.forEach(v=>{el('line',{x1:L,x2:w-R,y1:ys(v),y2:ys(v),class:'gl'},s);txt(L-6,ys(v)+4,opts.pct?pct(v):fmt(v,2),{'text-anchor':'end',class:'tick'},s);});
+ if(lo<0&&hi>0)el('line',{x1:L,x2:w-R,y1:ys(0),y2:ys(0),class:'ax'},s);
+ legs.forEach((lg,i)=>{if(W<380&&i%2)return;txt(xs(lg),h-B+16,lg+'ª',{'text-anchor':'middle',class:'tick'},s);});
+ const sf=cssVar('--surface');series.forEach(sr=>{const pts=sr.pts.filter(p=>p.v!=null);const d=pts.map((p,i)=>(i?'L':'M')+xs(p.leg)+' '+ys(p.v)).join(' ');el('path',{d,fill:'none',stroke:sr.color,'stroke-width':2,'stroke-linejoin':'round','stroke-linecap':'round'},s);
+  pts.forEach((p,i)=>{const g=el('g',{},s);el('circle',{cx:xs(p.leg),cy:ys(p.v),r:6,fill:sf},g);el('circle',{cx:xs(p.leg),cy:ys(p.v),r:4,fill:sr.color},g);el('circle',{cx:xs(p.leg),cy:ys(p.v),r:12,fill:'transparent'},g);hover(g,`<b>${sr.name} · ${p.leg}ª</b><br>${opts.pct?pct(p.v):fmt(p.v,3)}`);
+   if(i===pts.length-1)txt(xs(p.leg)-8,ys(p.v)-9,opts.pct?pct(p.v):fmt(p.v,2),{class:'lbl','font-size':11,'text-anchor':'end'},s);});});
+ table(id,[{l:'Legislatura',k:'leg'},...series.map(sr=>({l:sr.name,k:sr.name,num:1}))],D.time.map(t=>Object.assign({leg:t.leg+'ª'},Object.fromEntries(series.map(sr=>{const p=sr.pts.find(q=>q.leg===t.leg);return [sr.name,p&&p.v!=null?(opts.pct?pct(p.v):fmt(p.v,3)):'–'];})))));});}
+lineChart('t-ipp',[{name:'IPP médio',color:cssVar('--accent'),pts:D.time.map(t=>({leg:t.leg,v:t.ipp_mean}))}],{label:'IPP médio por legislatura',zero:true});
+lineChart('t-ird',[{name:'Índice de ajuste',color:cssVar('--accent'),pts:D.time.map(t=>({leg:t.leg,v:t.ird}))}],{label:'Índice de ajuste do IRD por legislatura'});
+lineChart('t-comp',[{name:'Mulheres',color:cssVar('--accent'),pts:D.time.map(t=>({leg:t.leg,v:t.pF}))},{name:'Não-brancos',color:cssVar('--s2'),pts:D.time.map(t=>({leg:t.leg,v:t.pNB}))}],{label:'Participação de mulheres e não-brancos por legislatura',pct:true,zero:true});
+
+// ---- rankings
+(function(){const seg=document.getElementById('rk-seg'),legSeg=document.getElementById('rk-leg'),host=document.getElementById('rk'),note=document.getElementById('rk-note');const DESC={ipp:'maior = mais profissionalizado',ird:'maior peso = perfil mais sub-representado',co2:'positivo = emissor, negativo = mitigador',ipipe:'maior = mais exposição a processos',ifs:'maior = menos desinformação'};
+ let leg='56',k='ipp';
+ function show(){const avail=IDX.filter(([i])=>D.rank[i][leg]);if(!D.rank[k][leg])k=avail[0][0];
+  legSeg.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.leg===leg));
+  seg.querySelectorAll('button').forEach(b=>{const ok=!!D.rank[b.dataset.k][leg];b.disabled=!ok;b.style.opacity=ok?'':'.4';b.setAttribute('aria-pressed',b.dataset.k===k);});
+  const R=D.rank[k][leg],d=k==='ipipe'?0:3;note.textContent=`${NAME[k]} · ${leg}ª legislatura · ${fmtN(R.n)} deputados com valor`;
+  const tb=(title,rows)=>`<div class="card"><h3>${title}</h3><div class="tablewrap"><table><thead><tr><th>#</th><th>Deputado</th><th>Partido · UF</th><th class="num">${NAME[k]}</th></tr></thead><tbody>${rows.map((r,i)=>`<tr><td>${i+1}</td><td>${r.nome}</td><td>${r.partido} · ${r.uf}</td><td class="num">${fmt(r.v,d)}</td></tr>`).join('')}</tbody></table></div></div>`;
+  host.innerHTML=tb('Dez maiores · '+DESC[k],R.top)+tb('Dez menores',R.bottom);}
+ legSeg.insertAdjacentHTML('beforeend',D.meta.legs.map(l=>`<button class="btn" role="tab" data-leg="${l}">${l}ª</button>`).join(''));
+ seg.insertAdjacentHTML('beforeend',IDX.map(([i,n])=>`<button class="btn" role="tab" data-k="${i}">${n.replace(/ \(.*\)/,'')}</button>`).join(''));
+ legSeg.addEventListener('click',e=>{const b=e.target.closest('button');if(b){leg=b.dataset.leg;show();}});
+ seg.addEventListener('click',e=>{const b=e.target.closest('button');if(b&&!b.disabled){k=b.dataset.k;show();}});
+ show();})();
+})();
+</script>
