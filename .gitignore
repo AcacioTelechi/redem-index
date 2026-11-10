@@ -33,3 +33,5 @@ studies/fake_news/df_res.csv
 *.nav
 *.snm
 *.synctex.gz
+# Arquivos brutos do TSE (~1 GB); preparar_tse.py baixa de novo se faltarem
+consolidado/scores/TSE/brutos/

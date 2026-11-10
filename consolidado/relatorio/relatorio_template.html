@@ -55,6 +55,7 @@ h1{font-size:clamp(30px,4.5vw,44px);font-weight:700;letter-spacing:-.01em}
 h2{font-size:clamp(22px,3vw,28px);font-weight:600;margin-top:56px;padding-top:24px;border-top:1px solid var(--grid)}
 h3{font-size:17px;font-weight:600}
 h3.sec{font-size:21px;margin:40px 0 12px}
+h3.subsec{font-size:18px;margin:28px 0 10px}
 p{margin:12px 0}
 .eyebrow{font-family:var(--display);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--fg2);font-weight:600}
 header{padding-block:48px 8px}
@@ -260,7 +261,55 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.9em;back
 </section>
 
 <section>
-  <h2>4. Método e limitações</h2>
+  <h2>4. Validação do índice</h2>
+  <div class="prose">
+  <p>Um índice formativo não se valida por consistência interna, e sim pela sua relação com o que está fora dele. Esta seção reúne esses testes. O primeiro é o <b>teste discriminante</b>: o IQ não deveria depender de características que não são qualidade parlamentar, como tempo de casa, idade, escolaridade, ideologia, região ou tamanho do partido. O segundo é a <b>validade preditiva</b>: a relação do IQ com o resultado das eleições de 2026, que ocorreram depois da medição. Os testes contra critérios de qualidade reconhecidos por especialistas ainda serão acrescentados.</p>
+  </div>
+
+  <h3 class="sec">4.1 Teste discriminante</h3>
+  <p class="prose">Para cada grupo de características, a parcela da variância do IQ que ele explica sozinho (R² de uma regressão linear), nos <span id="vd-n"></span> deputados com IQ completo. Gênero e raça aparecem separados porque entram no índice por desenho, através do IRD: nesse caso a associação é esperada, não um viés.</p>
+  <div class="grid c2">
+    <div class="card"><div class="head"><h3>Quanto do IQ cada característica explica</h3><button class="btn" data-tv="vd-r2">Tabela</button></div><p class="sub">R² de cada grupo de características, isoladamente</p><div class="chart" id="vd-r2"></div><p class="note" id="vd-r2-note"></p><div class="tablewrap tv" id="vd-r2-tv"></div></div>
+    <div class="card"><h3>IQ médio por grupo</h3><p class="sub">A última coluna recalcula a média sem o IRD, só para mostrar de onde vem a diferença</p><div class="tablewrap" id="vd-medias"></div></div>
+  </div>
+  <div class="card" style="margin-top:16px"><h3>Associação de cada característica com o IQ e com cada componente</h3><p class="sub">ρ de Spearman para características numéricas e η² (parcela da variância entre grupos) para categóricas · em negrito, p &lt; 0,05</p><div class="tablewrap" id="vd-assoc"></div></div>
+  <p class="prose" id="vd-texto"></p>
+
+  <h3 class="sec">4.2 Validade preditiva: as eleições de 2026</h3>
+  <div class="prose">
+  <p>O IQ foi medido com dados da 57ª legislatura, quase todos de 2023. As eleições de outubro de 2026 vieram depois e não entram no índice, o que as torna um teste independente: os deputados de maior IQ foram mais bem-sucedidos nas urnas? Os resultados e os votos vêm do TSE, e os deputados foram identificados pelo CPF.</p>
+  <p>O voto não é uma medida de qualidade. O eleitor decide por partido, recursos de campanha, base local e nome conhecido, de modo que a ausência de relação não invalida o índice. O teste responde a outra pergunta: a qualidade, como medida pelo IQ, é recompensada eleitoralmente?</p>
+  </div>
+  <div class="card"><h3>O que fizeram em 2026 os deputados com IQ completo</h3><p class="sub" id="ve-dest-sub"></p><div class="tablewrap" id="ve-dest"></div></div>
+
+  <h3 class="subsec">Reeleição para a Câmara</h3>
+  <p class="prose" id="ve-reel-intro"></p>
+  <div class="grid c2">
+    <div class="card"><div class="head"><h3>Taxa de reeleição por quartil de IQ</h3><button class="btn" data-tv="ve-q">Tabela</button></div><p class="sub" id="ve-q-sub"></p><div class="chart" id="ve-q"></div><div class="tablewrap tv" id="ve-q-tv"></div></div>
+    <div class="card"><h3>Reeleitos × não reeleitos</h3><p class="sub">Média de cada índice nos dois grupos · AUC = 0,5 significa que o índice não distingue os grupos</p><div class="tablewrap" id="ve-reel"></div></div>
+  </div>
+  <p class="prose" id="ve-reel-texto"></p>
+
+  <h3 class="subsec">Candidatos ao Senado</h3>
+  <p class="prose" id="ve-sen-intro"></p>
+  <div class="grid c2">
+    <div class="card"><div class="head"><h3>IQ e votação dos candidatos ao Senado</h3><button class="btn" data-tv="ve-s">Tabela</button></div><div class="legend"><span><i style="background:var(--accent);height:10px;width:10px;border-radius:50%"></i>Eleito</span><span><i style="background:var(--s2);height:10px;width:10px;border-radius:50%"></i>Não eleito</span></div><div class="chart" id="ve-s"></div><p class="note">Um ponto por candidato. Eixo vertical: participação nos votos nominais ao Senado no estado (cada eleitor votou em dois nomes).</p><div class="tablewrap tv" id="ve-s-tv"></div></div>
+    <div class="card"><h3>Eleitos × não eleitos ao Senado</h3><p class="sub">Média de cada índice nos dois grupos</p><div class="tablewrap" id="ve-sen"></div></div>
+  </div>
+  <p class="prose" id="ve-sen-texto"></p>
+
+  <h3 class="subsec">Conclusões</h3>
+  <div class="prose">
+  <ul class="flat">
+    <li><b>Câmara:</b> a qualidade, como medida pelo IQ, não é premiada nem punida.</li>
+    <li><b>Senado:</b> numa disputa majoritária, os deputados de menor IQ foram os que mais venceram, sobretudo os de pior desempenho em desinformação (IFS) e em representação reivindicada (IRR).</li>
+  </ul>
+  <p>Para a validação do índice, as duas disputas dizem o mesmo: o desempenho eleitoral não serve como critério de qualidade parlamentar.</p>
+  </div>
+</section>
+
+<section>
+  <h2>5. Método e limitações</h2>
   <div class="prose">
   <p>A base é <code>data/df_parlamentares_por_legislatura.csv</code>: uma linha por id da Câmara e legislatura. IPP e IRD já traziam esse id. CO2, IPIPE, IFS e IRR foram identificados por nome normalizado (sem acentos, caixa alta) contra todas as variantes de nome registradas pela Câmara, depois contra o nome civil; <span id="n-depara"></span> casos restantes foram resolvidos à mão em <code>depara_nomes.csv</code>.</p>
   <ul class="flat">
@@ -268,6 +317,8 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.9em;back
     <li><b>Índice formativo e pesos:</b> a seção 1.2 mostra que não há fator comum entre os componentes (KMO ≈ 0,5, cargas de sinais opostos) nem redundância (VIF ≈ 1). O IQ é tratado como índice formativo; por isso usa pesos iguais e a versão fatorial entra só como sensibilidade (coluna <code>iq_fatorial</code>).</li>
     <li><b>Agregação:</b> a seção 1.4 compara a média aritmética com a geométrica pura e a geométrica com piso de 0,1 (colunas <code>iq_geometrica</code> e <code>iq_geometrica_piso</code>). O piso é um parâmetro (<code>PISO_GEOMETRICA</code>); a mesma seção testa pisos de 0 a 0,5 e o índice de Mazziotta–Pareto (coluna <code>iq_mazziotta_pareto</code>), calculado sobre os componentes em posição percentual.</li>
     <li><b>IPIPE e carreira:</b> a seção 1.3 testa o IPIPE dividido pelo número de eleições disputadas (coluna <code>iq_ipipe_ajustado</code>). O IQ principal mantém o IPIPE original; o IPP, já validado por pares, não foi alterado.</li>
+    <li><b>Eleições de 2026:</b> candidaturas, resultados e votos vêm dos dados abertos do TSE (arquivos gerados em 10 nov 2026), preparados por <code>preparar_tse.py</code>, que soma os votos por candidato e liga cada um ao deputado pelo CPF. Quem tem duas candidaturas registradas fica com a que recebeu votos. O arquivo do TSE ainda pode ser atualizado por decisões judiciais.</li>
+    <li><b>Validação:</b> o teste discriminante (seção 4.1) é calculado por <code>validacao.py</code>. Ideologia, gênero e raça vêm do arquivo do IPIPE; idade e escolaridade, da planilha do IRR; região, da UF; tamanho do partido é a bancada na 57ª.</li>
     <li><b>Defasagem entre legislaturas:</b> o cruzamento principal compara o IQ da 57ª com o CO2-Index da 56ª, o que exige que o deputado esteja nas duas. Quem permanece de uma legislatura para a outra não é uma amostra aleatória, e o comportamento medido pelo CO2 é anterior ao medido pelo IQ.</li>
     <li><b>IPIPE:</b> casados 232 de 232 na 56ª e 482 de 494 na 57ª; os 12 restantes são suplentes que não constam na base de deputados usada. O relatório usa o <code>score_exposicao_ipipe</code>. Deputados fora dos arquivos são tratados como ausentes, não como sem processos.</li>
     <li><b>IFS:</b> 598 perfis de Instagram; 517 deputados casados. Os 81 restantes são senadores. Cobre só 2023, o primeiro ano da 57ª legislatura.</li>
@@ -536,6 +587,49 @@ lineChart('t-comp',[{name:'Mulheres',color:cssVar('--accent'),pts:D.time.map(t=>
  const links=[...list.querySelectorAll('a')];let ticking=false;
  function mark(){ticking=false;let cur=0;heads.forEach((h,i)=>{if(h.getBoundingClientRect().top<120)cur=i;});links.forEach((a,i)=>a.classList.toggle('on',i===cur));const on=links[cur];if(on&&wide()&&on.scrollIntoView)on.scrollIntoView({block:'nearest'});}
  addEventListener('scroll',()=>{if(!ticking){ticking=true;requestAnimationFrame(mark);}},{passive:true});mark();})();
+
+// ---- validação: teste discriminante
+(function(){const V=D.validacao.discriminante,pc=(v,d=1)=>fmt(v*100,d)+'%',m=(v,d=2)=>fmt(v,d);
+ document.getElementById('vd-n').textContent=fmtN(V.n);
+ chart('vd-r2',(c,W)=>{const rows=V.r2_blocos,L=150,Rm=52,T=8,B=26,rh=30,w=Math.max(280,W),h=T+rh*rows.length+B,pw=w-L-Rm;const s=el('svg',{viewBox:`0 0 ${w} ${h}`,width:w,height:h,role:'img','aria-label':'Parcela da variância do IQ explicada por cada grupo de características'},c);
+  const mx=Math.max(...rows.map(r=>r.iq)),tk=ticks(0,mx,4),hi=Math.max(mx,tk[tk.length-1]),xs=v=>L+v/hi*pw;
+  tk.forEach(v=>{el('line',{x1:xs(v),x2:xs(v),y1:T,y2:h-B,class:'gl'},s);txt(xs(v),h-B+16,pc(v,0),{'text-anchor':'middle',class:'tick'},s);});el('line',{x1:xs(0),x2:xs(0),y1:T,y2:h-B,class:'ax'},s);const acc=cssVar('--accent');
+  rows.forEach((r,i)=>{const y=T+rh*i,g=el('g',{},s);txt(L-8,y+rh/2+4,r.bloco,{'text-anchor':'end',class:'tick',style:`fill:${cssVar('--fg2')}`},s);const bw=Math.max(1,xs(r.iq)-xs(0));const rc=el('rect',{x:xs(0),y:y+5,width:bw,height:rh-10,fill:acc},g);if(bw>8)rc.setAttribute('rx',3);el('rect',{x:L,y,width:pw+Rm,height:rh,fill:'transparent'},g);txt(xs(r.iq)+5,y+rh/2+4,pc(r.iq),{class:'lbl','font-size':11},s);hover(g,`<b>${r.bloco}</b><br>IQ: ${pc(r.iq)}<br>IQ sem o IRD: ${pc(r.iq_sem_ird)}`);});
+  table('vd-r2',[{l:'Características',k:'b'},{l:'IQ',k:'a',num:1},{l:'IQ sem o IRD',k:'s',num:1}],[...rows.map(r=>({b:r.bloco,a:pc(r.iq),s:pc(r.iq_sem_ird)})),{b:'Todas juntas',a:pc(V.r2_todos.iq),s:pc(V.r2_todos.iq_sem_ird)},{b:'Todas, menos gênero e raça',a:pc(V.r2_sem_genero_raca.iq),s:pc(V.r2_sem_genero_raca.iq_sem_ird)}]);});
+ document.getElementById('vd-r2-note').textContent=`Todas juntas explicam ${pc(V.r2_todos.iq)} do IQ; sem gênero e raça, ${pc(V.r2_sem_genero_raca.iq)}.`;
+ const G=[['Gênero','genero'],['Raça','raca'],['Ideologia','ideologia'],['Região','regiao'],['Situação em 2022','reeleito']];
+ document.getElementById('vd-medias').innerHTML=`<table><thead><tr><th>Grupo</th><th class="num">Deputados</th><th class="num">IQ médio</th><th class="num">Sem o IRD</th></tr></thead><tbody>${G.map(([t,k])=>`<tr><td colspan="4" style="font-family:var(--display);font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--fg2);font-weight:600;padding-top:10px">${t}</td></tr>`+V.medias[k].map(r=>`<tr><td>${r.grupo}</td><td class="num">${fmtN(r.n)}</td><td class="num"><b>${m(r.iq)}</b></td><td class="num">${m(r.iq_sem_ird)}</td></tr>`).join('')).join('')}</tbody></table>`;
+ const K=[['iq','IQ'],['ipp_norm','IPP'],['ird_norm','IRD'],['ipipe_norm','IPIPE inv.'],['ifs_norm','IFS'],['irr_norm','IRR']],cell=(o,f)=>{const v=m(o[f]);return o.p<0.05?`<b>${v}</b>`:v;};
+ document.getElementById('vd-assoc').innerHTML=`<table><thead><tr><th>Característica</th><th>Medida</th>${K.map(([,l])=>`<th class="num">${l}</th>`).join('')}</tr></thead><tbody>${V.numericas.map(r=>`<tr><td>${r.var}</td><td>ρ</td>${K.map(([k])=>`<td class="num">${cell(r[k],'rho')}</td>`).join('')}</tr>`).join('')}${V.categoricas.map(r=>`<tr><td>${r.var}</td><td>η²</td>${K.map(([k])=>`<td class="num">${cell(r[k],'eta2')}</td>`).join('')}</tr>`).join('')}</tbody></table>`;
+ const N=V.numericas,T=N.find(r=>r.var==='Tempo de casa'),bl=n=>V.r2_blocos.find(r=>r.bloco===n),gen=V.medias.genero,rac=V.medias.raca,ide=V.medias.ideologia,reg=V.medias.regiao,I=V.ideologia,P=V.partido,gm=k=>gen.find(r=>r.grupo===k),im=k=>ide.find(r=>r.grupo===k);
+ document.getElementById('vd-texto').innerHTML=`<b>O que não se associa ao índice.</b> O tempo de casa tem correlação de ${m(T.iq.rho)} com o IQ, embora seja de ${m(T.ipp_norm.rho)} com o IPP: os demais componentes pendem para o lado oposto e o efeito se anula no índice. Idade, número de eleições disputadas e escolaridade também não se associam, e reeleitos e novatos de 2022 têm a mesma média. <b>O que se associa pouco.</b> Região (${pc(bl('Região').iq)} da variância; ${reg[0].grupo} ${m(reg[0].iq)}, ${reg[reg.length-1].grupo} ${m(reg[reg.length-1].iq)}), ideologia (${pc(bl('Ideologia (6 níveis)').iq)}; esquerda ${m(im('Esquerda').iq)}, direita ${m(im('Direita').iq)}) e tamanho do partido (${pc(bl('Tamanho do partido').iq)}). A diferença por ideologia diminui quando se controla gênero e raça (correlação de ${m(I.r)} para ${m(I.r_parcial_genero_raca)}), porque a esquerda tem ${pc(I.pct_mulheres_esquerda,0)} de mulheres e a direita ${pc(I.pct_mulheres_direita,0)}. A associação com o tamanho do partido vem de uma única bancada: sem o PL, a correlação passa de ${m(P.rho)} para ${m(P.rho_sem_pl)}. <b>Gênero e raça.</b> Explicam ${pc(bl('Gênero e raça').iq)} do IQ: mulheres têm média de ${m(gm('Mulheres').iq)} e homens de ${m(gm('Homens').iq)}. Essa associação é esperada e vem inteira do IRD, que mede a representação descritiva; sem ele, a diferença praticamente desaparece (${m(gm('Mulheres').iq_sem_ird)} contra ${m(gm('Homens').iq_sem_ird)}). Manter o IRD no índice é uma decisão conceitual: a representação descritiva é tratada como parte da qualidade da representação. <b>Em conjunto</b>, as características que não deveriam importar explicam ${pc(V.r2_sem_genero_raca.iq)} do IQ, distribuídos entre região, ideologia e partido, sem que nenhuma domine. O índice não funciona como um marcador indireto de antiguidade nem de ideologia.`;})();
+
+// ---- validação: eleições de 2026
+(function(){const E=D.validacao.eleicao,R=E.reeleicao,S=E.senado,pc=(v,d=0)=>fmt(v*100,d)+'%',m=(v,d=2)=>fmt(v,d),pv=p=>p<0.001?'< 0,001':fmt(p,3),
+  N={iq:'IQ',ipp_norm:'IPP',ird_norm:'IRD',ipipe_norm:'IPIPE (invertido)',ifs_norm:'IFS',irr_norm:'IRR'},g=(a,k)=>a.find(r=>r.var===k),bp=(v,p)=>p<0.05?`<b>${v}</b>`:v;
+ document.getElementById('ve-dest-sub').textContent=`${fmtN(E.n)} deputados da 57ª legislatura com os cinco componentes`;
+ document.getElementById('ve-dest').innerHTML=`<table><thead><tr><th>Destino em 2026</th><th class="num">Deputados</th><th class="num">% do total</th><th class="num">IQ médio</th></tr></thead><tbody>${E.destinos.map(r=>`<tr><td>${r.destino}</td><td class="num">${fmtN(r.n)}</td><td class="num">${pc(r.n/E.n,1)}</td><td class="num">${m(r.iq,3)}</td></tr>`).join('')}</tbody></table>`;
+ document.getElementById('ve-reel-intro').innerHTML=`Reeleição é tomada em sentido estrito: deputados eleitos em 2022 que concorreram a deputado federal em 2026 no mesmo estado e receberam votos. São ${fmtN(R.n)}, dos quais ${fmtN(R.eleitos)} se reelegeram (${pc(R.taxa)}). Ficam de fora os ${R.n_suplentes} que exerceram o mandato como suplentes, sem terem sido eleitos em 2022, e as candidaturas registradas que não receberam votos.`;
+ document.getElementById('ve-q-sub').textContent=`${fmtN(R.n)} deputados em quatro grupos de mesmo tamanho pelo IQ · linha horizontal: taxa geral de ${pc(R.taxa)}`;
+ chart('ve-q',(c,W)=>{const rows=R.quartis,L=44,Rm=12,T=22,B=30,h=230,w=Math.max(280,W),pw=w-L-Rm,ph=h-T-B;const s=el('svg',{viewBox:`0 0 ${w} ${h}`,width:w,height:h,role:'img','aria-label':'Taxa de reeleição por quartil de IQ'},c);const ys=v=>T+ph-v*ph,bw=pw/rows.length;
+  [0,0.25,0.5,0.75,1].forEach(v=>{el('line',{x1:L,x2:w-Rm,y1:ys(v),y2:ys(v),class:'gl'},s);txt(L-6,ys(v)+4,pc(v),{'text-anchor':'end',class:'tick'},s);});el('line',{x1:L,x2:w-Rm,y1:ys(0),y2:ys(0),class:'ax'},s);
+  const yt=ys(R.taxa);el('line',{x1:L,x2:w-Rm,y1:yt,y2:yt,stroke:cssVar('--fg'),'stroke-width':1},s);
+  const acc=cssVar('--accent');rows.forEach((r,i)=>{const cx=L+bw*i+bw/2,bwid=Math.min(24,bw-8),g=el('g',{},s);el('rect',{x:cx-bwid/2,y:ys(r.taxa),width:bwid,height:ys(0)-ys(r.taxa),rx:3,fill:acc},g);el('rect',{x:L+bw*i,y:T,width:bw,height:ph,fill:'transparent'},g);txt(cx,ys(r.taxa)-6,pc(r.taxa),{'text-anchor':'middle',class:'lbl','font-size':11},s);txt(cx,h-B+16,r.quartil,{'text-anchor':'middle',class:'tick'},s);hover(g,`<b>${r.quartil}</b><br>${pc(r.taxa,1)} reeleitos · ${r.n} deputados`);});
+  table('ve-q',[{l:'Quartil de IQ',k:'q'},{l:'Deputados',k:'n',num:1},{l:'Reeleitos',k:'t',num:1}],rows.map(r=>({q:r.quartil,n:r.n,t:pc(r.taxa,1)})));});
+ const cmp=(A,a,b,x)=>`<table><thead><tr><th>Índice</th><th class="num">${a}</th><th class="num">${b}</th><th class="num">AUC</th><th class="num">p</th><th class="num">${x}</th><th class="num">p</th></tr></thead><tbody>${A.map(r=>`<tr><td>${N[r.var]}</td><td class="num">${m(r.sim,3)}</td><td class="num">${m(r.nao,3)}</td><td class="num">${bp(m(r.auc),r.p)}</td><td class="num">${pv(r.p)}</td><td class="num">${bp(m(r.rho),r.p_rho)}</td><td class="num">${pv(r.p_rho)}</td></tr>`).join('')}</tbody></table>`;
+ document.getElementById('ve-reel').innerHTML=cmp(R.comparacao,'Reeleitos','Não reeleitos','ρ com a variação de votos')+`<p class="note" style="margin-top:8px">Variação de votos: mudança, de 2022 para 2026, na participação do deputado nos votos nominais para deputado federal no estado. Em negrito, p &lt; 0,05.</p>`;
+ const ri=g(R.comparacao,'iq'),rp=g(R.comparacao,'ipp_norm'),rd=g(R.comparacao,'ird_norm'),tx=R.quartis.map(q=>pc(q.taxa)).join(', ');
+ document.getElementById('ve-reel-texto').innerHTML=`<b>O IQ não se relaciona com a reeleição.</b> Reeleitos e não reeleitos têm praticamente o mesmo IQ (${m(ri.sim,3)} e ${m(ri.nao,3)}; AUC de ${m(ri.auc)}, p = ${pv(ri.p)}), e a taxa de reeleição não cresce com o índice (${tx} do menor ao maior quartil). Incluir os suplentes não muda o resultado (${fmtN(R.n_amplo)} deputados, AUC de ${m(R.auc_amplo)}). O mesmo vale para a votação: a participação mediana nos votos do estado variou ${m(R.var_votos_mediana*100,1)}% entre 2022 e 2026, e essa variação não acompanha o IQ (ρ = ${m(ri.rho)}, p = ${pv(ri.p_rho)}), nem quando se controla o tempo de casa e a votação de 2022. Dois componentes têm associações pequenas e de sinais opostos com a variação de votos, que se anulam no índice: deputados de IPP mais alto perderam um pouco de votação (ρ = ${m(rp.rho)}), e os de perfil sub-representado ganharam (IRD, ρ = ${m(rd.rho)}). Nenhum componente distingue reeleitos de não reeleitos.`;
+ document.getElementById('ve-sen-intro').innerHTML=`${S.n} deputados com IQ completo concorreram ao Senado, todos no exercício de mandato conquistado em 2022; ${S.eleitos} se elegeram. É uma disputa majoritária, com dois eleitos por estado em 2026.`;
+ chart('ve-s',(c,W)=>{const P=S.candidatos.filter(q=>q.participacao!=null),L=44,Rm=14,T=14,B=38,h=280,w=Math.max(280,W),pw=w-L-Rm,ph=h-T-B;const s=el('svg',{viewBox:`0 0 ${w} ${h}`,width:w,height:h,role:'img','aria-label':'IQ e participação nos votos dos candidatos ao Senado, por resultado'},c);
+  const x0=0.1,x1=0.9,ymax=Math.max(...P.map(q=>q.participacao)),yt=ticks(0,ymax,4),hi=Math.max(ymax,yt[yt.length-1]),xs=v=>L+(v-x0)/(x1-x0)*pw,ys=v=>T+ph-v/hi*ph;
+  yt.forEach(v=>{el('line',{x1:L,x2:w-Rm,y1:ys(v),y2:ys(v),class:'gl'},s);txt(L-6,ys(v)+4,pc(v),{'text-anchor':'end',class:'tick'},s);});el('line',{x1:L,x2:w-Rm,y1:ys(0),y2:ys(0),class:'ax'},s);
+  [0.2,0.4,0.6,0.8].forEach(v=>txt(xs(v),h-B+16,fmt(v,1),{'text-anchor':'middle',class:'tick'},s));txt(L+pw/2,h-4,'IQ →',{'text-anchor':'middle',class:'tick'},s);
+  const ca=cssVar('--accent'),cb=cssVar('--s2'),sf=cssVar('--surface');P.forEach(q=>{const g=el('g',{},s),x=xs(q.iq),y=ys(q.participacao);el('circle',{cx:x,cy:y,r:7,fill:sf},g);if(q.eleito)el('circle',{cx:x,cy:y,r:5,fill:ca},g);else{el('circle',{cx:x,cy:y,r:5,fill:cb},g);el('circle',{cx:x,cy:y,r:2,fill:sf},g);}el('circle',{cx:x,cy:y,r:12,fill:'transparent'},g);hover(g,`<b>${q.nome}</b> · ${q.partido}/${q.uf}<br>${q.eleito?'Eleito':'Não eleito'}<br>IQ ${fmt(q.iq,3)} · ${pc(q.participacao,1)} dos votos`);});
+  table('ve-s',[{l:'Candidato',k:'n'},{l:'Partido · UF',k:'p'},{l:'IQ',k:'i',num:1},{l:'Resultado',k:'r'},{l:'% dos votos',k:'v',num:1}],S.candidatos.map(q=>({n:q.nome,p:`${q.partido} · ${q.uf}`,i:fmt(q.iq,3),r:q.eleito?'Eleito':'Não eleito',v:q.participacao==null?'–':pc(q.participacao,1)})));});
+ document.getElementById('ve-sen').innerHTML=cmp(S.comparacao,'Eleitos','Não eleitos','ρ com % dos votos')+`<p class="note" style="margin-top:8px">${S.n} candidatos; a correlação com a votação usa ${S.comparacao[0].n_rho}, pois um candidato não tem votos registrados. Em negrito, p &lt; 0,05.</p>`;
+ const si=g(S.comparacao,'iq'),sf_=g(S.comparacao,'ifs_norm'),sr=g(S.comparacao,'irr_norm'),top=S.candidatos.slice(0,5),nt=top.filter(q=>!q.eleito).length,vr=g(S.vs_reeleicao,'irr_norm'),Dr=S.direita,Es=S.esquerda;
+ document.getElementById('ve-sen-texto').innerHTML=`<b>No Senado a relação é inversa.</b> Os eleitos têm IQ médio de ${m(si.sim,3)} e os derrotados de ${m(si.nao,3)}. O AUC é ${m(si.auc)}: sorteando um eleito e um derrotado, o eleito tem o IQ maior em ${pc(si.auc)} das vezes (p = ${pv(si.p)}; ${pv(S.p_permutacao)} por permutação). Dos cinco candidatos de maior IQ, ${nt===5?'todos perderam':nt+' perderam'}. A diferença vem dos dois componentes medidos nas redes sociais, IFS (${m(sf_.sim,2)} contra ${m(sf_.nao,2)}) e IRR (${m(sr.sim,2)} contra ${m(sr.nao,2)}); IPP e IPIPE não distinguem os grupos. <b>Três cautelas.</b> São ${S.n} casos. Parte do efeito é ideológica: dos ${Es.n} candidatos de esquerda, que têm IQ médio de ${m(Es.iq)} contra ${m(Dr.iq)} da direita, só ${Es.eleitos} se elegeu; considerando apenas a direita (${Dr.n} candidatos), a diferença se mantém na mesma direção, mas menor e sem significância estatística (${m(Dr.iq_eleitos,3)} contra ${m(Dr.iq_nao,3)}, p = ${pv(Dr.p)}). E os candidatos ao Senado já diferem dos demais num ponto: têm IRR médio de ${m(vr.senado)}, contra ${m(vr.reeleicao)} dos que tentaram a reeleição. O resultado deve ser lido como indício.`;})();
 
 // ---- download do banco consolidado (só aparece onde a página pode oferecer arquivos)
 (async function(){const downloads=await (window.claude&&window.claude.use?window.claude.use('downloads'):null);if(!downloads)return;

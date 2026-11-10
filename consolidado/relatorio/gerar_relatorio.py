@@ -149,6 +149,9 @@ def main() -> None:
     # IQ por partido (57ª, mínimo de 8 deputados com IQ completo)
     out["party"]["iqc"] = {"min": 8, "legs": {"57": {"n": int(len(comp)), "data": by_party(comp, "iq", 8)}}}
 
+    # ---- validação (validacao.py)
+    out["validacao"] = json.loads((ROOT / "consolidado" / "validacao_resumo.json").read_text(encoding="utf-8"))
+
     data = json.dumps(out, ensure_ascii=False, allow_nan=False)  # NaN quebraria o JSON.parse da página
     (HERE / "dados.json").write_text(data, encoding="utf-8")
     template = (HERE / "relatorio_template.html").read_text(encoding="utf-8")
