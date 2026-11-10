@@ -32,49 +32,49 @@
    "var": "iq",
    "n": 245,
    "spearman": -0.234,
-   "p_spearman": 0.0002,
+   "p_spearman": 0.000215,
    "pearson": -0.186,
-   "p_pearson": 0.0035
+   "p_pearson": 0.003465
   },
   {
    "var": "ipp_norm",
    "n": 245,
    "spearman": -0.231,
-   "p_spearman": 0.0003,
+   "p_spearman": 0.000263,
    "pearson": -0.198,
-   "p_pearson": 0.0019
+   "p_pearson": 0.001882
   },
   {
    "var": "ird_norm",
    "n": 245,
    "spearman": -0.062,
-   "p_spearman": 0.3302,
+   "p_spearman": 0.330209,
    "pearson": -0.106,
-   "p_pearson": 0.099
+   "p_pearson": 0.098955
   },
   {
    "var": "ipipe_norm",
    "n": 245,
    "spearman": -0.017,
-   "p_spearman": 0.7888,
+   "p_spearman": 0.788794,
    "pearson": -0.07,
-   "p_pearson": 0.2781
+   "p_pearson": 0.278094
   },
   {
    "var": "ifs_norm",
    "n": 245,
    "spearman": -0.075,
-   "p_spearman": 0.2419,
+   "p_spearman": 0.241853,
    "pearson": -0.025,
-   "p_pearson": 0.6979
+   "p_pearson": 0.697945
   },
   {
    "var": "irr_norm",
    "n": 245,
    "spearman": -0.2,
-   "p_spearman": 0.0017,
+   "p_spearman": 0.001678,
    "pearson": -0.06,
-   "p_pearson": 0.3458
+   "p_pearson": 0.345807
   }
  ],
  "corr_opcao2_leg56": [
@@ -82,33 +82,33 @@
    "var": "iq_disponivel",
    "n": 587,
    "spearman": -0.133,
-   "p_spearman": 0.0012,
+   "p_spearman": 0.001235,
    "pearson": -0.185,
-   "p_pearson": 0.0
+   "p_pearson": 6e-06
   },
   {
    "var": "ipp_norm",
    "n": 587,
    "spearman": -0.166,
-   "p_spearman": 0.0001,
+   "p_spearman": 5.2e-05,
    "pearson": -0.17,
-   "p_pearson": 0.0
+   "p_pearson": 3.5e-05
   },
   {
    "var": "ird_norm",
    "n": 587,
    "spearman": -0.027,
-   "p_spearman": 0.5086,
+   "p_spearman": 0.508608,
    "pearson": -0.07,
-   "p_pearson": 0.0891
+   "p_pearson": 0.08908
   },
   {
    "var": "ipipe_norm",
    "n": 213,
    "spearman": 0.05,
-   "p_spearman": 0.4647,
+   "p_spearman": 0.464668,
    "pearson": -0.008,
-   "p_pearson": 0.9038
+   "p_pearson": 0.903756
   },
   {
    "var": "ifs_norm",
@@ -132,9 +132,9 @@
    "var": "ipp_norm",
    "n": 415,
    "spearman": 0.175,
-   "p_spearman": 0.0004,
+   "p_spearman": 0.000353,
    "pearson": 0.201,
-   "p_pearson": 0.0
+   "p_pearson": 3.7e-05
   },
   {
    "var": "ird_norm",
@@ -256,6 +256,20 @@
    0.0692,
    0.0444
   ],
+  "vif": [
+   1.09,
+   1.046,
+   1.046,
+   1.02,
+   1.014
+  ],
+  "vif_original": [
+   1.051,
+   1.045,
+   1.02,
+   1.019,
+   1.014
+  ],
   "corr_iq_igual": 0.743,
   "corr_iq_igual_spearman": 0.698,
   "reg_co2": {
@@ -269,7 +283,7 @@
    "p": 0.000117,
    "pearson": -0.244,
    "spearman": -0.214,
-   "p_spearman": 0.0008,
+   "p_spearman": 0.000767,
    "x_min": 0.256,
    "x_max": 0.8955
   }
@@ -405,7 +419,7 @@
    "p": 0.000929,
    "pearson": -0.21,
    "spearman": -0.271,
-   "p_spearman": 0.0,
+   "p_spearman": 1.7e-05,
    "x_min": 0.2575,
    "x_max": 0.8368
   }
@@ -436,7 +450,7 @@
      "p": 0.003465,
      "pearson": -0.186,
      "spearman": -0.234,
-     "p_spearman": 0.0002,
+     "p_spearman": 0.000215,
      "x_min": 0.2561,
      "x_max": 0.8368
     }
@@ -462,7 +476,7 @@
      "p": 0.000118,
      "pearson": -0.244,
      "spearman": -0.288,
-     "p_spearman": 0.0,
+     "p_spearman": 5e-06,
      "x_min": 0.1522,
      "x_max": 0.8309
     }
@@ -488,7 +502,7 @@
      "p": 0.000269,
      "pearson": -0.231,
      "spearman": -0.272,
-     "p_spearman": 0.0,
+     "p_spearman": 1.6e-05,
      "x_min": 0.2873,
      "x_max": 0.8485
     }
@@ -744,7 +758,7 @@
      "top10": 10,
      "bottom10": 5,
      "co2_spearman": -0.288,
-     "co2_p": 0.0
+     "co2_p": 5e-06
     },
     {
      "piso": 0.01,
@@ -754,7 +768,7 @@
      "top10": 10,
      "bottom10": 8,
      "co2_spearman": -0.285,
-     "co2_p": 0.0
+     "co2_p": 6e-06
     },
     {
      "piso": 0.05,
@@ -764,7 +778,7 @@
      "top10": 10,
      "bottom10": 9,
      "co2_spearman": -0.28,
-     "co2_p": 0.0
+     "co2_p": 9e-06
     },
     {
      "piso": 0.1,
@@ -774,7 +788,7 @@
      "top10": 10,
      "bottom10": 10,
      "co2_spearman": -0.272,
-     "co2_p": 0.0
+     "co2_p": 1.6e-05
     },
     {
      "piso": 0.15,
@@ -784,7 +798,7 @@
      "top10": 10,
      "bottom10": 9,
      "co2_spearman": -0.265,
-     "co2_p": 0.0
+     "co2_p": 2.6e-05
     },
     {
      "piso": 0.2,
@@ -794,7 +808,7 @@
      "top10": 10,
      "bottom10": 9,
      "co2_spearman": -0.261,
-     "co2_p": 0.0
+     "co2_p": 3.6e-05
     },
     {
      "piso": 0.3,
@@ -804,7 +818,7 @@
      "top10": 10,
      "bottom10": 8,
      "co2_spearman": -0.256,
-     "co2_p": 0.0
+     "co2_p": 4.9e-05
     },
     {
      "piso": 0.5,
@@ -814,7 +828,7 @@
      "top10": 9,
      "bottom10": 8,
      "co2_spearman": -0.246,
-     "co2_p": 0.0001
+     "co2_p": 9.8e-05
     }
    ],
    "metodos": {
@@ -826,7 +840,7 @@
      "bottom10_geo": 7,
      "rho_desequilibrio": 0.038,
      "co2_spearman": -0.234,
-     "co2_p": 0.0002
+     "co2_p": 0.000215
     },
     "iq_geometrica_piso": {
      "rho_aritm": 0.96,
@@ -836,7 +850,7 @@
      "bottom10_geo": 10,
      "rho_desequilibrio": -0.192,
      "co2_spearman": -0.272,
-     "co2_p": 0.0
+     "co2_p": 1.6e-05
     },
     "iq_mazziotta_pareto": {
      "rho_aritm": 0.994,
@@ -846,7 +860,7 @@
      "bottom10_geo": 8,
      "rho_desequilibrio": -0.044,
      "co2_spearman": -0.245,
-     "co2_p": 0.0001
+     "co2_p": 0.000107
     }
    },
    "partidos_ordem": {
@@ -907,7 +921,7 @@
    "p": 0.003465,
    "pearson": -0.186,
    "spearman": -0.234,
-   "p_spearman": 0.0002,
+   "p_spearman": 0.000215,
    "x_min": 0.2561,
    "x_max": 0.8368
   },
@@ -922,7 +936,7 @@
    "p": 0.003033,
    "pearson": -0.189,
    "spearman": -0.229,
-   "p_spearman": 0.0003,
+   "p_spearman": 0.000313,
    "x_min": 0.2561,
    "x_max": 0.8368
   },
@@ -937,7 +951,7 @@
    "p": 6e-06,
    "pearson": -0.185,
    "spearman": -0.133,
-   "p_spearman": 0.0012,
+   "p_spearman": 0.001235,
    "x_min": 0.1536,
    "x_max": 0.9494
   },
@@ -952,7 +966,7 @@
    "p": 2e-06,
    "pearson": -0.197,
    "spearman": -0.128,
-   "p_spearman": 0.002,
+   "p_spearman": 0.001986,
    "x_min": 0.1536,
    "x_max": 0.9494
   }

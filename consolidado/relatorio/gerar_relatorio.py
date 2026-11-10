@@ -83,6 +83,10 @@ def main() -> None:
         "co2": int(f.co2_index.notna().sum()),
         "ipipe": int(f.ipipe_id_parlamentar.notna().sum()),
         "ipipe_completo": int((f.ipipe_status == "SCORE_COMPLETO").sum()),
+        "ipipe_total": int(sum(len(pd.read_csv(f)) for f in sorted((ROOT / "consolidado" / "scores" / "IPIPE").glob("IPIPE_*A_PARLAMENTARES.csv")))),
+        "irr": int(f.irr.notna().sum()),
+        "irr_total": int(f.irr.notna().sum() + (nc.indice == "IRR").sum()),
+        "depara": int(len(pd.read_csv(ROOT / "consolidado" / "depara_nomes.csv"))),
     }
 
     cov = f.groupby("legislatura")[list(IDX.values())].count()
@@ -100,7 +104,7 @@ def main() -> None:
         "ifs": hist(f.ifs, np.linspace(0.3, 1, 29)),
         "irr": hist(f.irr, np.linspace(0, 1, 21)),
     }
-    out["hist"]["co2"]["note"] = "valores abaixo de -6 agrupados no primeiro intervalo"
+    out["hist"]["co2"]["note"] = "valores abaixo de −6 agrupados no primeiro intervalo"
     out["hist"]["ipipe"]["note"] = "valores acima de 300 agrupados no último intervalo"
 
     out["corr56"] = corr(f[f.legislatura == 56], [("ipp_final_v4", "IPP"), ("ird_peso", "IRD"), ("ipipe_score_exposicao", "IPIPE")])

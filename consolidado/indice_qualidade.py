@@ -66,8 +66,8 @@ def corr_table(df: pd.DataFrame, x: str, cols: list[str]) -> list[dict]:
             continue
         sp = stats.spearmanr(d[x], d[c])
         pe = stats.pearsonr(d[x], d[c])
-        rows.append({"var": c, "n": int(len(d)), "spearman": round(float(sp.statistic), 3), "p_spearman": round(float(sp.pvalue), 4),
-                     "pearson": round(float(pe.statistic), 3), "p_pearson": round(float(pe.pvalue), 4)})
+        rows.append({"var": c, "n": int(len(d)), "spearman": round(float(sp.statistic), 3), "p_spearman": round(float(sp.pvalue), 6),
+                     "pearson": round(float(pe.statistic), 3), "p_pearson": round(float(pe.pvalue), 6)})
     return rows
 
 
@@ -82,8 +82,13 @@ def regressao(df: pd.DataFrame, x: str, y: str) -> dict:
     return {"n": int(n), "slope": r(lr.slope), "intercept": r(lr.intercept), "stderr": r(lr.stderr),
             "ci_low": r(lr.slope - tcrit * lr.stderr), "ci_high": r(lr.slope + tcrit * lr.stderr),
             "r2": r(lr.rvalue ** 2), "p": r(lr.pvalue, 6), "pearson": r(lr.rvalue, 3),
-            "spearman": r(sp.statistic, 3), "p_spearman": r(sp.pvalue),
+            "spearman": r(sp.statistic, 3), "p_spearman": r(sp.pvalue, 6),
             "x_min": r(d[x].min()), "x_max": r(d[x].max())}
+
+
+def vif(X: pd.DataFrame) -> list[float]:
+    """Fator de inflação da variância de cada coluna (diagonal da inversa da matriz de correlações)."""
+    return [round(float(v), 3) for v in np.diag(np.linalg.inv(X.corr().values))]
 
 
 def analise_fatorial(X: pd.DataFrame) -> dict:
@@ -249,6 +254,9 @@ def main() -> None:
     iq["iq"] = iq["iq_parcial"].where(iq["n_componentes"] == len(COMPONENTES))
     # sensibilidade: pesos derivados da análise fatorial (carga² normalizada)
     fat = analise_fatorial(iq.loc[iq["iq"].notna(), normcols])
+    ids_completos = iq.index[iq["iq"].notna()]
+    fat["vif"] = vif(iq.loc[ids_completos, normcols])
+    fat["vif_original"] = vif(base.loc[ids_completos, [col for col, _ in COMPONENTES.values()]])
     iq["iq_fatorial"] = (iq[normcols] * fat["pesos"]).sum(axis=1).where(iq["iq"].notna())
     # formas alternativas de agregação: geométrica pura e geométrica com piso
     completo_mask = iq["iq"].notna()
