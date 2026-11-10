@@ -28,7 +28,7 @@ OUT_DIR = ROOT / "consolidado"
 DEPARA_PATH = OUT_DIR / "depara_nomes.csv"
 
 LEG_CO2 = 56  # CO2-INDEX cobre a 56a legislatura (2019-2023)
-LEG_IPIPE = 56  # arquivos IPIPE_56A_*
+LEGS_IPIPE = [56, 57]  # arquivos IPIPE_56A_* e IPIPE_57A_*
 LEG_IFS = 57  # postagens de 2023
 
 
@@ -163,14 +163,17 @@ def load_co2(aliases: pd.DataFrame, depara: dict) -> tuple[pd.DataFrame, pd.Data
 
 
 def load_ipipe(aliases: pd.DataFrame, det: pd.DataFrame, depara: dict) -> tuple[pd.DataFrame, pd.DataFrame]:
-    ip = pd.read_csv(SCORES / "IPIPE" / "IPIPE_56A_PARLAMENTARES.csv")
-    leg_ids = set(aliases.loc[aliases.legislatura == LEG_IPIPE, "id_camara"])
-    det_leg = det[det.id_camara.isin(leg_ids)]
-    civil = unique_map(det_leg, "civil_norm", "id_camara")
     civil_any = unique_map(det, "civil_norm", "id_camara")
-    ip["id_camara"] = match_names(ip, "nome", "IPIPE", [civil, civil_any], depara)
-    ip["legislatura"] = LEG_IPIPE
-    unmatched = ip[ip.id_camara.isna()][["id_parlamentar", "nome", "uf", "partido"]]
+    partes = []
+    for leg in LEGS_IPIPE:  # um arquivo IPIPE_<leg>A_PARLAMENTARES.csv por legislatura
+        parte = pd.read_csv(SCORES / "IPIPE" / f"IPIPE_{leg}A_PARLAMENTARES.csv")
+        leg_ids = set(aliases.loc[aliases.legislatura == leg, "id_camara"])
+        civil = unique_map(det[det.id_camara.isin(leg_ids)], "civil_norm", "id_camara")
+        parte["id_camara"] = match_names(parte, "nome", "IPIPE", [civil, civil_any], depara)
+        parte["legislatura"] = leg
+        partes.append(parte)
+    ip = pd.concat(partes, ignore_index=True)
+    unmatched = ip[ip.id_camara.isna()][["legislatura", "id_parlamentar", "nome", "uf", "partido"]]
     ok = ip.dropna(subset=["id_camara"]).rename(
         columns={
             "id_parlamentar": "ipipe_id_parlamentar",
