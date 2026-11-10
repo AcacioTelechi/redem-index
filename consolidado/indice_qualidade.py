@@ -1,13 +1,13 @@
 """Índice de Qualidade (IQ) a partir dos scores consolidados.
 
-Componentes: IPP, IRD (peso), IPIPE (exposição, invertido) e IFS. CO2 não entra; é o alvo
-da correlação. Preparado para receber o IRS como quinto componente (basta adicionar em COMPONENTES).
+Componentes: IPP, IRD (peso), IPIPE (exposição, invertido), IFS e IRR. CO2 não entra; é o alvo
+da correlação. Novos componentes entram adicionando uma linha em COMPONENTES.
 
 Cada componente vira uma posição percentual (0 = pior, 1 = melhor) dentro da legislatura em
 que foi medido, e o IQ é a média simples dos componentes.
 
 Saídas:
-  consolidado/indice_qualidade.csv                  - IQ dos deputados da 57ª legislatura (exige os 4
+  consolidado/indice_qualidade.csv                  - IQ dos deputados da 57ª legislatura (exige todos os
                                                       componentes), com o CO2-Index da 56ª dos reeleitos
   consolidado/indice_qualidade_por_legislatura.csv  - robustez: IQ por parlamentar-legislatura com os
                                                       componentes disponíveis na linha
@@ -34,7 +34,7 @@ COMPONENTES = {
     "ird": ("ird_peso", True),  # peso maior = perfil sub-representado, contribui mais à representação descritiva
     "ipipe": ("ipipe_score_exposicao", False),  # mais exposição a processos = pior
     "ifs": ("ifs", True),
-    # "irs": ("irs", True),  # quando houver dados
+    "irr": ("irr", True),
 }
 LEG_IQ = 57  # legislatura com os quatro componentes
 LEG_CO2 = 56  # o CO2-Index só existe para a 56ª
@@ -124,7 +124,114 @@ def analise_fatorial(X: pd.DataFrame) -> dict:
             "var_explicada": round(float(w[-1] / p), 4), "cargas_cp": r(cp), "cargas_ep": r(ep), "pesos": r(pesos)}
 
 
+def senioridade(ids: pd.Index) -> pd.DataFrame:
+    """Por deputado: nº de eleições ordinárias disputadas até 2022 (TSE, via CPF) e ln do tempo de casa (IPP)."""
+    det = pd.read_csv(ROOT / "data" / "df_parl_detalhes.csv")[["id", "cpf"]].drop_duplicates("id").set_index("id")
+    tse = pd.read_csv(ROOT / "data" / "df_tse_candidatos.csv", low_memory=False)
+    tse = tse[(tse.ano <= 2022) & (tse.tipo_eleicao == "eleicao ordinaria")]
+    n_el = tse.groupby("cpf").ano.nunique()
+    ipp = pd.read_excel(OUT / "scores" / "IPP" / "df_ipp_v4.xlsx")
+    tempo = ipp[ipp.idLegislatura == LEG_IQ].set_index("id")["tempo_atuacao_dias_cum_ln"]
+    return pd.DataFrame({"n_eleicoes": det.cpf.reindex(ids).map(n_el).values, "ln_tempo_casa": tempo.reindex(ids).values}, index=ids)
+
+
+PISO_GEOMETRICA = 0.1  # cada componente é reescalado para [piso, 1] antes da média geométrica
+
+
+def agregacoes(c: pd.DataFrame, normcols: list[str]) -> dict:
+    """Compara a média aritmética (IQ) com a geométrica pura e a geométrica com piso."""
+    d = c.copy()
+    d["menor_componente"] = d[normcols].min(axis=1)
+    pos = lambda k: d[k].rank(ascending=False)
+    top = lambda k: set(d.nlargest(10, k).id_camara)
+    bot = lambda k: set(d.nsmallest(10, k).id_camara)
+    versoes = {}
+    for k in ["iq", "iq_geometrica", "iq_geometrica_piso"]:
+        mov = (pos("iq") - pos(k)).abs()
+        versoes[k] = {
+            "min": round(float(d[k].min()), 3), "mediana": round(float(d[k].median()), 3), "max": round(float(d[k].max()), 3),
+            "corr_iq": round(float(d.iq.corr(d[k], method="spearman")), 3),
+            "mov_mediana": float(mov.median()), "mov_max": float(mov.max()),
+            "top10_comum": len(top("iq") & top(k)), "bottom10_comum": len(bot("iq") & bot(k)),
+            "corr_menor_componente": round(float(d[k].corr(d.menor_componente, method="spearman")), 3),
+            "reg_co2": regressao(d, k, "co2_index"),
+        }
+    d["delta"] = pos("iq") - pos("iq_geometrica_piso")  # positivo = sobe com a geométrica com piso
+    linha = lambda r: {"nome": str(r.nome), "partido": str(r.siglaPartido), "uf": str(r.siglaUf), "iq": round(float(r.iq), 2),
+                       "geo": round(float(r.iq_geometrica_piso), 2), "delta": int(round(r.delta)),
+                       "comp": [round(float(getattr(r, n)), 2) for n in normcols]}
+    g = d.groupby("siglaPartido").agg(n=("iq", "size"), iq=("iq", "mean"), geo=("iq_geometrica", "mean"), piso=("iq_geometrica_piso", "mean"))
+    g = g[g.n >= 8].sort_values("piso", ascending=False)
+    return {"piso": PISO_GEOMETRICA, "n": int(len(d)), "menor_valor_componente": round(float(d[normcols].min().min()), 4), "versoes": versoes,
+            "sobem": [linha(r) for r in d.nlargest(5, "delta").itertuples()],
+            "caem": [linha(r) for r in d.nsmallest(5, "delta").itertuples()],
+            "partidos": [{"partido": str(i), "n": int(r.n), "iq": round(float(r.iq), 3), "geo": round(float(r.geo), 3), "piso": round(float(r.piso), 3)} for i, r in g.iterrows()]}
+
+
+def mazziotta_pareto(M: pd.DataFrame) -> pd.Series:
+    """Índice de Mazziotta-Pareto com penalidade negativa: média dos componentes padronizados
+    (média 100, desvio 10) menos desvio x coeficiente de variação entre os componentes da linha."""
+    Z = 100 + 10 * (M - M.mean()) / M.std(ddof=0)
+    m, s = Z.mean(axis=1), Z.std(axis=1, ddof=0)
+    return m - s * (s / m)
+
+
+def robustez_agregacao(c: pd.DataFrame, normcols: list[str]) -> dict:
+    """Sensibilidade da geométrica ao valor do piso e comparação com o Mazziotta-Pareto."""
+    d = c.copy()
+    X = d[normcols]
+    ref = d["iq_geometrica_piso"]
+    pos = lambda s: s.rank(ascending=False)
+    top = lambda s: set(d.loc[s.nlargest(10).index, "id_camara"])
+    bot = lambda s: set(d.loc[s.nsmallest(10).index, "id_camara"])
+    rho = lambda a, b: round(float(a.corr(b, method="spearman")), 3)
+    pisos = []
+    for p in [0, 0.01, 0.05, 0.10, 0.15, 0.20, 0.30, 0.50]:
+        s = np.exp(np.log(p + (1 - p) * X).mean(axis=1))
+        d["_s"] = s
+        r = regressao(d, "_s", "co2_index")
+        pisos.append({"piso": p, "rho_ref": rho(s, ref), "rho_aritm": rho(s, d.iq), "mov_max": float((pos(s) - pos(ref)).abs().max()),
+                      "top10": len(top(s) & top(ref)), "bottom10": len(bot(s) & bot(ref)), "co2_spearman": r["spearman"], "co2_p": r["p_spearman"]})
+    d["dp"] = X.std(axis=1)
+    metodos = {}
+    for k in ["iq", "iq_geometrica_piso", "iq_mazziotta_pareto"]:
+        r = regressao(d, k, "co2_index")
+        metodos[k] = {"rho_aritm": rho(d[k], d.iq), "rho_geo": rho(d[k], ref), "mov_max": float((pos(d[k]) - pos(d.iq)).abs().max()),
+                      "top10_geo": len(top(d[k]) & top(ref)), "bottom10_geo": len(bot(d[k]) & bot(ref)),
+                      "rho_desequilibrio": rho(d[k], d.dp), "co2_spearman": r["spearman"], "co2_p": r["p_spearman"]}
+    g = d.groupby("siglaPartido").agg(n=("iq", "size"), a=("iq", "mean"), g=("iq_geometrica_piso", "mean"), m=("iq_mazziotta_pareto", "mean"))
+    g = g[g.n >= 8]
+    ordem = {k: list(g.sort_values(k, ascending=False).index) for k in ["a", "g", "m"]}
+    return {"pisos": pisos, "metodos": metodos, "partidos_ordem": ordem}
+
+
 CO2_OUTLIER = -10  # sensibilidade: sem os deputados com CO2-Index abaixo disso
+
+
+def sens_ipipe(c: pd.DataFrame) -> dict:
+    """Resumo da sensibilidade do IQ ao IPIPE ajustado por eleição disputada."""
+    d = c.dropna(subset=["iq_ipipe_ajustado"]).copy()
+    sp = lambda a, b: round(float(d[a].corr(d[b], method="spearman")), 3)
+    pos, pos_adj = d.iq.rank(ascending=False), d.iq_ipipe_ajustado.rank(ascending=False)
+    d["delta"] = pos - pos_adj  # positivo = sobe com o ajuste
+    linha = lambda r: {"nome": str(r.nome), "partido": str(r.siglaPartido), "uf": str(r.siglaUf), "n_eleicoes": int(r.n_eleicoes),
+                       "iq": round(float(r.iq), 3), "iq_adj": round(float(r.iq_ipipe_ajustado), 3), "delta": int(round(r.delta))}
+    top = lambda k: set(d.nlargest(10, k).id_camara)
+    bot = lambda k: set(d.nsmallest(10, k).id_camara)
+    return {
+        "n": int(len(d)),
+        "corr_ipipe": {"tempo": [sp("ipipe_norm", "ln_tempo_casa"), sp("ipipe_adj_norm", "ln_tempo_casa")],
+                       "ipp": [sp("ipipe_norm", "ipp_norm"), sp("ipipe_adj_norm", "ipp_norm")],
+                       "n_eleicoes": [sp("ipipe_norm", "n_eleicoes"), sp("ipipe_adj_norm", "n_eleicoes")]},
+        "corr_ipipe_original_ajustado": sp("ipipe_norm", "ipipe_adj_norm"),
+        "corr_iq": sp("iq", "iq_ipipe_ajustado"),
+        "iq_tempo": [sp("iq", "ln_tempo_casa"), sp("iq_ipipe_ajustado", "ln_tempo_casa")],
+        "mov_mediana": float((pos - pos_adj).abs().median()), "mov_p90": float((pos - pos_adj).abs().quantile(0.9)),
+        "top10_comum": len(top("iq") & top("iq_ipipe_ajustado")), "bottom10_comum": len(bot("iq") & bot("iq_ipipe_ajustado")),
+        "sobem": [linha(r) for r in d.nlargest(5, "delta").itertuples()],
+        "caem": [linha(r) for r in d.nsmallest(5, "delta").itertuples()],
+        "reg_co2": regressao(d, "iq_ipipe_ajustado", "co2_index"),
+    }
 
 
 def main() -> None:
@@ -143,6 +250,16 @@ def main() -> None:
     # sensibilidade: pesos derivados da análise fatorial (carga² normalizada)
     fat = analise_fatorial(iq.loc[iq["iq"].notna(), normcols])
     iq["iq_fatorial"] = (iq[normcols] * fat["pesos"]).sum(axis=1).where(iq["iq"].notna())
+    # formas alternativas de agregação: geométrica pura e geométrica com piso
+    completo_mask = iq["iq"].notna()
+    iq["iq_geometrica"] = np.exp(np.log(iq[normcols]).mean(axis=1)).where(completo_mask)
+    iq["iq_geometrica_piso"] = np.exp(np.log(PISO_GEOMETRICA + (1 - PISO_GEOMETRICA) * iq[normcols]).mean(axis=1)).where(completo_mask)
+    iq["iq_mazziotta_pareto"] = mazziotta_pareto(iq.loc[completo_mask, normcols])
+    # sensibilidade: IPIPE por eleição disputada (propensão a processos, não tempo de exposição)
+    iq = iq.join(senioridade(iq.index))
+    iq["ipipe_adj_norm"] = rank01(base["ipipe_score_exposicao"] / iq["n_eleicoes"], False)
+    cols_adj = [c if c != "ipipe_norm" else "ipipe_adj_norm" for c in normcols]
+    iq["iq_ipipe_ajustado"] = iq[cols_adj].mean(axis=1).where(iq["iq"].notna() & iq["ipipe_adj_norm"].notna())
     iq = iq.reset_index().sort_values("iq", ascending=False)
     iq.to_csv(OUT / "indice_qualidade.csv", index=False)
 
@@ -170,6 +287,8 @@ def main() -> None:
         "fatorial": {**fat, "corr_iq_igual": round(float(completo.iq.corr(completo.iq_fatorial)), 3),
                      "corr_iq_igual_spearman": round(float(completo.iq.corr(completo.iq_fatorial, method="spearman")), 3),
                      "reg_co2": regressao(completo, "iq_fatorial", "co2_index")},
+        "ipipe_ajustado": sens_ipipe(completo),
+        "agregacao": {**agregacoes(completo, normcols), "robustez": robustez_agregacao(completo, normcols)},
         "reg": {
             "principal": regressao(completo, "iq", "co2_index"),
             "principal_sem_outlier": regressao(completo[completo.co2_index > CO2_OUTLIER], "iq", "co2_index"),

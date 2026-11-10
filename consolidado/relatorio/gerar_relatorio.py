@@ -17,8 +17,8 @@ import pandas as pd
 
 HERE = Path(__file__).resolve().parent
 ROOT = HERE.parents[1]
-IDX = {"ipp": "ipp_final_v4", "ird": "ird_peso", "co2": "co2_index", "ipipe": "ipipe_score_exposicao", "ifs": "ifs"}
-MIN_PARTIDO = {"ipp": 8, "ird": 8, "co2": 8, "ipipe": 5, "ifs": 8}
+IDX = {"ipp": "ipp_final_v4", "ird": "ird_peso", "co2": "co2_index", "ipipe": "ipipe_score_exposicao", "ifs": "ifs", "irr": "irr"}
+MIN_PARTIDO = {"ipp": 8, "ird": 8, "co2": 8, "ipipe": 5, "ifs": 8, "irr": 8}
 
 
 def s(v):
@@ -98,12 +98,13 @@ def main() -> None:
         "co2": hist(f.co2_index, np.linspace(-6, 9, 31), clip=(-6, 9)),
         "ipipe": hist(f.ipipe_score_exposicao, np.linspace(0, 300, 31), clip=(0, 300)),
         "ifs": hist(f.ifs, np.linspace(0.3, 1, 29)),
+        "irr": hist(f.irr, np.linspace(0, 1, 21)),
     }
     out["hist"]["co2"]["note"] = "valores abaixo de -6 agrupados no primeiro intervalo"
     out["hist"]["ipipe"]["note"] = "valores acima de 300 agrupados no último intervalo"
 
     out["corr56"] = corr(f[f.legislatura == 56], [("ipp_final_v4", "IPP"), ("ird_peso", "IRD"), ("ipipe_score_exposicao", "IPIPE")])
-    out["corr57"] = corr(f[f.legislatura == 57], [("ipp_final_v4", "IPP"), ("ird_peso", "IRD"), ("ipipe_score_exposicao", "IPIPE"), ("ifs", "IFS")])
+    out["corr57"] = corr(f[f.legislatura == 57], [("ipp_final_v4", "IPP"), ("ird_peso", "IRD"), ("ipipe_score_exposicao", "IPIPE"), ("ifs", "IFS"), ("irr", "IRR")])
 
     out["party"] = {}
     out["rank"] = {}
@@ -137,8 +138,8 @@ def main() -> None:
         "scatter2": [{"nome": s(r.nome), "partido": s(r.siglaPartido), "uf": s(r.siglaUf), "iq": round(float(r.iq_disponivel), 3), "co2": round(float(r.co2_index), 3), "nc": int(r.n_componentes)} for _, r in rob.iterrows()],
         "hist": hist(comp.iq, np.linspace(0, 1, 21)),
         "scatter": [{"nome": s(r.nome), "partido": s(r.siglaPartido), "uf": s(r.siglaUf), "iq": round(float(r.iq), 3), "co2": round(float(r.co2_index), 3)} for _, r in pts.iterrows()],
-        "top": [{"nome": s(r.nome), "partido": s(r.siglaPartido), "uf": s(r.siglaUf), "v": round(float(r.iq), 3), "ipp": round(float(r.ipp_norm), 2), "ird": round(float(r.ird_norm), 2), "ipipe": round(float(r.ipipe_norm), 2), "ifs": round(float(r.ifs_norm), 2)} for _, r in comp.head(10).iterrows()],
-        "bottom": [{"nome": s(r.nome), "partido": s(r.siglaPartido), "uf": s(r.siglaUf), "v": round(float(r.iq), 3), "ipp": round(float(r.ipp_norm), 2), "ird": round(float(r.ird_norm), 2), "ipipe": round(float(r.ipipe_norm), 2), "ifs": round(float(r.ifs_norm), 2)} for _, r in comp.tail(10).iloc[::-1].iterrows()],
+        "top": [{"nome": s(r.nome), "partido": s(r.siglaPartido), "uf": s(r.siglaUf), "v": round(float(r.iq), 3), "ipp": round(float(r.ipp_norm), 2), "ird": round(float(r.ird_norm), 2), "ipipe": round(float(r.ipipe_norm), 2), "ifs": round(float(r.ifs_norm), 2), "irr": round(float(r.irr_norm), 2)} for _, r in comp.head(10).iterrows()],
+        "bottom": [{"nome": s(r.nome), "partido": s(r.siglaPartido), "uf": s(r.siglaUf), "v": round(float(r.iq), 3), "ipp": round(float(r.ipp_norm), 2), "ird": round(float(r.ird_norm), 2), "ipipe": round(float(r.ipipe_norm), 2), "ifs": round(float(r.ifs_norm), 2), "irr": round(float(r.irr_norm), 2)} for _, r in comp.tail(10).iloc[::-1].iterrows()],
     }
 
     # IQ por partido (57ª, mínimo de 8 deputados com IQ completo)

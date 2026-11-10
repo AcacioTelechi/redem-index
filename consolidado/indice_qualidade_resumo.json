@@ -3,68 +3,78 @@
   "ipp",
   "ird",
   "ipipe",
-  "ifs"
+  "ifs",
+  "irr"
  ],
  "leg_iq": 57,
  "leg_co2": 56,
  "n_deputados": 595,
- "n_iq_completo": 436,
- "n_iq_completo_com_co2": 260,
+ "n_iq_completo": 415,
+ "n_iq_completo_com_co2": 245,
  "n_componentes_dist": {
-  "2": 59,
-  "3": 100,
-  "4": 436
+  "2": 54,
+  "3": 29,
+  "4": 97,
+  "5": 415
  },
  "iq_stats": {
-  "count": 436.0,
-  "mean": 0.5099,
-  "std": 0.1205,
-  "min": 0.164,
-  "25%": 0.4282,
-  "50%": 0.5103,
-  "75%": 0.5906,
-  "max": 0.8782
+  "count": 415.0,
+  "mean": 0.507,
+  "std": 0.1119,
+  "min": 0.1881,
+  "25%": 0.4309,
+  "50%": 0.5041,
+  "75%": 0.5858,
+  "max": 0.8368
  },
  "corr_opcao1": [
   {
    "var": "iq",
-   "n": 260,
-   "spearman": -0.175,
-   "p_spearman": 0.0048,
-   "pearson": -0.182,
-   "p_pearson": 0.0033
+   "n": 245,
+   "spearman": -0.234,
+   "p_spearman": 0.0002,
+   "pearson": -0.186,
+   "p_pearson": 0.0035
   },
   {
    "var": "ipp_norm",
-   "n": 260,
-   "spearman": -0.232,
-   "p_spearman": 0.0002,
-   "pearson": -0.197,
-   "p_pearson": 0.0014
+   "n": 245,
+   "spearman": -0.231,
+   "p_spearman": 0.0003,
+   "pearson": -0.198,
+   "p_pearson": 0.0019
   },
   {
    "var": "ird_norm",
-   "n": 260,
-   "spearman": -0.087,
-   "p_spearman": 0.1617,
-   "pearson": -0.114,
-   "p_pearson": 0.0654
+   "n": 245,
+   "spearman": -0.062,
+   "p_spearman": 0.3302,
+   "pearson": -0.106,
+   "p_pearson": 0.099
   },
   {
    "var": "ipipe_norm",
-   "n": 260,
-   "spearman": -0.041,
-   "p_spearman": 0.5085,
-   "pearson": -0.076,
-   "p_pearson": 0.2202
+   "n": 245,
+   "spearman": -0.017,
+   "p_spearman": 0.7888,
+   "pearson": -0.07,
+   "p_pearson": 0.2781
   },
   {
    "var": "ifs_norm",
-   "n": 260,
-   "spearman": -0.041,
-   "p_spearman": 0.5128,
-   "pearson": -0.01,
-   "p_pearson": 0.8729
+   "n": 245,
+   "spearman": -0.075,
+   "p_spearman": 0.2419,
+   "pearson": -0.025,
+   "p_pearson": 0.6979
+  },
+  {
+   "var": "irr_norm",
+   "n": 245,
+   "spearman": -0.2,
+   "p_spearman": 0.0017,
+   "pearson": -0.06,
+   "p_pearson": 0.3458
   }
  ],
  "corr_opcao2_leg56": [
@@ -107,160 +117,814 @@
    "p_spearman": null,
    "pearson": null,
    "p_pearson": null
+  },
+  {
+   "var": "irr_norm",
+   "n": 0,
+   "spearman": null,
+   "p_spearman": null,
+   "pearson": null,
+   "p_pearson": null
   }
  ],
  "corr_iq_componentes": [
   {
    "var": "ipp_norm",
-   "n": 436,
-   "spearman": 0.248,
-   "p_spearman": 0.0,
-   "pearson": 0.276,
+   "n": 415,
+   "spearman": 0.175,
+   "p_spearman": 0.0004,
+   "pearson": 0.201,
    "p_pearson": 0.0
   },
   {
    "var": "ird_norm",
-   "n": 436,
-   "spearman": 0.464,
+   "n": 415,
+   "spearman": 0.466,
    "p_spearman": 0.0,
-   "pearson": 0.471,
+   "pearson": 0.469,
    "p_pearson": 0.0
   },
   {
    "var": "ipipe_norm",
-   "n": 436,
-   "spearman": 0.505,
+   "n": 415,
+   "spearman": 0.401,
    "p_spearman": 0.0,
-   "pearson": 0.517,
+   "pearson": 0.422,
    "p_pearson": 0.0
   },
   {
    "var": "ifs_norm",
-   "n": 436,
-   "spearman": 0.505,
+   "n": 415,
+   "spearman": 0.445,
    "p_spearman": 0.0,
-   "pearson": 0.503,
+   "pearson": 0.445,
+   "p_pearson": 0.0
+  },
+  {
+   "var": "irr_norm",
+   "n": 415,
+   "spearman": 0.516,
+   "p_spearman": 0.0,
+   "pearson": 0.502,
    "p_pearson": 0.0
   }
  ],
  "co2_outlier": -10,
  "fatorial": {
-  "n": 436,
+  "n": 415,
   "vars": [
    "ipp_norm",
    "ird_norm",
    "ipipe_norm",
-   "ifs_norm"
+   "ifs_norm",
+   "irr_norm"
   ],
   "corr": [
    [
     1.0,
-    -0.1904,
-    -0.1851,
-    -0.1223
+    -0.1849,
+    -0.1869,
+    -0.1273,
+    -0.0677
    ],
    [
-    -0.1904,
+    -0.1849,
     1.0,
-    0.1036,
-    -0.0006
+    0.0885,
+    0.0433,
+    0.089
    ],
    [
-    -0.1851,
-    0.1036,
+    -0.1869,
+    0.0885,
     1.0,
-    -0.0377
+    -0.0284,
+    -0.0382
    ],
    [
-    -0.1223,
-    -0.0006,
-    -0.0377,
+    -0.1273,
+    0.0433,
+    -0.0284,
+    1.0,
+    -0.0012
+   ],
+   [
+    -0.0677,
+    0.089,
+    -0.0382,
+    -0.0012,
     1.0
    ]
   ],
-  "bartlett_chi2": 41.621,
-  "bartlett_gl": 6,
+  "bartlett_chi2": 44.158,
+  "bartlett_gl": 10,
   "bartlett_p": 0.0,
-  "kmo": 0.525,
+  "kmo": 0.529,
   "kmo_var": [
-   0.5177,
-   0.5641,
-   0.5416,
-   0.4294
+   0.5285,
+   0.5827,
+   0.509,
+   0.4765,
+   0.4981
   ],
   "autovalores": [
-   1.3329,
-   1.0414,
-   0.8925,
-   0.7332
+   1.3521,
+   1.0502,
+   1.0124,
+   0.8515,
+   0.7338
   ],
-  "var_explicada": 0.3332,
+  "var_explicada": 0.2704,
   "cargas_cp": [
-   -0.7541,
-   0.6135,
-   0.5865,
-   0.2095
+   -0.7497,
+   0.6195,
+   0.5025,
+   0.3059,
+   0.2451
   ],
   "cargas_ep": [
-   0.8064,
-   -0.2473,
-   -0.2351,
-   -0.1169
+   0.7673,
+   -0.2632,
+   -0.232,
+   -0.1422,
+   -0.0906
   ],
   "pesos": [
-   0.4266,
-   0.2824,
-   0.2581,
-   0.0329
+   0.4157,
+   0.2839,
+   0.1867,
+   0.0692,
+   0.0444
   ],
-  "corr_iq_igual": 0.799,
-  "corr_iq_igual_spearman": 0.765,
+  "corr_iq_igual": 0.743,
+  "corr_iq_igual_spearman": 0.698,
   "reg_co2": {
-   "n": 260,
-   "slope": -5.4137,
-   "intercept": 2.845,
-   "stderr": 1.3908,
-   "ci_low": -8.1525,
-   "ci_high": -2.6749,
-   "r2": 0.0555,
-   "p": 0.000126,
-   "pearson": -0.236,
-   "spearman": -0.2,
-   "p_spearman": 0.0012,
-   "x_min": 0.2525,
-   "x_max": 0.9047
+   "n": 245,
+   "slope": -6.2795,
+   "intercept": 3.2679,
+   "stderr": 1.6034,
+   "ci_low": -9.4378,
+   "ci_high": -3.1212,
+   "r2": 0.0594,
+   "p": 0.000117,
+   "pearson": -0.244,
+   "spearman": -0.214,
+   "p_spearman": 0.0008,
+   "x_min": 0.256,
+   "x_max": 0.8955
+  }
+ },
+ "ipipe_ajustado": {
+  "n": 415,
+  "corr_ipipe": {
+   "tempo": [
+    -0.259,
+    -0.079
+   ],
+   "ipp": [
+    -0.186,
+    -0.037
+   ],
+   "n_eleicoes": [
+    -0.179,
+    0.119
+   ]
+  },
+  "corr_ipipe_original_ajustado": 0.917,
+  "corr_iq": 0.976,
+  "iq_tempo": [
+   0.095,
+   0.19
+  ],
+  "mov_mediana": 8.0,
+  "mov_p90": 46.60000000000002,
+  "top10_comum": 9,
+  "bottom10_comum": 7,
+  "sobem": [
+   {
+    "nome": "Reginaldo Lopes",
+    "partido": "PT",
+    "uf": "MG",
+    "n_eleicoes": 9,
+    "iq": 0.431,
+    "iq_adj": 0.477,
+    "delta": 69
+   },
+   {
+    "nome": "Zé Neto",
+    "partido": "PT",
+    "uf": "BA",
+    "n_eleicoes": 12,
+    "iq": 0.464,
+    "iq_adj": 0.512,
+    "delta": 62
+   },
+   {
+    "nome": "Cleber Verde",
+    "partido": "REPUBLICANOS",
+    "uf": "MA",
+    "n_eleicoes": 10,
+    "iq": 0.509,
+    "iq_adj": 0.554,
+    "delta": 60
+   },
+   {
+    "nome": "Luis Tibé",
+    "partido": "AVANTE",
+    "uf": "MG",
+    "n_eleicoes": 8,
+    "iq": 0.423,
+    "iq_adj": 0.459,
+    "delta": 57
+   },
+   {
+    "nome": "Silas Câmara",
+    "partido": "REPUBLICANOS",
+    "uf": "AM",
+    "n_eleicoes": 8,
+    "iq": 0.501,
+    "iq_adj": 0.538,
+    "delta": 52
+   }
+  ],
+  "caem": [
+   {
+    "nome": "Augusto Pupio",
+    "partido": "MDB",
+    "uf": "AP",
+    "n_eleicoes": 1,
+    "iq": 0.474,
+    "iq_adj": 0.397,
+    "delta": -106
+   },
+   {
+    "nome": "Rosangela Moro",
+    "partido": "UNIÃO",
+    "uf": "SP",
+    "n_eleicoes": 1,
+    "iq": 0.475,
+    "iq_adj": 0.405,
+    "delta": -98
+   },
+   {
+    "nome": "Thiago de Joaldo",
+    "partido": "PP",
+    "uf": "SE",
+    "n_eleicoes": 1,
+    "iq": 0.578,
+    "iq_adj": 0.508,
+    "delta": -96
+   },
+   {
+    "nome": "Andreia Siqueira",
+    "partido": "MDB",
+    "uf": "PA",
+    "n_eleicoes": 1,
+    "iq": 0.561,
+    "iq_adj": 0.491,
+    "delta": -90
+   },
+   {
+    "nome": "Maria Arraes",
+    "partido": "SOLIDARIEDADE",
+    "uf": "PE",
+    "n_eleicoes": 1,
+    "iq": 0.606,
+    "iq_adj": 0.529,
+    "delta": -89
+   }
+  ],
+  "reg_co2": {
+   "n": 245,
+   "slope": -5.2652,
+   "intercept": 2.4672,
+   "stderr": 1.5705,
+   "ci_low": -8.3588,
+   "ci_high": -2.1716,
+   "r2": 0.0442,
+   "p": 0.000929,
+   "pearson": -0.21,
+   "spearman": -0.271,
+   "p_spearman": 0.0,
+   "x_min": 0.2575,
+   "x_max": 0.8368
+  }
+ },
+ "agregacao": {
+  "piso": 0.1,
+  "n": 415,
+  "menor_valor_componente": 0.0022,
+  "versoes": {
+   "iq": {
+    "min": 0.188,
+    "mediana": 0.504,
+    "max": 0.837,
+    "corr_iq": 1.0,
+    "mov_mediana": 0.0,
+    "mov_max": 0.0,
+    "top10_comum": 10,
+    "bottom10_comum": 10,
+    "corr_menor_componente": 0.594,
+    "reg_co2": {
+     "n": 245,
+     "slope": -4.7028,
+     "intercept": 2.15,
+     "stderr": 1.593,
+     "ci_low": -7.8406,
+     "ci_high": -1.5649,
+     "r2": 0.0346,
+     "p": 0.003465,
+     "pearson": -0.186,
+     "spearman": -0.234,
+     "p_spearman": 0.0002,
+     "x_min": 0.2561,
+     "x_max": 0.8368
+    }
+   },
+   "iq_geometrica": {
+    "min": 0.134,
+    "mediana": 0.421,
+    "max": 0.831,
+    "corr_iq": 0.909,
+    "mov_mediana": 28.0,
+    "mov_max": 262.0,
+    "top10_comum": 8,
+    "bottom10_comum": 3,
+    "corr_menor_componente": 0.843,
+    "reg_co2": {
+     "n": 245,
+     "slope": -4.9702,
+     "intercept": 1.8653,
+     "stderr": 1.27,
+     "ci_low": -7.4718,
+     "ci_high": -2.4687,
+     "r2": 0.0593,
+     "p": 0.000118,
+     "pearson": -0.244,
+     "spearman": -0.288,
+     "p_spearman": 0.0,
+     "x_min": 0.1522,
+     "x_max": 0.8309
+    }
+   },
+   "iq_geometrica_piso": {
+    "min": 0.25,
+    "mediana": 0.495,
+    "max": 0.848,
+    "corr_iq": 0.96,
+    "mov_mediana": 18.0,
+    "mov_max": 118.0,
+    "top10_comum": 8,
+    "bottom10_comum": 7,
+    "corr_menor_componente": 0.768,
+    "reg_co2": {
+     "n": 245,
+     "slope": -5.9371,
+     "intercept": 2.7588,
+     "stderr": 1.6056,
+     "ci_low": -9.0999,
+     "ci_high": -2.7744,
+     "r2": 0.0533,
+     "p": 0.000269,
+     "pearson": -0.231,
+     "spearman": -0.272,
+     "p_spearman": 0.0,
+     "x_min": 0.2873,
+     "x_max": 0.8485
+    }
+   }
+  },
+  "sobem": [
+   {
+    "nome": "Mersinho Lucena",
+    "partido": "PP",
+    "uf": "PB",
+    "iq": 0.42,
+    "geo": 0.47,
+    "delta": 77,
+    "comp": [
+     0.34,
+     0.3,
+     0.43,
+     0.45,
+     0.56
+    ]
+   },
+   {
+    "nome": "Rogério Correia",
+    "partido": "PT",
+    "uf": "MG",
+    "iq": 0.4,
+    "geo": 0.45,
+    "delta": 75,
+    "comp": [
+     0.58,
+     0.3,
+     0.39,
+     0.4,
+     0.33
+    ]
+   },
+   {
+    "nome": "Tarcísio Motta",
+    "partido": "PSOL",
+    "uf": "RJ",
+    "iq": 0.45,
+    "geo": 0.49,
+    "delta": 70,
+    "comp": [
+     0.3,
+     0.3,
+     0.65,
+     0.47,
+     0.55
+    ]
+   },
+   {
+    "nome": "André Ferreira",
+    "partido": "PL",
+    "uf": "PE",
+    "iq": 0.4,
+    "geo": 0.45,
+    "delta": 68,
+    "comp": [
+     0.39,
+     0.3,
+     0.3,
+     0.63,
+     0.36
+    ]
+   },
+   {
+    "nome": "Adriano do Baldy",
+    "partido": "PP",
+    "uf": "GO",
+    "iq": 0.47,
+    "geo": 0.51,
+    "delta": 66,
+    "comp": [
+     0.61,
+     0.3,
+     0.59,
+     0.37,
+     0.49
+    ]
+   }
+  ],
+  "caem": [
+   {
+    "nome": "Marx Beltrão",
+    "partido": "PP",
+    "uf": "AL",
+    "iq": 0.55,
+    "geo": 0.47,
+    "delta": -118,
+    "comp": [
+     0.77,
+     0.3,
+     0.0,
+     0.76,
+     0.94
+    ]
+   },
+   {
+    "nome": "Domingos Sávio",
+    "partido": "PL",
+    "uf": "MG",
+    "iq": 0.46,
+    "geo": 0.36,
+    "delta": -115,
+    "comp": [
+     0.96,
+     0.3,
+     0.05,
+     0.95,
+     0.01
+    ]
+   },
+   {
+    "nome": "Jeferson Rodrigues",
+    "partido": "REPUBLICANOS",
+    "uf": "GO",
+    "iq": 0.51,
+    "geo": 0.43,
+    "delta": -114,
+    "comp": [
+     0.07,
+     0.73,
+     0.85,
+     0.85,
+     0.06
+    ]
+   },
+   {
+    "nome": "Detinha",
+    "partido": "PL",
+    "uf": "MA",
+    "iq": 0.55,
+    "geo": 0.47,
+    "delta": -98,
+    "comp": [
+     0.07,
+     0.88,
+     0.85,
+     0.15,
+     0.8
+    ]
+   },
+   {
+    "nome": "Waldenor Pereira",
+    "partido": "PT",
+    "uf": "BA",
+    "iq": 0.5,
+    "geo": 0.43,
+    "delta": -92,
+    "comp": [
+     0.85,
+     0.73,
+     0.03,
+     0.14,
+     0.75
+    ]
+   }
+  ],
+  "partidos": [
+   {
+    "partido": "PDT",
+    "n": 15,
+    "iq": 0.577,
+    "geo": 0.517,
+    "piso": 0.577
+   },
+   {
+    "partido": "PSOL",
+    "n": 10,
+    "iq": 0.551,
+    "geo": 0.486,
+    "piso": 0.555
+   },
+   {
+    "partido": "PSB",
+    "n": 13,
+    "iq": 0.55,
+    "geo": 0.474,
+    "piso": 0.544
+   },
+   {
+    "partido": "PSD",
+    "n": 35,
+    "iq": 0.528,
+    "geo": 0.442,
+    "piso": 0.522
+   },
+   {
+    "partido": "PT",
+    "n": 53,
+    "iq": 0.517,
+    "geo": 0.446,
+    "piso": 0.519
+   },
+   {
+    "partido": "UNIÃO",
+    "n": 46,
+    "iq": 0.52,
+    "geo": 0.434,
+    "piso": 0.513
+   },
+   {
+    "partido": "PSDB",
+    "n": 13,
+    "iq": 0.514,
+    "geo": 0.437,
+    "piso": 0.513
+   },
+   {
+    "partido": "PP",
+    "n": 40,
+    "iq": 0.513,
+    "geo": 0.423,
+    "piso": 0.506
+   },
+   {
+    "partido": "PODE",
+    "n": 11,
+    "iq": 0.477,
+    "geo": 0.413,
+    "piso": 0.486
+   },
+   {
+    "partido": "REPUBLICANOS",
+    "n": 31,
+    "iq": 0.487,
+    "geo": 0.401,
+    "piso": 0.484
+   },
+   {
+    "partido": "MDB",
+    "n": 26,
+    "iq": 0.488,
+    "geo": 0.393,
+    "piso": 0.48
+   },
+   {
+    "partido": "PL",
+    "n": 80,
+    "iq": 0.46,
+    "geo": 0.36,
+    "piso": 0.455
+   }
+  ],
+  "robustez": {
+   "pisos": [
+    {
+     "piso": 0,
+     "rho_ref": 0.985,
+     "rho_aritm": 0.909,
+     "mov_max": 146.0,
+     "top10": 10,
+     "bottom10": 5,
+     "co2_spearman": -0.288,
+     "co2_p": 0.0
+    },
+    {
+     "piso": 0.01,
+     "rho_ref": 0.99,
+     "rho_aritm": 0.919,
+     "mov_max": 115.0,
+     "top10": 10,
+     "bottom10": 8,
+     "co2_spearman": -0.285,
+     "co2_p": 0.0
+    },
+    {
+     "piso": 0.05,
+     "rho_ref": 0.998,
+     "rho_aritm": 0.944,
+     "mov_max": 42.0,
+     "top10": 10,
+     "bottom10": 9,
+     "co2_spearman": -0.28,
+     "co2_p": 0.0
+    },
+    {
+     "piso": 0.1,
+     "rho_ref": 1.0,
+     "rho_aritm": 0.96,
+     "mov_max": 0.0,
+     "top10": 10,
+     "bottom10": 10,
+     "co2_spearman": -0.272,
+     "co2_p": 0.0
+    },
+    {
+     "piso": 0.15,
+     "rho_ref": 0.999,
+     "rho_aritm": 0.97,
+     "mov_max": 27.0,
+     "top10": 10,
+     "bottom10": 9,
+     "co2_spearman": -0.265,
+     "co2_p": 0.0
+    },
+    {
+     "piso": 0.2,
+     "rho_ref": 0.997,
+     "rho_aritm": 0.978,
+     "mov_max": 44.0,
+     "top10": 10,
+     "bottom10": 9,
+     "co2_spearman": -0.261,
+     "co2_p": 0.0
+    },
+    {
+     "piso": 0.3,
+     "rho_ref": 0.992,
+     "rho_aritm": 0.987,
+     "mov_max": 62.0,
+     "top10": 10,
+     "bottom10": 8,
+     "co2_spearman": -0.256,
+     "co2_p": 0.0
+    },
+    {
+     "piso": 0.5,
+     "rho_ref": 0.982,
+     "rho_aritm": 0.995,
+     "mov_max": 89.0,
+     "top10": 9,
+     "bottom10": 8,
+     "co2_spearman": -0.246,
+     "co2_p": 0.0001
+    }
+   ],
+   "metodos": {
+    "iq": {
+     "rho_aritm": 1.0,
+     "rho_geo": 0.96,
+     "mov_max": 0.0,
+     "top10_geo": 8,
+     "bottom10_geo": 7,
+     "rho_desequilibrio": 0.038,
+     "co2_spearman": -0.234,
+     "co2_p": 0.0002
+    },
+    "iq_geometrica_piso": {
+     "rho_aritm": 0.96,
+     "rho_geo": 1.0,
+     "mov_max": 118.0,
+     "top10_geo": 10,
+     "bottom10_geo": 10,
+     "rho_desequilibrio": -0.192,
+     "co2_spearman": -0.272,
+     "co2_p": 0.0
+    },
+    "iq_mazziotta_pareto": {
+     "rho_aritm": 0.994,
+     "rho_geo": 0.978,
+     "mov_max": 51.0,
+     "top10_geo": 10,
+     "bottom10_geo": 8,
+     "rho_desequilibrio": -0.044,
+     "co2_spearman": -0.245,
+     "co2_p": 0.0001
+    }
+   },
+   "partidos_ordem": {
+    "a": [
+     "PDT",
+     "PSOL",
+     "PSB",
+     "PSD",
+     "UNIÃO",
+     "PT",
+     "PSDB",
+     "PP",
+     "MDB",
+     "REPUBLICANOS",
+     "PODE",
+     "PL"
+    ],
+    "g": [
+     "PDT",
+     "PSOL",
+     "PSB",
+     "PSD",
+     "PT",
+     "UNIÃO",
+     "PSDB",
+     "PP",
+     "PODE",
+     "REPUBLICANOS",
+     "MDB",
+     "PL"
+    ],
+    "m": [
+     "PDT",
+     "PSOL",
+     "PSB",
+     "PSD",
+     "PT",
+     "UNIÃO",
+     "PSDB",
+     "PP",
+     "REPUBLICANOS",
+     "MDB",
+     "PODE",
+     "PL"
+    ]
+   }
   }
  },
  "reg": {
   "principal": {
-   "n": 260,
-   "slope": -4.2171,
-   "intercept": 2.003,
-   "stderr": 1.4224,
-   "ci_low": -7.0182,
-   "ci_high": -1.416,
-   "r2": 0.0329,
-   "p": 0.003313,
-   "pearson": -0.182,
-   "spearman": -0.175,
-   "p_spearman": 0.0048,
-   "x_min": 0.2223,
-   "x_max": 0.8714
+   "n": 245,
+   "slope": -4.7028,
+   "intercept": 2.15,
+   "stderr": 1.593,
+   "ci_low": -7.8406,
+   "ci_high": -1.5649,
+   "r2": 0.0346,
+   "p": 0.003465,
+   "pearson": -0.186,
+   "spearman": -0.234,
+   "p_spearman": 0.0002,
+   "x_min": 0.2561,
+   "x_max": 0.8368
   },
   "principal_sem_outlier": {
-   "n": 258,
-   "slope": -3.1885,
-   "intercept": 1.6081,
-   "stderr": 1.171,
-   "ci_low": -5.4944,
-   "ci_high": -0.8825,
-   "r2": 0.0281,
-   "p": 0.006915,
-   "pearson": -0.168,
-   "spearman": -0.164,
-   "p_spearman": 0.0084,
-   "x_min": 0.2223,
-   "x_max": 0.8714
+   "n": 243,
+   "slope": -3.914,
+   "intercept": 1.8912,
+   "stderr": 1.3069,
+   "ci_low": -6.4885,
+   "ci_high": -1.3395,
+   "r2": 0.0359,
+   "p": 0.003033,
+   "pearson": -0.189,
+   "spearman": -0.229,
+   "p_spearman": 0.0003,
+   "x_min": 0.2561,
+   "x_max": 0.8368
   },
   "robustez": {
    "n": 587,

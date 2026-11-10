@@ -1,4 +1,4 @@
-"""Consolida os scores (IPP, IRD, CO2, IPIPE, IFS) por parlamentar-legislatura.
+"""Consolida os scores (IPP, IRD, CO2, IPIPE, IFS, IRR) por parlamentar-legislatura.
 
 Base: data/df_parlamentares_por_legislatura.csv (uma linha por id da Câmara x legislatura).
 Cada índice é juntado por left join. Índices sem id da Câmara (CO2, IPIPE, IFS) são
@@ -30,6 +30,7 @@ DEPARA_PATH = OUT_DIR / "depara_nomes.csv"
 LEG_CO2 = 56  # CO2-INDEX cobre a 56a legislatura (2019-2023)
 LEGS_IPIPE = [56, 57]  # arquivos IPIPE_56A_* e IPIPE_57A_*
 LEG_IFS = 57  # postagens de 2023
+LEG_IRR = 57  # planilha V6_..._IRR_ponderado_57
 
 
 # --------------------------------------------------------------------------- helpers
@@ -186,6 +187,33 @@ def load_ipipe(aliases: pd.DataFrame, det: pd.DataFrame, depara: dict) -> tuple[
     return ok, unmatched
 
 
+def load_irr(aliases: pd.DataFrame, det: pd.DataFrame, depara: dict) -> tuple[pd.DataFrame, pd.DataFrame]:
+    """IRR da 57ª legislatura; a planilha é identificada pelo nome civil, como o IPIPE."""
+    irr = pd.read_excel(SCORES / "IRR" / "V6_agregado_ponderado_final_IRR_ponderado_57.xlsx", sheet_name="Agregado_Ponderado")
+    leg_ids = set(aliases.loc[aliases.legislatura == LEG_IRR, "id_camara"])
+    civil = unique_map(det[det.id_camara.isin(leg_ids)], "civil_norm", "id_camara")
+    # os nomes civis são os mesmos do IPIPE: reaproveita o de-para feito para ele
+    civil_ipipe = {nome: i for (indice, nome), i in depara.items() if indice == "IPIPE"}
+    irr["id_camara"] = match_names(irr, "PARLAMENTAR", "IRR", [civil, civil_ipipe], depara)
+    irr["legislatura"] = LEG_IRR
+    unmatched = irr[irr.id_camara.isna()][["PARLAMENTAR", "PLATAFORMAS", "N_POSTS_TOTAL"]]
+    ok = irr.dropna(subset=["id_camara"]).rename(
+        columns={
+            "IRR_PONDERADO_VOLUME_final": "irr",
+            "N_POSTS_TOTAL": "irr_n_posts",
+            "N_POSTS_CLAIM_VALIDA": "irr_n_posts_claim",
+            "RECEPCAO": "irr_recepcao",
+            "ESCOPO": "irr_escopo",
+            "ESPECIFICIDADE": "irr_especificidade",
+            "CONSISTENCIA": "irr_consistencia",
+            "VALENCIA": "irr_valencia",
+            "QUADRANTE": "irr_quadrante",
+        }
+    )[["id_camara", "legislatura", "irr", "irr_n_posts", "irr_n_posts_claim", "irr_recepcao", "irr_escopo",
+       "irr_especificidade", "irr_consistencia", "irr_valencia", "irr_quadrante"]]
+    return ok, unmatched
+
+
 def load_ifs(aliases: pd.DataFrame, det: pd.DataFrame, depara: dict) -> tuple[pd.DataFrame, pd.DataFrame]:
     posts = read_xlsx_columns(
         SCORES / "IFS" / "df_predictions.xlsx",
@@ -245,9 +273,10 @@ def main() -> None:
     co2, co2_nc = load_co2(aliases, depara)
     ipipe, ipipe_nc = load_ipipe(aliases, det, depara)
     ifs, ifs_nc = load_ifs(aliases, det, depara)
+    irr, irr_nc = load_irr(aliases, det, depara)
 
     final = base
-    for name, df in [("ipp", ipp), ("ird", ird), ("co2", co2), ("ipipe", ipipe), ("ifs", ifs)]:
+    for name, df in [("ipp", ipp), ("ird", ird), ("co2", co2), ("ipipe", ipipe), ("ifs", ifs), ("irr", irr)]:
         assert not df.duplicated(["id_camara", "legislatura"]).any(), f"{name}: chave duplicada"
         df = df.copy()
         df["id_camara"] = df["id_camara"].astype("int64")
@@ -266,6 +295,7 @@ def main() -> None:
             co2_nc.assign(indice="CO2", nome_origem=co2_nc.nome_padronizado),
             ipipe_nc.assign(indice="IPIPE", nome_origem=ipipe_nc.nome),
             ifs_nc.assign(indice="IFS", nome_origem=ifs_nc.screen_name),
+            irr_nc.assign(indice="IRR", nome_origem=irr_nc.PARLAMENTAR),
         ],
         ignore_index=True,
     )
@@ -279,6 +309,7 @@ def main() -> None:
         ("CO2", "co2_index", len(co2) + len(co2_nc)),
         ("IPIPE", "ipipe_id_parlamentar", len(ipipe) + len(ipipe_nc)),
         ("IFS", "ifs", len(ifs) + len(ifs_nc)),
+        ("IRR", "irr", len(irr) + len(irr_nc)),
     ]:
         print(f"  {name:6s} {final[col].notna().sum():5d} linhas com valor  (origem: {total})")
     print(f"não casados: {len(nc)}  -> {OUT_DIR / 'nao_casados.csv'}")

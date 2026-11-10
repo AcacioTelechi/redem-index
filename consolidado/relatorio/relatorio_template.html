@@ -97,24 +97,24 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.9em;back
 <header>
   <div class="eyebrow">REDEM · Câmara dos Deputados · 57ª legislatura (2023–2027)</div>
   <h1 style="margin-top:8px">Índice de Qualidade Parlamentar</h1>
-  <p class="lede">Um índice composto que resume, por deputado federal, quatro dimensões do mandato: profissionalização (IPP), representação descritiva (IRD), exposição a processos eleitorais (IPIPE) e integridade informacional (IFS). Ao final, o índice é confrontado com o CO2-Index, que mede emissões associadas à atividade legislativa na legislatura anterior.</p>
+  <p class="lede">Um índice composto que resume, por deputado federal, cinco dimensões do mandato: profissionalização (IPP), representação descritiva (IRD), exposição a processos eleitorais (IPIPE), integridade informacional (IFS) e representação reivindicada nas redes (IRR). Ao final, o índice é confrontado com o CO2-Index, que mede emissões associadas à atividade legislativa na legislatura anterior.</p>
   <div class="tiles" id="iq-tiles"></div>
-  <div id="dl-row" hidden style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:12px 0 4px"><button class="btn dl" id="dl-btn" type="button">Baixar banco consolidado (CSV)</button><span id="dl-msg" style="font-size:13px;color:var(--muted)">6.250 linhas · um registro por deputado e legislatura, com os cinco índices</span></div>
-  <p class="note" style="font-size:13px;color:var(--muted)">Fontes: <code>consolidado/indice_qualidade.csv</code> e <code>scores_consolidados.csv</code>, gerados em 9 nov 2026.</p>
+  <div id="dl-row" hidden style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:12px 0 4px"><button class="btn dl" id="dl-btn" type="button">Baixar banco consolidado (CSV)</button><span id="dl-msg" style="font-size:13px;color:var(--muted)">6.250 linhas · um registro por deputado e legislatura, com os seis índices</span></div>
+  <p class="note" style="font-size:13px;color:var(--muted)">Fontes: <code>consolidado/indice_qualidade.csv</code> e <code>scores_consolidados.csv</code>, gerados em 10 nov 2026.</p>
 </header>
 
 <section>
   <h2>1. O Índice de Qualidade (IQ)</h2>
   <div class="prose">
-  <p>O IQ é a média simples de quatro componentes: IPP, IRD, IPIPE (invertido: mais exposição a processos = pior) e IFS. O IRS entrará como quinta dimensão quando houver dados. Antes da média, cada componente é convertido em posição percentual (0 = pior, 1 = melhor) dentro da legislatura em que foi medido, de modo que nenhum domine por ter escala ou cauda maior.</p>
-  <p>O IQ é calculado para a <b>57ª legislatura</b>, a única em que os quatro componentes foram medidos. Exigir os quatro deixa <span id="iq-n"></span> dos 595 deputados; os demais não têm perfil de Instagram analisado (IFS) ou não têm registro no IPIPE.</p>
+  <p>O IQ é a média simples de cinco componentes: IPP, IRD, IPIPE (invertido: mais exposição a processos = pior), IFS e IRR. Antes da média, cada componente é convertido em posição percentual (0 = pior, 1 = melhor) dentro da legislatura em que foi medido, de modo que nenhum domine por ter escala ou cauda maior.</p>
+  <p>O IQ é calculado para a <b>57ª legislatura</b>, a única em que os cinco componentes foram medidos. Exigir os cinco deixa <span id="iq-n"></span> dos 595 deputados; os demais não têm perfil de rede social analisado (IFS, IRR) ou não têm registro no IPIPE.</p>
   </div>
   <div class="grid c2">
     <div class="card"><div class="head"><h3>Distribuição do IQ</h3><button class="btn" data-tv="iq-h">Tabela</button></div><p class="sub" id="iq-h-sub"></p><div class="chart" id="iq-h"></div><div class="tablewrap tv" id="iq-h-tv"></div></div>
     <div class="card"><div class="head"><h3>Quanto cada componente acompanha o IQ</h3><button class="btn" data-tv="iq-comp">Tabela</button></div><p class="sub">ρ de Spearman entre o IQ e cada componente normalizado</p><div class="chart" id="iq-comp"></div><p class="note">Com pesos iguais, os componentes mais dispersos e menos correlacionados entre si pesam mais no resultado.</p><div class="tablewrap tv" id="iq-comp-tv"></div></div>
   </div>
   <p class="prose" id="iq-texto1"></p>
-  <div class="rk" id="iq-rk" style="margin-top:16px"></div>
+  <div class="rk" id="iq-rk" style="margin-top:16px;grid-template-columns:repeat(auto-fit,minmax(min(100%,540px),1fr))"></div>
 
   <h3 class="sec">1.1 IQ por partido</h3>
   <p class="prose">Média do IQ entre os deputados de cada partido na 57ª legislatura, para partidos com oito ou mais deputados com IQ completo. Passe o mouse para ver o número de deputados e a mediana.</p>
@@ -122,13 +122,40 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.9em;back
   <p class="prose" id="iq-party-texto"></p>
 
   <h3 class="sec">1.2 Sensibilidade: pesos por análise fatorial</h3>
-  <p class="prose">Uma alternativa aos pesos iguais é derivar os pesos de uma análise fatorial, como foi feito para as variáveis do IPP. O teste abaixo aplica um modelo de um fator aos quatro componentes normalizados e usa a carga ao quadrado, normalizada, como peso.</p>
+  <p class="prose">Uma alternativa aos pesos iguais é derivar os pesos de uma análise fatorial, como foi feito para as variáveis do IPP. O teste abaixo aplica um modelo de um fator aos cinco componentes normalizados e usa a carga ao quadrado, normalizada, como peso.</p>
   <div class="grid c2">
     <div class="card"><h3>O modelo fatorial é adequado?</h3><p class="sub">Diagnósticos sobre os deputados com IQ completo</p><div class="tablewrap" id="fa-diag"></div></div>
     <div class="card"><div class="head"><h3>Cargas no primeiro fator</h3><button class="btn" data-tv="fa-load">Tabela</button></div><p class="sub">Extração por componentes principais</p><div class="chart" id="fa-load"></div><div class="tablewrap tv" id="fa-load-tv"></div></div>
   </div>
   <p class="prose" id="fa-texto"></p>
-  <div class="card" style="margin-top:16px"><h3>Pesos iguais × pesos fatoriais</h3><p class="sub">Peso de cada componente e efeito sobre o índice</p><div class="tablewrap" id="fa-pesos"></div></div>
+  <div class="card" style="margin-top:16px"><h3>Pesos iguais × pesos fatoriais</h3><p class="sub">Peso de cada componente nas duas ponderações</p><div class="tablewrap" id="fa-pesos"></div></div>
+
+  <h3 class="sec">1.3 Sensibilidade: IPIPE por eleição disputada</h3>
+  <p class="prose">A exposição a processos eleitorais acumula com a carreira: quem disputou mais eleições teve mais ocasiões de ser processado. Nesta variante o IPIPE é dividido pelo número de eleições ordinárias que o deputado disputou entre 1998 e 2022 (dados do TSE), de modo a medir propensão a processos, não tempo de exposição. Os demais componentes ficam como estão.</p>
+  <div class="grid c2">
+    <div class="card"><h3>O que o ajuste muda no componente</h3><p class="sub">Correlação de Spearman do IPIPE (invertido) com medidas de carreira</p><div class="tablewrap" id="ia-comp"></div></div>
+    <div class="card"><h3>O que muda no índice</h3><p class="sub">IQ atual × IQ com IPIPE ajustado</p><div class="tablewrap" id="ia-iq"></div></div>
+  </div>
+  <p class="prose" id="ia-texto"></p>
+  <div class="rk" id="ia-mov" style="margin-top:16px"></div>
+
+  <h3 class="sec">1.4 Formas de agregação: aritmética ou geométrica?</h3>
+  <div class="prose">
+  <p>A média aritmética supõe que as dimensões se compensam: um deputado muito exposto a processos pode ter IQ mediano se for forte nas demais. A média geométrica supõe o contrário: qualidade exige um mínimo em todas as dimensões, e um ponto muito fraco não é compensado pelos outros. A escolha é conceitual, não estatística.</p>
+  <p>Há um cuidado técnico. Como cada componente é uma posição percentual, o último colocado em um deles vale quase zero, e na geométrica pura isso derruba o índice inteiro, mesmo que a distância real para o penúltimo seja mínima. A <b>geométrica com piso</b> reescala cada componente para o intervalo de <span id="ag-piso"></span> a 1 antes da média, preservando a penalidade por desequilíbrio sem deixar um único último lugar dominar o resultado.</p>
+  </div>
+  <div class="card"><h3>As três formas comparadas</h3><p class="sub" id="ag-sub"></p><div class="tablewrap" id="ag-comp"></div></div>
+  <p class="prose" id="ag-texto"></p>
+  <div class="rk" id="ag-mov" style="margin-top:16px;grid-template-columns:repeat(auto-fit,minmax(min(100%,540px),1fr))"></div>
+  <div class="prose" style="margin-top:24px">
+  <p><b>A escolha depende do valor do piso?</b> O piso de 0,1 é uma convenção. A tabela à esquerda repete o cálculo com pisos de 0 a 0,5 e compara cada resultado com o de 0,1. <b>Outro método chega ao mesmo lugar?</b> O índice de Mazziotta–Pareto foi desenhado para dimensões não substituíveis e não usa piso: é a média dos componentes padronizados menos uma penalidade pelo desequilíbrio entre eles. A tabela à direita o compara com as duas médias.</p>
+  </div>
+  <div class="grid c2">
+    <div class="card"><h3>Sensibilidade ao valor do piso</h3><p class="sub">Cada linha comparada com a geométrica de piso 0,1</p><div class="tablewrap" id="ag-pisos"></div></div>
+    <div class="card"><h3>Comparação com o Mazziotta–Pareto</h3><p class="sub">Três formas de agregar os mesmos cinco componentes</p><div class="tablewrap" id="ag-mpi"></div></div>
+  </div>
+  <p class="prose" id="ag-rob-texto"></p>
+  <div class="card" style="margin-top:16px"><div class="head"><h3>IQ médio por partido nas três formas</h3></div><p class="sub">Partidos com oito ou mais deputados, ordenados pela geométrica com piso</p><div class="tablewrap" id="ag-part"></div></div>
 </section>
 
 <section>
@@ -139,11 +166,12 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.9em;back
     <dt>IRD</dt><dd>Índice de Representação Descritiva. O valor por deputado é o peso individual que corrige a sub ou super-representação do seu perfil de gênero e raça frente à população (peso 1 = perfil já proporcional). Por legislatura, o índice de ajuste resume o quanto a Câmara se afasta da população.</dd>
     <dt>IPIPE</dt><dd>Exposição a processos eleitorais (TSE), ponderada por gravidade e imputação e com desconto por recorrência. Maior = mais exposição; no IQ entra invertido.</dd>
     <dt>IFS</dt><dd>Índice de Falar Sincero: 1 − (postagens classificadas como desinformação ÷ total de postagens) no Instagram em 2023. Maior = melhor.</dd>
+    <dt>IRR</dt><dd>Mede, nas postagens do deputado no Instagram e no X, o quanto ele reivindica representar grupos ou causas e como essa reivindicação é recebida, combinando recepção, escopo, especificidade, consistência e valência, ponderados pelo volume de postagens (0 a 1). Maior = melhor.</dd>
   </dl>
   </div>
 
   <h3 class="sec">2.1 Cobertura dos dados</h3>
-  <p class="prose">Cada índice cobre um recorte diferente. IPP e IRD existem para toda a série histórica; o IPIPE cobre a 56ª e a 57ª legislaturas; o IFS usa postagens de 2023, portanto só a 57ª; o CO2-Index existe só para a 56ª. A 57ª é a única com os quatro componentes do IQ.</p>
+  <p class="prose">Cada índice cobre um recorte diferente. IPP e IRD existem para toda a série histórica; o IPIPE cobre a 56ª e a 57ª legislaturas; o IFS usa postagens de 2023 e o IRR foi calculado para a 57ª; o CO2-Index existe só para a 56ª. A 57ª é a única com os cinco componentes do IQ.</p>
   <div class="tiles" id="tiles"></div>
   <div class="card">
     <div class="head"><h3>Deputados com valor em cada índice, por legislatura</h3><button class="btn" data-tv="cov">Tabela</button></div>
@@ -153,14 +181,14 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.9em;back
   </div>
 
   <h3 class="sec">2.2 Distribuição de cada componente</h3>
-  <p class="prose">Histogramas dos valores originais, antes da normalização. A linha vertical marca a mediana. IRD e IPIPE têm cauda longa à direita: poucos deputados com peso ou exposição muito altos. O IFS concentra-se perto de 1, já que a maioria dos perfis tem poucas postagens classificadas como desinformação.</p>
+  <p class="prose">Histogramas dos valores originais, antes da normalização. A linha vertical marca a mediana. IRD e IPIPE têm cauda longa à direita: poucos deputados com peso ou exposição muito altos. O IFS concentra-se perto de 1, já que a maioria dos perfis tem poucas postagens classificadas como desinformação. O IRR é o mais simétrico, em torno de 0,55.</p>
   <div class="grid c2" id="hists"></div>
 
   <h3 class="sec">2.3 Os componentes se relacionam entre si?</h3>
   <p class="prose">Correlação de Spearman entre os componentes nas legislaturas em que coexistem. <span id="corr-texto"></span></p>
   <div class="grid c2">
     <div class="card"><div class="head"><h3>56ª legislatura</h3><button class="btn" data-tv="c56">Tabela</button></div><p class="sub">IPP, IRD e IPIPE · n entre 223 e 613 pares</p><div class="chart" id="c56"></div><div class="tablewrap tv" id="c56-tv"></div></div>
-    <div class="card"><div class="head"><h3>57ª legislatura</h3><button class="btn" data-tv="c57">Tabela</button></div><p class="sub">IPP, IRD, IPIPE e IFS · n entre 436 e 595 pares</p><div class="chart" id="c57"></div><div class="tablewrap tv" id="c57-tv"></div></div>
+    <div class="card"><div class="head"><h3>57ª legislatura</h3><button class="btn" data-tv="c57">Tabela</button></div><p class="sub">IPP, IRD, IPIPE, IFS e IRR · n entre 415 e 595 pares</p><div class="chart" id="c57"></div><div class="tablewrap tv" id="c57-tv"></div></div>
   </div>
   <div class="scale" style="margin-top:10px"><span>−1</span><div class="bar" style="background:linear-gradient(90deg,var(--div-neg),var(--div-mid),var(--div-pos))"></div><span>+1</span><span style="margin-left:8px">ρ de Spearman</span></div>
 
@@ -194,7 +222,7 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.9em;back
   <div class="grid c2" id="co2-cards"></div>
 
   <h3 class="sec">3.1 Dispersão e reta de regressão</h3>
-  <p class="prose">Cada ponto é um deputado. A reta é o ajuste por mínimos quadrados de CO2 sobre IQ. À esquerda, o IQ da 57ª (quatro componentes) contra o CO2-Index da 56ª, para os reeleitos; à direita, a robustez dentro da 56ª, com os componentes disponíveis para cada deputado (IPP e IRD para todos, IPIPE para 223).</p>
+  <p class="prose">Cada ponto é um deputado. A reta é o ajuste por mínimos quadrados de CO2 sobre IQ. À esquerda, o IQ da 57ª (cinco componentes) contra o CO2-Index da 56ª, para os reeleitos; à direita, a robustez dentro da 56ª, com os componentes disponíveis para cada deputado (IPP e IRD para todos, IPIPE para 223).</p>
   <div class="grid c2">
     <div class="card"><div class="head"><h3>IQ da 57ª × CO2-Index da 56ª</h3><button class="btn" data-tv="iq-sc">Tabela</button></div><p class="sub" id="iq-sc-sub"></p><div class="chart" id="iq-sc"></div><div class="tablewrap tv" id="iq-sc-tv"></div></div>
     <div class="card"><div class="head"><h3>Robustez: IQ parcial × CO2-Index, 56ª</h3><button class="btn" data-tv="iq-sc2">Tabela</button></div><p class="sub" id="iq-sc2-sub"></p><div class="chart" id="iq-sc2"></div><div class="tablewrap tv" id="iq-sc2-tv"></div></div>
@@ -214,11 +242,14 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.9em;back
   <div class="prose">
   <p>A base é <code>data/df_parlamentares_por_legislatura.csv</code>: uma linha por id da Câmara e legislatura. IPP e IRD já traziam esse id. CO2, IPIPE e IFS foram casados por nome normalizado (sem acentos, caixa alta) contra todas as variantes de nome registradas pela Câmara, depois contra o nome civil; 17 casos restantes foram resolvidos à mão em <code>depara_nomes.csv</code>.</p>
   <ul class="flat">
-    <li><b>IQ:</b> calculado por <code>indice_qualidade.py</code> para a 57ª legislatura. A normalização por posição percentual evita que as caudas de IRD e IPIPE dominem a média. Ficam de fora os deputados sem os quatro componentes, em geral por não terem perfil de Instagram analisado.</li>
+    <li><b>IQ:</b> calculado por <code>indice_qualidade.py</code> para a 57ª legislatura. A normalização por posição percentual evita que as caudas de IRD e IPIPE dominem a média. Ficam de fora os deputados sem os cinco componentes, em geral por não terem perfil de rede social analisado.</li>
     <li><b>Pesos:</b> a análise fatorial (seção 1.2) não sustenta um fator comum (KMO ≈ 0,5 e cargas de sinais opostos); por isso o IQ usa pesos iguais e a versão fatorial entra só como sensibilidade (coluna <code>iq_fatorial</code>).</li>
+    <li><b>Agregação:</b> a seção 1.4 compara a média aritmética com a geométrica pura e a geométrica com piso de 0,1 (colunas <code>iq_geometrica</code> e <code>iq_geometrica_piso</code>). O piso é um parâmetro (<code>PISO_GEOMETRICA</code>); a mesma seção testa pisos de 0 a 0,5 e o índice de Mazziotta–Pareto (coluna <code>iq_mazziotta_pareto</code>), calculado sobre os componentes em posição percentual.</li>
+    <li><b>IPIPE e carreira:</b> a seção 1.3 testa o IPIPE dividido pelo número de eleições disputadas (coluna <code>iq_ipipe_ajustado</code>). O IQ principal mantém o IPIPE original; o IPP, já validado por pares, não foi alterado.</li>
     <li><b>Defasagem entre legislaturas:</b> o cruzamento principal compara o IQ da 57ª com o CO2-Index da 56ª, o que exige que o deputado esteja nas duas. Reeleitos não são uma amostra aleatória, e o comportamento medido pelo CO2 é anterior ao medido pelo IQ.</li>
     <li><b>IPIPE:</b> casados 232 de 232 na 56ª e 482 de 494 na 57ª; os 12 restantes são suplentes que não constam na base de deputados usada. O relatório usa o <code>score_exposicao_ipipe</code>. Deputados fora dos arquivos são tratados como ausentes, não como sem processos.</li>
     <li><b>IFS:</b> 598 perfis de Instagram; 517 deputados casados. Os 81 restantes são senadores. Cobre só 2023, o primeiro ano da 57ª legislatura.</li>
+    <li><b>IRR:</b> 496 de 497 deputados casados pelo nome civil. O relatório usa a versão ponderada por volume (<code>IRR_PONDERADO_VOLUME_final</code>), que correlaciona 0,99 com a média simples.</li>
     <li><b>IRD:</b> o valor por deputado é o peso de ponderação; o índice de ajuste por legislatura foi recalculado a partir dos pesos com a fórmula documentada, 1 − Σ|w − 1| / (2(N − 1)).</li>
     <li><b>CO2:</b> 587 de 587 deputados casados, 56ª legislatura. A distribuição tem poucos valores muito negativos, por isso a regressão é reportada com e sem eles e acompanhada da correlação de Spearman.</li>
   </ul>
@@ -231,7 +262,7 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.9em;back
 <script>
 (function(){
 const D=JSON.parse(document.getElementById('data').textContent);
-const IDX=[['ipp','IPP'],['ird','IRD (peso)'],['co2','CO2-Index'],['ipipe','IPIPE (exposição)'],['ifs','IFS']];
+const IDX=[['ipp','IPP'],['ird','IRD (peso)'],['co2','CO2-Index'],['ipipe','IPIPE (exposição)'],['ifs','IFS'],['irr','IRR']];
 const NAME=Object.fromEntries(IDX);const COMP=IDX.filter(([k])=>k!=='co2');
 const fmtN=n=>n.toLocaleString('pt-BR');
 const fmt=(v,d=2)=>v==null?'–':v.toLocaleString('pt-BR',{minimumFractionDigits:d,maximumFractionDigits:d});
@@ -341,11 +372,11 @@ lineChart('t-ird',[{name:'Índice de ajuste',color:cssVar('--accent'),pts:D.time
 lineChart('t-comp',[{name:'Mulheres',color:cssVar('--accent'),pts:D.time.map(t=>({leg:t.leg,v:t.pF}))},{name:'Não-brancos',color:cssVar('--s2'),pts:D.time.map(t=>({leg:t.leg,v:t.pNB}))}],{label:'Participação de mulheres e não-brancos por legislatura',pct:true,zero:true});
 
 // ---- índice de qualidade
-(function(){const Q=D.iq,R=Q.resumo,CN={iq:'IQ',ipp_norm:'IPP',ird_norm:'IRD',ipipe_norm:'IPIPE (invertido)',ifs_norm:'IFS',iq_disponivel:'IQ (disponíveis)'};
+(function(){const Q=D.iq,R=Q.resumo,CN={iq:'IQ',ipp_norm:'IPP',ird_norm:'IRD',ipipe_norm:'IPIPE (invertido)',ifs_norm:'IFS',irr_norm:'IRR',iq_disponivel:'IQ (disponíveis)'};
  document.getElementById('iq-n').textContent=fmtN(R.n_iq_completo);
  const dist=R.n_componentes_dist;document.getElementById('iq-tiles').innerHTML=[
   [`Deputados da ${R.leg_iq}ª`,fmtN(R.n_deputados),'base do IQ'],['Deputados com IQ completo',fmtN(R.n_iq_completo),`${fmtN(R.n_iq_completo_com_co2)} deles com CO2-Index da ${R.leg_co2}ª`,true],
-  ['Com 3 componentes',fmtN(dist['3']||0),'falta IPIPE ou IFS'],['Com 2 componentes',fmtN(dist['2']||0),'só IPP e IRD'],
+  ['Com 4 componentes',fmtN(dist['4']||0),'falta um: IPIPE, IFS ou IRR'],['Com 3 ou menos',fmtN((dist['3']||0)+(dist['2']||0)),'faltam dois ou mais'],
   ['IQ mediano',fmt(R.iq_stats['50%'],2),`de ${fmt(R.iq_stats.min,2)} a ${fmt(R.iq_stats.max,2)}`]].map(([l,v,s,h])=>`<div class="tile${h?' hero':''}"><div class="lab">${l}</div><div class="val">${v}</div><div class="sub">${s}</div></div>`).join('');
  // histograma
  const H=Q.hist;document.getElementById('iq-h-sub').textContent=`n = ${fmtN(H.n)} · mediana ${fmt(H.median,3)} · média ${fmt(H.mean,3)}`;
@@ -373,7 +404,7 @@ lineChart('t-comp',[{name:'Mulheres',color:cssVar('--accent'),pts:D.time.map(t=>
   const acc=cssVar('--accent'),sf=cssVar('--surface'),dense=S.length>200,r=dense?3:4.5;S.forEach(p=>{const g=el('g',{},s);if(!dense)el('circle',{cx:xs(p.iq),cy:ys(p.co2),r:r+1.5,fill:sf},g);el('circle',{cx:xs(p.iq),cy:ys(p.co2),r,fill:acc,'fill-opacity':dense?.55:.85},g);el('circle',{cx:xs(p.iq),cy:ys(p.co2),r:dense?7:12,fill:'transparent'},g);hover(g,`<b>${p.nome}</b> · ${p.partido}/${p.uf}<br>IQ ${fmt(p.iq,3)} · CO2 ${fmt(p.co2,2)}${p.nc?`<br>${p.nc} componentes`:''}`);});
   const f=x=>G.intercept+G.slope*x,xa=G.x_min,xb=G.x_max;el('line',{x1:xs(xa),y1:ys(f(xa)),x2:xs(xb),y2:ys(f(xb)),stroke:sf,'stroke-width':5,'stroke-linecap':'round'},s);el('line',{x1:xs(xa),y1:ys(f(xa)),x2:xs(xb),y2:ys(f(xb)),stroke:cssVar('--s2'),'stroke-width':2.5,'stroke-linecap':'round'},s);
   table(id,[{l:'Deputado',k:'nome'},{l:'Partido · UF',k:'p'},{l:'IQ',k:'iq',num:1},{l:'CO2',k:'co2',num:1}],S.slice().sort((a,b)=>b.iq-a.iq).map(p=>({nome:p.nome,p:`${p.partido} · ${p.uf}`,iq:fmt(p.iq,3),co2:fmt(p.co2,2)})));});}
- const G=R.reg;scatter('iq-sc',Q.scatter,G.principal,'IQ da 57ª (4 componentes) →');scatter('iq-sc2',Q.scatter2,G.robustez,'IQ parcial da 56ª →');
+ const G=R.reg;scatter('iq-sc',Q.scatter,G.principal,'IQ da 57ª (5 componentes) →');scatter('iq-sc2',Q.scatter2,G.robustez,'IQ parcial da 56ª →');
  // tabela de regressão
  const RL=[['principal','IQ da 57ª × CO2 da 56ª'],['principal_sem_outlier','Idem, sem extremos'],['robustez','Robustez: IQ parcial, 56ª'],['robustez_sem_outlier','Robustez, sem extremos']];
  document.getElementById('iq-reg').innerHTML=`<table><thead><tr><th>Amostra</th><th class="num">n</th><th class="num">Intercepto a</th><th class="num">Inclinação b</th><th class="num">IC 95% de b</th><th class="num">R²</th><th class="num">p</th><th class="num">Pearson</th><th class="num">Spearman</th><th class="num">p (Spearman)</th></tr></thead><tbody>${RL.map(([k,l])=>{const g=G[k];return `<tr><td>${l}</td><td class="num">${fmtN(g.n)}</td><td class="num">${fmt(g.intercept,2)}</td><td class="num"><b>${fmt(g.slope,2)}</b></td><td class="num">${fmt(g.ci_low,2)} a ${fmt(g.ci_high,2)}</td><td class="num">${fmt(g.r2,3)}</td><td class="num">${pv(g.p)}</td><td class="num">${fmt(g.pearson,3)}</td><td class="num">${fmt(g.spearman,3)}</td><td class="num">${pv(g.p_spearman)}</td></tr>`;}).join('')}</tbody></table>`;
@@ -383,11 +414,11 @@ lineChart('t-comp',[{name:'Mulheres',color:cssVar('--accent'),pts:D.time.map(t=>
  const gp=G.principal,gr=G.robustez,cipp=R.corr_opcao1.find(r=>r.var==='ipp_norm');
  const sg=g=>g.p<0.05;const sigc=R.corr_opcao1.filter(r=>r.var!=='iq'&&r.p_spearman<0.05).map(r=>CN[r.var]);
  document.getElementById('iq-texto').innerHTML=`Nas quatro especificações a inclinação é negativa: deputados com IQ maior tendem a ter CO2-Index menor. No cruzamento principal (n = ${gp.n}), cada 0,1 ponto de IQ corresponde a ${fmt(Math.abs(gp.slope)/10,2)} ponto a menos de CO2-Index; o intervalo de 95% da inclinação vai de ${fmt(gp.ci_low,2)} a ${fmt(gp.ci_high,2)} e ${sg(gp)?'não inclui zero':'inclui zero'} (p ${gp.p<0.001?'':'= '}${pv(gp.p)}; Spearman ${fmt(gp.spearman,2)}, p ${gp.p_spearman<0.001?'':'= '}${pv(gp.p_spearman)}). A robustez dentro da 56ª (n = ${fmtN(gr.n)}) aponta na mesma direção, com inclinação de ${fmt(gr.slope,2)} (IC ${fmt(gr.ci_low,2)} a ${fmt(gr.ci_high,2)}). Retirar os valores extremos de CO2 não muda a conclusão. A relação é ${sg(gp)&&sg(gr)?'estatisticamente significativa nas duas amostras, mas fraca':'fraca'}: o IQ explica ${fmt(gp.r2*100,1)}% da variância do CO2-Index. Entre os componentes, ${sigc.length?`só ${sigc.join(' e ')} se associa${sigc.length>1?'m':''} ao CO2 de forma detectável`:'nenhum se associa ao CO2 de forma detectável isoladamente'} (ρ do IPP = ${fmt(cipp.spearman,2)}).`;
- const tb=(title,rows)=>`<div class="card"><h3>${title}</h3><div class="tablewrap"><table><thead><tr><th>#</th><th>Deputado</th><th>Partido · UF</th><th class="num">IQ</th><th class="num">IPP</th><th class="num">IRD</th><th class="num">IPIPE</th><th class="num">IFS</th></tr></thead><tbody>${rows.map((r,i)=>`<tr><td>${i+1}</td><td>${r.nome}</td><td>${r.partido} · ${r.uf}</td><td class="num"><b>${fmt(r.v,3)}</b></td><td class="num">${fmt(r.ipp,2)}</td><td class="num">${fmt(r.ird,2)}</td><td class="num">${fmt(r.ipipe,2)}</td><td class="num">${fmt(r.ifs,2)}</td></tr>`).join('')}</tbody></table></div><p class="note">Componentes em posição percentual (0 = pior, 1 = melhor).</p></div>`;
+ const tb=(title,rows)=>`<div class="card"><h3>${title}</h3><div class="tablewrap"><table><thead><tr><th>#</th><th>Deputado</th><th>Partido · UF</th><th class="num">IQ</th><th class="num">IPP</th><th class="num">IRD</th><th class="num">IPIPE</th><th class="num">IFS</th><th class="num">IRR</th></tr></thead><tbody>${rows.map((r,i)=>`<tr><td>${i+1}</td><td>${r.nome}</td><td>${r.partido} · ${r.uf}</td><td class="num"><b>${fmt(r.v,3)}</b></td><td class="num">${fmt(r.ipp,2)}</td><td class="num">${fmt(r.ird,2)}</td><td class="num">${fmt(r.ipipe,2)}</td><td class="num">${fmt(r.ifs,2)}</td><td class="num">${fmt(r.irr,2)}</td></tr>`).join('')}</tbody></table></div><p class="note">Componentes em posição percentual (0 = pior, 1 = melhor).</p></div>`;
  document.getElementById('iq-rk').innerHTML=tb('Dez maiores IQ',Q.top)+tb('Dez menores IQ',Q.bottom);})();
 
 // ---- sensibilidade: análise fatorial
-(function(){const F=D.iq.resumo.fatorial,N={ipp_norm:'IPP',ird_norm:'IRD',ipipe_norm:'IPIPE (invertido)',ifs_norm:'IFS'},pv=p=>p<0.001?'< 0,001':fmt(p,3);
+(function(){const F=D.iq.resumo.fatorial,N={ipp_norm:'IPP',ird_norm:'IRD',ipipe_norm:'IPIPE (invertido)',ifs_norm:'IFS',irr_norm:'IRR'},pv=p=>p<0.001?'< 0,001':fmt(p,3);
  const ok=(c,t)=>`<span style="white-space:nowrap">${c?'✓ atende':'✗ não atende'}</span> <span style="color:var(--muted)">(${t})</span>`;
  document.getElementById('fa-diag').innerHTML=`<table><thead><tr><th>Diagnóstico</th><th class="num">Valor</th><th>Critério</th></tr></thead><tbody>
   <tr><td>Deputados</td><td class="num">${F.n}</td><td></td></tr>
@@ -401,10 +432,70 @@ lineChart('t-comp',[{name:'Mulheres',color:cssVar('--accent'),pts:D.time.map(t=>
   table('fa-load',[{l:'Componente',k:'n'},{l:'Componentes principais',k:'a',num:1},{l:'Eixos principais',k:'b',num:1}],rows.map(r=>({n:r.n,a:fmt(r.cp,3),b:fmt(r.ep,3)})));});
  const G=D.iq.resumo.reg.principal,H=F.reg_co2,neg=F.vars.filter((v,i)=>F.cargas_cp[i]<0).map(v=>N[v]);
  const sigB=F.bartlett_p<0.05,pos=F.vars.filter((v,i)=>F.cargas_cp[i]>=0).map(v=>N[v]);
- document.getElementById('fa-texto').innerHTML=`Os dados não sustentam bem um fator comum. ${sigB?`O teste de Bartlett rejeita a hipótese de componentes não correlacionados (p ${pv(F.bartlett_p).replace('< ','< ')}), o que é esperado com ${F.n} deputados, mas`:`O teste de Bartlett não rejeita a hipótese de que os componentes sejam não correlacionados (p = ${pv(F.bartlett_p)}),`} o KMO fica em ${fmt(F.kmo,2)}, abaixo do mínimo usual de 0,6, e o primeiro fator explica ${fmt(F.var_explicada*100,0)}% da variância, pouco acima dos 25% esperados por acaso com quatro variáveis.${neg.length?` Além disso, o fator opõe ${neg.join(' e ')} a ${pos.join(', ')}: as cargas têm sinais contrários, de modo que usá-las com sinal inverteria o sentido de parte dos componentes.`:''} Por isso os pesos iguais permanecem como versão principal, e os pesos fatoriais (carga ao quadrado, sem sinal) servem apenas para verificar se as conclusões dependem da ponderação.`;
- document.getElementById('fa-pesos').innerHTML=`<table><thead><tr><th>Versão</th>${F.vars.map(v=>`<th class="num">${N[v]}</th>`).join('')}<th class="num">Correlação com o IQ principal</th><th class="num">Inclinação vs CO2</th><th class="num">p</th><th class="num">Spearman vs CO2</th><th class="num">p</th></tr></thead><tbody>
-  <tr><td>Pesos iguais (principal)</td>${F.vars.map(()=>`<td class="num">0,25</td>`).join('')}<td class="num">1,00</td><td class="num">${fmt(G.slope,2)}</td><td class="num">${pv(G.p)}</td><td class="num">${fmt(G.spearman,3)}</td><td class="num">${pv(G.p_spearman)}</td></tr>
-  <tr><td>Pesos fatoriais</td>${F.pesos.map(v=>`<td class="num">${fmt(v,2)}</td>`).join('')}<td class="num">${fmt(F.corr_iq_igual,2)}</td><td class="num">${fmt(H.slope,2)}</td><td class="num">${pv(H.p)}</td><td class="num">${fmt(H.spearman,3)}</td><td class="num">${pv(H.p_spearman)}</td></tr></tbody></table><p class="note" style="margin-top:8px">${(()=>{const i=F.pesos.indexOf(Math.max(...F.pesos)),j=F.pesos.indexOf(Math.min(...F.pesos)),sa=G.p<0.05,sb=H.p<0.05;return `Os pesos fatoriais dão ${fmt(F.pesos[i]*100,0)}% do índice a ${N[F.vars[i]]} e ${fmt(F.pesos[j]*100,0)}% a ${N[F.vars[j]]}. A relação com o CO2 tem o mesmo sinal nas duas ponderações e ${sa===sb?(sa?'é significativa em ambas':'não é significativa em nenhuma'):'a significância da regressão depende dos pesos'}.`;})()}</p>`;})();
+ document.getElementById('fa-texto').innerHTML=`Os dados não sustentam bem um fator comum. ${sigB?`O teste de Bartlett rejeita a hipótese de componentes não correlacionados (p ${pv(F.bartlett_p).replace('< ','< ')}), o que é esperado com ${F.n} deputados, mas`:`O teste de Bartlett não rejeita a hipótese de que os componentes sejam não correlacionados (p = ${pv(F.bartlett_p)}),`} o KMO fica em ${fmt(F.kmo,2)}, abaixo do mínimo usual de 0,6, e o primeiro fator explica ${fmt(F.var_explicada*100,0)}% da variância, pouco acima dos ${fmt(100/F.vars.length,0)}% esperados por acaso com ${F.vars.length} variáveis.${neg.length?` Além disso, o fator opõe ${neg.join(' e ')} a ${pos.join(', ')}: as cargas têm sinais contrários, de modo que usá-las com sinal inverteria o sentido de parte dos componentes.`:''} Por isso os pesos iguais permanecem como versão principal, e os pesos fatoriais (carga ao quadrado, sem sinal) servem apenas para verificar se as conclusões dependem da ponderação.`;
+ const k=F.vars.length,eq=1/k,ci=g=>`${m2(g.ci_low)} a ${m2(g.ci_high)}`,m2=v=>fmt(v,2).replace('-','−'),m3=v=>fmt(v,3).replace('-','−');
+ const iMax=F.pesos.indexOf(Math.max(...F.pesos)),iMin=F.pesos.indexOf(Math.min(...F.pesos)),sa=G.p<0.05,sb=H.p<0.05;
+ document.getElementById('fa-pesos').innerHTML=`<table><thead><tr><th>Componente</th><th class="num">Carga no 1º fator</th><th class="num">Peso igual</th><th class="num">Peso fatorial (carga²)</th><th class="num">Diferença</th></tr></thead><tbody>
+  ${F.vars.map((v,i)=>`<tr><td>${N[v]}</td><td class="num">${m2(F.cargas_cp[i])}</td><td class="num">${fmt(eq,2)}</td><td class="num"><b>${fmt(F.pesos[i],2)}</b></td><td class="num">${F.pesos[i]>=eq?'+':'−'}${fmt(Math.abs(F.pesos[i]-eq),2)}</td></tr>`).join('')}
+  <tr><td><b>Soma</b></td><td class="num"></td><td class="num">${fmt(eq*k,2)}</td><td class="num">${fmt(F.pesos.reduce((x,y)=>x+y,0),2)}</td><td class="num"></td></tr></tbody></table>
+  <h3 style="margin-top:20px">Efeito sobre o índice</h3>
+  <table style="margin-top:6px"><thead><tr><th>Versão</th><th class="num">n</th><th class="num">Correlação de postos com o IQ principal</th><th class="num">CO2: inclinação</th><th class="num">IC 95%</th><th class="num">p</th><th class="num">CO2: Spearman</th><th class="num">p</th></tr></thead><tbody>
+  <tr><td>Pesos iguais (IQ principal)</td><td class="num">${fmtN(G.n)}</td><td class="num">1,00</td><td class="num">${m2(G.slope)}</td><td class="num">${ci(G)}</td><td class="num">${pv(G.p)}</td><td class="num">${m3(G.spearman)}</td><td class="num">${pv(G.p_spearman)}</td></tr>
+  <tr><td>Pesos fatoriais</td><td class="num">${fmtN(H.n)}</td><td class="num">${m2(F.corr_iq_igual_spearman)}</td><td class="num">${m2(H.slope)}</td><td class="num">${ci(H)}</td><td class="num">${pv(H.p)}</td><td class="num">${m3(H.spearman)}</td><td class="num">${pv(H.p_spearman)}</td></tr></tbody></table>
+  <p class="note" style="margin-top:8px">Os pesos fatoriais dão ${fmt(F.pesos[iMax]*100,0)}% do índice a ${N[F.vars[iMax]]} e ${fmt(F.pesos[iMin]*100,0)}% a ${N[F.vars[iMin]]}, contra ${fmt(eq*100,0)}% para cada componente nos pesos iguais. A regressão com o CO2 usa os ${fmtN(G.n)} deputados com IQ da 57ª e CO2-Index da 56ª; o sinal é o mesmo nas duas ponderações e ${sa===sb?(sa?'a relação é significativa em ambas':'a relação não é significativa em nenhuma'):'a significância depende dos pesos'}.</p>`;})();
+
+// ---- sensibilidade: IPIPE por eleição disputada
+(function(){const A=D.iq.resumo.ipipe_ajustado,G=D.iq.resumo.reg.principal,H=A.reg_co2,pv=p=>p<0.001?'< 0,001':fmt(p,3),m=v=>fmt(v,2).replace('-','−');
+ document.getElementById('ia-comp').innerHTML=`<table><thead><tr><th>IPIPE (invertido) com</th><th class="num">Original</th><th class="num">Ajustado</th></tr></thead><tbody>
+  <tr><td>Tempo de casa</td><td class="num">${m(A.corr_ipipe.tempo[0])}</td><td class="num">${m(A.corr_ipipe.tempo[1])}</td></tr>
+  <tr><td>IPP</td><td class="num">${m(A.corr_ipipe.ipp[0])}</td><td class="num">${m(A.corr_ipipe.ipp[1])}</td></tr>
+  <tr><td>Número de eleições disputadas</td><td class="num">${m(A.corr_ipipe.n_eleicoes[0])}</td><td class="num">${m(A.corr_ipipe.n_eleicoes[1])}</td></tr></tbody></table><p class="note" style="margin-top:8px">O componente ajustado correlaciona ${m(A.corr_ipipe_original_ajustado)} com o original.</p>`;
+ document.getElementById('ia-iq').innerHTML=`<table><thead><tr><th></th><th class="num">IQ atual</th><th class="num">IPIPE ajustado</th></tr></thead><tbody>
+  <tr><td>Correlação com o IQ atual</td><td class="num">1,00</td><td class="num">${m(A.corr_iq)}</td></tr>
+  <tr><td>Mudança de posição (mediana)</td><td class="num">–</td><td class="num">${fmt(A.mov_mediana,0)}</td></tr>
+  <tr><td>Dez primeiros em comum</td><td class="num">–</td><td class="num">${A.top10_comum}</td></tr>
+  <tr><td>Dez últimos em comum</td><td class="num">–</td><td class="num">${A.bottom10_comum}</td></tr>
+  <tr><td>Correlação com tempo de casa</td><td class="num">${m(A.iq_tempo[0])}</td><td class="num">${m(A.iq_tempo[1])}</td></tr>
+  <tr><td>IQ × CO2: inclinação</td><td class="num">${m(G.slope)}</td><td class="num">${m(H.slope)}</td></tr>
+  <tr><td>IQ × CO2: Spearman (p)</td><td class="num">${fmt(G.spearman,2).replace('-','−')} (${pv(G.p_spearman)})</td><td class="num">${fmt(H.spearman,2).replace('-','−')} (${pv(H.p_spearman)})</td></tr></tbody></table>`;
+ document.getElementById('ia-texto').innerHTML=`O ajuste cumpre o que se espera dele: a correlação do IPIPE com o tempo de casa cai de ${m(A.corr_ipipe.tempo[0])} para ${m(A.corr_ipipe.tempo[1])}, e a com o IPP, de ${m(A.corr_ipipe.ipp[0])} para ${m(A.corr_ipipe.ipp[1])}. O índice muda pouco (correlação de ${m(A.corr_iq)} com o IQ atual; ${A.top10_comum} dos dez primeiros se mantêm), e a relação com o CO2-Index continua negativa. Há dois efeitos colaterais. O IQ passa a favorecer um pouco mais os veteranos (correlação com tempo de casa de ${m(A.iq_tempo[0])} para ${m(A.iq_tempo[1])}), porque o IPIPE original compensava em parte o peso da antiguidade no IPP. E estreantes, que disputaram uma única eleição, ficam com o denominador mínimo: um só processo pesa muito, o que explica as maiores quedas. Por isso a variante fica como sensibilidade e o IQ principal mantém o IPIPE original.`;
+ const tb=(title,rows)=>`<div class="card"><h3>${title}</h3><div class="tablewrap"><table><thead><tr><th>Deputado</th><th>Partido · UF</th><th class="num">Eleições</th><th class="num">IQ atual</th><th class="num">Ajustado</th><th class="num">Posições</th></tr></thead><tbody>${rows.map(r=>`<tr><td>${r.nome}</td><td>${r.partido} · ${r.uf}</td><td class="num">${r.n_eleicoes}</td><td class="num">${fmt(r.iq,2)}</td><td class="num">${fmt(r.iq_adj,2)}</td><td class="num">${r.delta>0?'+':'−'}${Math.abs(r.delta)}</td></tr>`).join('')}</tbody></table></div></div>`;
+ document.getElementById('ia-mov').innerHTML=tb('Quem mais sobe com o ajuste',A.sobem)+tb('Quem mais cai',A.caem);})();
+
+// ---- formas de agregação
+(function(){const A=D.iq.resumo.agregacao,V=A.versoes,K=[['iq','Aritmética (IQ atual)'],['iq_geometrica','Geométrica'],['iq_geometrica_piso','Geométrica com piso']],pv=p=>p<0.001?'< 0,001':fmt(p,3),m=v=>fmt(v,2).replace('-','−'),P=V.iq_geometrica_piso,G=V.iq_geometrica,I=V.iq;
+ document.getElementById('ag-piso').textContent=fmt(A.piso,1);document.getElementById('ag-sub').textContent=`${fmtN(A.n)} deputados com os cinco componentes`;
+ const row=(l,f)=>`<tr><td>${l}</td>${K.map(([k])=>`<td class="num">${f(V[k],k)}</td>`).join('')}</tr>`;
+ document.getElementById('ag-comp').innerHTML=`<table><thead><tr><th></th>${K.map(([,l])=>`<th class="num">${l}</th>`).join('')}</tr></thead><tbody>
+  ${row('Mínimo · mediana · máximo',v=>`${m(v.min)} · ${m(v.mediana)} · ${m(v.max)}`)}
+  ${row('Correlação de postos com o IQ atual',v=>m(v.corr_iq))}
+  ${row('Mudança de posição (mediana)',(v,k)=>k==='iq'?'–':fmt(v.mov_mediana,0))}
+  ${row('Maior mudança de posição',(v,k)=>k==='iq'?'–':fmt(v.mov_max,0))}
+  ${row('Dez primeiros em comum',(v,k)=>k==='iq'?'–':v.top10_comum)}
+  ${row('Dez últimos em comum',(v,k)=>k==='iq'?'–':v.bottom10_comum)}
+  ${row('Correlação com o pior componente do deputado',v=>m(v.corr_menor_componente))}
+  ${row('IQ × CO2: inclinação',v=>m(v.reg_co2.slope))}
+  ${row('IQ × CO2: Spearman (p)',v=>`${m(v.reg_co2.spearman)} (${pv(v.reg_co2.p_spearman)})`)}
+  ${row('IQ × CO2: R²',v=>fmt(v.reg_co2.r2*100,1)+'%')}</tbody></table>`;
+ document.getElementById('ag-texto').innerHTML=`Na geométrica pura o índice passa a depender muito do pior componente de cada deputado (correlação de ${m(G.corr_menor_componente)}, contra ${m(I.corr_menor_componente)} na aritmética), a maior mudança chega a ${fmt(G.mov_max,0)} posições e só ${G.bottom10_comum} dos dez últimos se mantêm. Com o piso, a penalidade por desequilíbrio continua (${m(P.corr_menor_componente)}), mas o ranking fica mais estável: correlação de ${m(P.corr_iq)} com o IQ atual, ${P.top10_comum} dos dez primeiros e ${P.bottom10_comum} dos dez últimos mantidos, maior mudança de ${fmt(P.mov_max,0)} posições. A relação com o CO2-Index é negativa e significativa nas três formas. Entre as três, a geométrica com piso é a que melhor traduz a ideia de que qualidade parlamentar exige um desempenho mínimo em todas as dimensões, sem o artefato do último lugar. Neste relatório o IQ das demais seções continua sendo a média aritmética.`;
+ const H=['IPP','IRD','IPIPE','IFS','IRR'],tb=(title,rows)=>`<div class="card"><h3>${title}</h3><div class="tablewrap"><table><thead><tr><th>Deputado</th><th>Partido · UF</th><th class="num">Aritm.</th><th class="num">Geom. piso</th>${H.map(h=>`<th class="num">${h}</th>`).join('')}<th class="num">Posições</th></tr></thead><tbody>${rows.map(r=>`<tr><td>${r.nome}</td><td>${r.partido} · ${r.uf}</td><td class="num">${fmt(r.iq,2)}</td><td class="num"><b>${fmt(r.geo,2)}</b></td>${r.comp.map(v=>`<td class="num">${fmt(v,2)}</td>`).join('')}<td class="num">${r.delta>0?'+':'−'}${Math.abs(r.delta)}</td></tr>`).join('')}</tbody></table></div><p class="note">Componentes em posição percentual (0 = pior, 1 = melhor).</p></div>`;
+ document.getElementById('ag-mov').innerHTML=tb('Quem mais cai com a geométrica com piso',A.caem)+tb('Quem mais sobe',A.sobem);
+ document.getElementById('ag-part').innerHTML=`<table><thead><tr><th>Partido</th><th class="num">Deputados</th><th class="num">Aritmética</th><th class="num">Geométrica</th><th class="num">Geométrica com piso</th></tr></thead><tbody>${A.partidos.map(r=>`<tr><td>${r.partido}</td><td class="num">${r.n}</td><td class="num">${fmt(r.iq,3)}</td><td class="num">${fmt(r.geo,3)}</td><td class="num"><b>${fmt(r.piso,3)}</b></td></tr>`).join('')}</tbody></table>`;})();
+
+// ---- robustez da agregação: piso e Mazziotta-Pareto
+(function(){const B=D.iq.resumo.agregacao.robustez,pv=p=>p<0.001?'< 0,001':fmt(p,3),m=(v,d=2)=>fmt(v,d).replace('-','−');
+ document.getElementById('ag-pisos').innerHTML=`<table><thead><tr><th class="num">Piso</th><th class="num">Correlação de postos</th><th class="num">Maior mudança</th><th class="num">10 primeiros iguais</th><th class="num">10 últimos iguais</th><th class="num">CO2: Spearman</th></tr></thead><tbody>${B.pisos.map(r=>{const ref=r.piso===0.1,b=s=>ref?`<b>${s}</b>`:s;return `<tr><td class="num">${b(r.piso===0?'0 (pura)':fmt(r.piso,2))}</td><td class="num">${b(m(r.rho_ref,3))}</td><td class="num">${b(ref?'–':fmt(r.mov_max,0))}</td><td class="num">${b(r.top10)}</td><td class="num">${b(r.bottom10)}</td><td class="num">${b(m(r.co2_spearman))}</td></tr>`;}).join('')}</tbody></table>`;
+ const K=[['iq','Aritmética'],['iq_geometrica_piso','Geométrica com piso'],['iq_mazziotta_pareto','Mazziotta–Pareto']],M=B.metodos,row=(l,f)=>`<tr><td>${l}</td>${K.map(([k])=>`<td class="num">${f(M[k],k)}</td>`).join('')}</tr>`;
+ document.getElementById('ag-mpi').innerHTML=`<table><thead><tr><th></th>${K.map(([,l])=>`<th class="num">${l}</th>`).join('')}</tr></thead><tbody>
+  ${row('Correlação de postos com a aritmética',v=>m(v.rho_aritm))}
+  ${row('Correlação de postos com a geométrica com piso',v=>m(v.rho_geo))}
+  ${row('Maior mudança de posição frente à aritmética',(v,k)=>k==='iq'?'–':fmt(v.mov_max,0))}
+  ${row('Dez primeiros iguais aos da geométrica com piso',v=>v.top10_geo)}
+  ${row('Dez últimos iguais aos da geométrica com piso',v=>v.bottom10_geo)}
+  ${row('Correlação com o desequilíbrio do deputado',v=>m(v.rho_desequilibrio))}
+  ${row('IQ × CO2: Spearman (p)',v=>`${m(v.co2_spearman)} (${pv(v.co2_p)})`)}</tbody></table><p class="note" style="margin-top:8px">Desequilíbrio = desvio-padrão entre os cinco componentes do deputado. Valor negativo indica que o índice rebaixa perfis desequilibrados.</p>`;
+ const fx=B.pisos.filter(r=>r.piso>=0.05&&r.piso<=0.3),mn=Math.min(...fx.map(r=>r.rho_ref)),p0=B.pisos.find(r=>r.piso===0),mp=M.iq_mazziotta_pareto,gp=M.iq_geometrica_piso,O=B.partidos_ordem,same=a=>a.slice(0,3).join(', '),cs=B.pisos.map(r=>r.co2_spearman);
+ document.getElementById('ag-rob-texto').innerHTML=`O valor do piso não muda o índice dentro de uma faixa ampla: entre 0,05 e 0,30 a correlação de postos com o piso de 0,1 fica em ${m(mn,3)} ou mais, os dez primeiros são os mesmos e ao menos ${Math.min(...fx.map(r=>r.bottom10))} dos dez últimos se mantêm. O único salto está entre não ter piso e ter algum: sem piso, só ${p0.bottom10} dos dez últimos coincidem. O que importa é haver um piso, não o seu valor exato. O Mazziotta–Pareto, por sua vez, chega aos mesmos dez primeiros da geométrica com piso e a ${mp.bottom10_geo} dos dez últimos, com correlação de ${m(mp.rho_geo)}; mas sua penalidade é leve e ele fica quase colado na aritmética (${m(mp.rho_aritm)}), de modo que a geométrica com piso é a única das três que de fato rebaixa os perfis desequilibrados (${m(gp.rho_desequilibrio)} contra ${m(mp.rho_desequilibrio)}). Nas três formas os partidos de maior IQ são os mesmos (${same(O.g)}), o último é ${O.g[O.g.length-1]}, e a relação com o CO2-Index fica entre ${m(Math.max(...cs))} e ${m(Math.min(...cs))} em todos os pisos testados. A escolha entre compensar ou não as dimensões continua sendo teórica; os testes mostram que, uma vez feita, ela é estável.`;})();
 
 // ---- download do banco consolidado (só aparece onde a página pode oferecer arquivos)
 (async function(){const downloads=await (window.claude&&window.claude.use?window.claude.use('downloads'):null);if(!downloads)return;
@@ -415,7 +506,7 @@ lineChart('t-comp',[{name:'Mulheres',color:cssVar('--accent'),pts:D.time.map(t=>
   btn.disabled=false;});})();
 
 // ---- rankings
-(function(){const seg=document.getElementById('rk-seg'),legSeg=document.getElementById('rk-leg'),host=document.getElementById('rk'),note=document.getElementById('rk-note');const DESC={ipp:'maior = mais profissionalizado',ird:'maior peso = perfil mais sub-representado',co2:'positivo = emissor, negativo = mitigador',ipipe:'maior = mais exposição a processos',ifs:'maior = menos desinformação'};
+(function(){const seg=document.getElementById('rk-seg'),legSeg=document.getElementById('rk-leg'),host=document.getElementById('rk'),note=document.getElementById('rk-note');const DESC={ipp:'maior = mais profissionalizado',ird:'maior peso = perfil mais sub-representado',co2:'positivo = emissor, negativo = mitigador',ipipe:'maior = mais exposição a processos',ifs:'maior = menos desinformação',irr:'maior = reivindica mais e é mais bem recebido'};
  let leg='57',k='ipp';
  function show(){const avail=COMP.filter(([i])=>D.rank[i][leg]);if(!D.rank[k][leg])k=avail[0][0];
   legSeg.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',b.dataset.leg===leg));
