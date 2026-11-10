@@ -1,35 +1,24 @@
 <title>Scores Consolidados REDEM</title>
 <meta name="claude:viewport-fit-sides" content="cover">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@500;600;700&family=Source+Sans+3:ital,wght@0,400;0,600;1,400&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fira+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Lora:ital,wght@0,400;0,600;1,400&display=swap">
 <style>
 /* Layout: a single reading column (72ch) for prose, charts break out to 1080px; cards only around charts. */
 :root{
-  --bg:#f3f5f8; --surface:#fcfcfb; --fg:#0b0b0b; --fg2:#52514e; --muted:#898781;
-  --grid:#e1e0d9; --axis:#c3c2b7; --ring:rgba(11,11,11,.10);
-  --accent:#2a78d6; --s2:#eb6834; --s3:#1baf7a;
-  --seq1:#cde2fb; --seq2:#9ec5f4; --seq3:#5598e7; --seq4:#256abf; --seq5:#0d366b;
-  --div-neg:#2a78d6; --div-mid:#f0efec; --div-pos:#e34948;
-  --tip-bg:#0b0b0b; --tip-fg:#fcfcfb;
-  --display:"Archivo",system-ui,-apple-system,"Segoe UI",sans-serif;
-  --body:"Source Sans 3",system-ui,-apple-system,"Segoe UI",sans-serif;
-  --data:system-ui,-apple-system,"Segoe UI",sans-serif;
+  --bg:#ffffff; --surface:#f6f6f6; --fg:#181814; --fg2:#54595f; --muted:#85888c;
+  --grid:#e2e2e0; --axis:#c4c4c1; --ring:rgba(24,24,20,.07);
+  --accent:#ef5700; --accent-ink:#b84300; --ink:#272727; --s2:#272727; --s3:#434c9b;
+  --seq1:#fde6d6; --seq2:#f9bd97; --seq3:#f38c4d; --seq4:#ef5700; --seq5:#7a2c00;
+  --div-neg:#434c9b; --div-mid:#f1f1f0; --div-pos:#ef5700;
+  --tip-bg:#181814; --tip-fg:#ffffff; --text:#272727;
+  --display:"Fira Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --body:"Fira Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --data:"Fira Sans",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --read:"Lora",Georgia,"Times New Roman",serif;
+  color-scheme:light;
 }
-@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
-  --bg:#0d0d0d; --surface:#1a1a19; --fg:#f0efec; --fg2:#c3c2b7; --muted:#898781;
-  --grid:#2c2c2a; --axis:#383835; --ring:rgba(255,255,255,.10);
-  --accent:#3987e5; --s2:#d95926; --s3:#199e70;
-  --seq1:#184f95; --seq2:#1c5cab; --seq3:#3987e5; --seq4:#86b6ef; --seq5:#cde2fb;
-  --div-neg:#3987e5; --div-mid:#383835; --div-pos:#e66767;
-  --tip-bg:#f0efec; --tip-fg:#0b0b0b; color-scheme:dark } }
-:root[data-theme="dark"]{
-  --bg:#0d0d0d; --surface:#1a1a19; --fg:#f0efec; --fg2:#c3c2b7; --muted:#898781;
-  --grid:#2c2c2a; --axis:#383835; --ring:rgba(255,255,255,.10);
-  --accent:#3987e5; --s2:#d95926; --s3:#199e70;
-  --seq1:#184f95; --seq2:#1c5cab; --seq3:#3987e5; --seq4:#86b6ef; --seq5:#cde2fb;
-  --div-neg:#3987e5; --div-mid:#383835; --div-pos:#e66767;
-  --tip-bg:#f0efec; --tip-fg:#0b0b0b; color-scheme:dark }
+/* tema claro fixo: o relatório não acompanha o modo escuro do sistema */
 
-body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:17px;line-height:1.55;
+body{background:var(--bg);color:var(--fg);font-family:var(--body);font-size:17px;line-height:1.55;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
   padding-left:max(16px,env(safe-area-inset-left,0px));padding-right:max(16px,env(safe-area-inset-right,0px));padding-block:0 64px}
 *{box-sizing:border-box}
 .wrap{max-width:1080px;margin:0 auto;min-width:0}
@@ -49,19 +38,33 @@ h2,h3.sec{scroll-margin-top:calc(16px + env(safe-area-inset-top,0px))}
   #toc summary{list-style:none;cursor:default;pointer-events:none}
   #toc summary::-webkit-details-marker{display:none}
 }
-.prose{max-width:72ch}
+.prose{max-width:62ch;font-family:var(--read);font-size:18px;line-height:1.75;color:var(--text);text-wrap:pretty;hyphens:manual}
+.prose p{margin:0 0 1.05em}
+.prose p:last-child{margin-bottom:0}
+p.prose{margin:0 0 1.05em}
+.pb{display:block;height:1.05em}
+.prose b,.prose strong{font-weight:600;color:var(--fg)}
+.prose a{color:var(--accent-ink);text-underline-offset:3px}
+/* respiro entre texto corrido e blocos de gráfico/tabela */
+:is(.grid,.card,.rk,.seg,.tablewrap)+.prose{margin-top:32px}
+.prose+:is(.grid,.card,.rk){margin-top:28px!important}
+:is(.grid,.card,.rk)+:is(.grid,.card,.rk){margin-top:20px!important}
+:is(.grid,.rk)>:is(.grid,.card,.rk){margin-top:0!important}
 h1,h2,h3{font-family:var(--display);text-wrap:balance;line-height:1.15;margin:0}
 h1{font-size:clamp(30px,4.5vw,44px);font-weight:700;letter-spacing:-.01em}
-h2{font-size:clamp(22px,3vw,28px);font-weight:600;margin-top:56px;padding-top:24px;border-top:1px solid var(--grid)}
+h2{font-size:clamp(24px,3vw,30px);font-weight:600;letter-spacing:-.01em;margin:72px 0 20px;padding-top:32px;border-top:1px solid var(--grid)}
 h3{font-size:17px;font-weight:600}
-h3.sec{font-size:21px;margin:40px 0 12px}
-h3.subsec{font-size:18px;margin:28px 0 10px}
+h3.sec{font-size:22px;margin:64px 0 14px}
+h3.subsec{font-size:18px;margin:44px 0 10px}
+.card.dec ul{margin:4px 0 0;padding-left:18px;font-size:15px;line-height:1.5}
+.card.dec li{margin:6px 0}
+.card.dec .eyebrow{color:var(--accent)}
 p{margin:12px 0}
-.eyebrow{font-family:var(--display);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--fg2);font-weight:600}
+.eyebrow{font-family:var(--display);font-size:12px;letter-spacing:.08em;text-transform:uppercase;color:var(--accent-ink);font-weight:600}
 header{padding-block:48px 8px}
-header .lede{font-size:19px;color:var(--fg2);max-width:62ch}
+header .lede{font-family:var(--read);font-size:20px;line-height:1.6;color:var(--fg2);max-width:60ch;text-wrap:pretty;margin:16px 0 0}
 .tiles{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:12px;margin:28px 0 8px}
-.tile{background:var(--surface);border:1px solid var(--ring);border-radius:8px;padding:14px 16px;min-width:0}
+.tile{background:var(--surface);border:1px solid var(--ring);border-radius:4px;padding:14px 16px;min-width:0}
 .tile .lab{font-size:13px;color:var(--fg2)}
 .tile .val{font-family:var(--data);font-weight:600;font-size:30px;line-height:1.1;margin-top:4px}
 .tile.hero .val{font-size:48px}
@@ -69,10 +72,10 @@ header .lede{font-size:19px;color:var(--fg2);max-width:62ch}
 .grid{display:grid;gap:16px;margin-top:16px}
 .grid.c2{grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr))}
 .grid.c3{grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr))}
-.card{background:var(--surface);border:1px solid var(--ring);border-radius:8px;padding:16px;min-width:0;display:flex;flex-direction:column;gap:8px}
+.card{background:var(--surface);border:1px solid var(--ring);border-radius:4px;padding:20px 22px;min-width:0;display:flex;flex-direction:column;gap:8px}
 .card .head{display:flex;justify-content:space-between;align-items:baseline;gap:12px;flex-wrap:wrap}
-.card .sub{font-size:14px;color:var(--fg2);margin:0}
-.card .note{font-size:13px;color:var(--muted);margin:0}
+.card .sub{font-size:14.5px;line-height:1.45;color:var(--fg2);margin:0;max-width:80ch}
+.card .note{font-size:14px;line-height:1.5;color:var(--fg2);margin:0;max-width:80ch}
 .chart{position:relative;min-width:0}
 .chart svg{display:block;width:100%;height:auto;font-family:var(--data);font-size:12px;overflow:visible}
 .chart text{fill:var(--fg2)}
@@ -81,16 +84,19 @@ header .lede{font-size:19px;color:var(--fg2);max-width:62ch}
 .chart .ax{stroke:var(--axis);stroke-width:1}
 .chart .lbl{fill:var(--fg);font-weight:600}
 .btn{font:600 12px var(--display);letter-spacing:.04em;text-transform:uppercase;color:var(--fg2);background:none;border:1px solid var(--ring);border-radius:6px;padding:4px 10px;cursor:pointer}
-.btn.dl{background:var(--accent);color:#fff;border-color:var(--accent);font-size:13px;padding:8px 14px}
+.btn.dl{background:var(--ink);color:#fff;border-color:var(--ink);font-size:13px;padding:9px 18px;border-radius:999px}
+.btn.dl:hover{background:var(--accent-ink);border-color:var(--accent-ink);color:#fff}
+.brand{display:block;height:44px;width:auto;margin-bottom:28px}
 .btn.dl:disabled{opacity:.6;cursor:default}
 .btn:hover{color:var(--fg);border-color:var(--axis)}
 .btn:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
-.btn[aria-pressed="true"]{background:var(--accent);color:#fff;border-color:var(--accent)}
+.btn[aria-pressed="true"]{background:var(--ink);color:#fff;border-color:var(--ink)}
 .seg{display:flex;gap:6px;flex-wrap:wrap;margin:16px 0 8px}
-table{border-collapse:collapse;width:100%;font-size:14px;font-family:var(--data)}
-th,td{padding:6px 8px;text-align:left;border-bottom:1px solid var(--grid);vertical-align:top}
+table{border-collapse:collapse;width:100%;font-size:14.5px;line-height:1.4;font-family:var(--data)}
+th,td{padding:9px 10px;text-align:left;border-bottom:1px solid var(--grid);vertical-align:top}
 th{font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--fg2);font-weight:600}
 td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
+td.num{white-space:nowrap}
 .tablewrap{overflow-x:auto;min-width:0}
 .tv{display:none}.tv.on{display:block}
 .legend{display:flex;gap:16px;flex-wrap:wrap;font-size:13px;color:var(--fg2)}
@@ -100,13 +106,15 @@ td.num,th.num{text-align:right;font-variant-numeric:tabular-nums}
 .scale .bar{height:8px;flex:1;max-width:160px;border-radius:4px}
 #tip{position:fixed;pointer-events:none;background:var(--tip-bg);color:var(--tip-fg);font:13px/1.4 var(--data);padding:6px 9px;border-radius:6px;max-width:260px;z-index:20;opacity:0;transition:opacity .08s}
 #tip b{font-weight:600}
-dl.defs{display:grid;grid-template-columns:max-content 1fr;gap:6px 16px;margin:12px 0;font-size:15px}
+dl.defs{display:grid;grid-template-columns:max-content 1fr;gap:14px 20px;margin:12px 0;font-size:17px;line-height:1.6}
 dl.defs dt{font-family:var(--display);font-weight:600}
-dl.defs dd{margin:0;color:var(--fg2)}
+dl.defs dd{margin:0;color:var(--text);font-family:var(--read)}
 @media (max-width:520px){dl.defs{grid-template-columns:1fr}dl.defs dd{margin-bottom:6px}}
-ul.flat{padding-left:20px;margin:8px 0}
+ul.flat{padding-left:22px;margin:12px 0}
+ul.flat li{margin:0 0 .55em;padding-left:4px}
+ul.flat li::marker{color:var(--muted)}
 .rk{display:grid;grid-template-columns:repeat(auto-fit,minmax(min(100%,420px),1fr));gap:16px}
-code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.9em;background:var(--surface);border:1px solid var(--ring);padding:0 4px;border-radius:4px}
+code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.85em;background:var(--surface);border:1px solid var(--ring);padding:0 4px;border-radius:4px}
 @media (prefers-reduced-motion:reduce){#tip{transition:none}}
 </style>
 
@@ -114,6 +122,7 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.9em;back
 <nav id="toc" aria-label="Índice do relatório"><details open><summary>Índice</summary><ol id="toc-list"></ol></details></nav>
 <div class="wrap">
 <header>
+  <img class="brand" alt="ReDem" src="data:image/png;base64,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">
   <div class="eyebrow">REDEM · Câmara dos Deputados · 57ª legislatura (2023–2027)</div>
   <h1 style="margin-top:8px">Índice de Qualidade Parlamentar</h1>
   <p class="lede">Um índice composto que resume, por deputado federal, cinco dimensões do mandato: profissionalização (IPP), representação descritiva (IRD), exposição a processos eleitorais (IPIPE), integridade informacional (IFS) e representação reivindicada nas redes (IRR). Ao final, o índice é confrontado com o CO2-Index, que mede emissões associadas à atividade legislativa na legislatura anterior.</p>
@@ -121,6 +130,20 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.9em;back
   <div id="dl-row" hidden style="display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:12px 0 4px"><button class="btn dl" id="dl-btn" type="button">Baixar banco consolidado (CSV)</button><span id="dl-msg" style="font-size:13px;color:var(--muted)">6.250 linhas · um registro por deputado e legislatura, com os seis índices</span></div>
   <p class="note" style="font-size:13px;color:var(--muted)">Fontes: <code>consolidado/indice_qualidade.csv</code> e <code>scores_consolidados.csv</code>, gerados em 10 nov 2026.</p>
 </header>
+
+<section>
+  <h2>Síntese para decisão</h2>
+  <p class="prose">Este relatório apoia duas decisões sobre o Índice de Qualidade: como entendê-lo e como agregar os seus cinco componentes. Os pontos abaixo resumem a evidência; cada um remete à seção onde está detalhado.</p>
+  <div class="grid c2">
+    <div class="card dec"><div class="eyebrow">Decisão 1</div><h3>Adotar o IQ como índice formativo</h3><div id="rs-d1"></div></div>
+    <div class="card dec"><div class="eyebrow">Decisão 2</div><h3>Agregar pela média geométrica com piso</h3><div id="rs-d2"></div></div>
+  </div>
+  <div class="card" style="margin-top:16px"><h3>Média aritmética × geométrica com piso</h3><p class="sub">O que muda e o que não muda com a forma de agregação</p><div class="tablewrap" id="rs-tab"></div></div>
+  <div class="grid c2">
+    <div class="card dec"><h3>O que não depende dessas decisões</h3><div id="rs-fixo"></div></div>
+    <div class="card dec"><h3>Pontos de atenção</h3><div id="rs-atencao"></div></div>
+  </div>
+</section>
 
 <section>
   <h2>1. O Índice de Qualidade (IQ)</h2>
@@ -171,7 +194,7 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.9em;back
   <p class="prose" id="ag-texto"></p>
   <div class="rk" id="ag-mov" style="margin-top:16px;grid-template-columns:repeat(auto-fit,minmax(min(100%,540px),1fr))"></div>
   <div class="prose" style="margin-top:24px">
-  <p><b>A escolha depende do valor do piso?</b> O piso de 0,1 é uma convenção. A tabela à esquerda repete o cálculo com pisos de 0 a 0,5 e compara cada resultado com o de 0,1. <b>Outro método chega ao mesmo lugar?</b> O índice de Mazziotta–Pareto foi desenhado para dimensões não substituíveis e não usa piso: é a média dos componentes padronizados menos uma penalidade pelo desequilíbrio entre eles. A tabela à direita o compara com as duas médias.</p>
+  <p><b>A escolha depende do valor do piso?</b> O piso de 0,1 é uma convenção. A tabela à esquerda repete o cálculo com pisos de 0 a 0,5 e compara cada resultado com o de 0,1.<span class="pb"></span><b>Outro método chega ao mesmo lugar?</b> O índice de Mazziotta–Pareto foi desenhado para dimensões não substituíveis e não usa piso: é a média dos componentes padronizados menos uma penalidade pelo desequilíbrio entre eles. A tabela à direita o compara com as duas médias.</p>
   </div>
   <div class="grid c2">
     <div class="card"><h3>Sensibilidade ao valor do piso</h3><p class="sub">Cada linha comparada com a geométrica de piso 0,1</p><div class="tablewrap" id="ag-pisos"></div></div>
@@ -252,7 +275,7 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.9em;back
   </div>
 
   <h3 class="sec">3.2 Estatísticas</h3>
-  <div class="card"><h3>Regressão linear: CO2 = a + b · IQ</h3><p class="sub">Inclinação b com intervalo de 95%; "sem extremos" exclui deputados com CO2-Index abaixo de −10. A reta aparece em laranja nos gráficos acima.</p><div class="tablewrap" id="iq-reg"></div></div>
+  <div class="card"><h3>Regressão linear: CO2 = a + b · IQ</h3><p class="sub">Inclinação b com intervalo de 95%; "sem extremos" exclui deputados com CO2-Index abaixo de −10. A reta aparece em cinza-escuro nos gráficos acima.</p><div class="tablewrap" id="iq-reg"></div></div>
   <p class="prose" id="iq-texto"></p>
   <div class="grid c2">
     <div class="card"><h3>Correlação de cada componente com o CO2</h3><p class="sub">Deputados com IQ da 57ª e CO2 da 56ª · Spearman e Pearson com valor-p</p><div class="tablewrap" id="iq-corr"></div></div>
@@ -318,6 +341,12 @@ code{font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.9em;back
   </div>
   <div class="card" style="margin-top:16px"><h3>Reconhecidos pelo DIAP × demais deputados</h3><p class="sub">Média de cada índice nos dois grupos · AUC = 0,5 significa que o índice não distingue os grupos · em negrito, p &lt; 0,05</p><div class="tablewrap" id="vp-tab"></div></div>
   <p class="prose" id="vp-texto"></p>
+
+  <h3 class="sec">4.4 Síntese da validação</h3>
+  <div class="card"><h3>O que cada teste mostrou</h3><p class="sub">Resultado para o IQ (média aritmética dos cinco componentes)</p><div class="tablewrap" id="vs-tab"></div></div>
+  <div class="prose">
+  <p id="vs-texto"></p>
+  </div>
 </section>
 
 <section>
@@ -615,7 +644,7 @@ lineChart('t-comp',[{name:'Mulheres',color:cssVar('--accent'),pts:D.time.map(t=>
  const K=[['iq','IQ'],['ipp_norm','IPP'],['ird_norm','IRD'],['ipipe_norm','IPIPE inv.'],['ifs_norm','IFS'],['irr_norm','IRR']],cell=(o,f)=>{const v=m(o[f]);return o.p<0.05?`<b>${v}</b>`:v;};
  document.getElementById('vd-assoc').innerHTML=`<table><thead><tr><th>Característica</th><th>Medida</th>${K.map(([,l])=>`<th class="num">${l}</th>`).join('')}</tr></thead><tbody>${V.numericas.map(r=>`<tr><td>${r.var}</td><td>ρ</td>${K.map(([k])=>`<td class="num">${cell(r[k],'rho')}</td>`).join('')}</tr>`).join('')}${V.categoricas.map(r=>`<tr><td>${r.var}</td><td>η²</td>${K.map(([k])=>`<td class="num">${cell(r[k],'eta2')}</td>`).join('')}</tr>`).join('')}</tbody></table>`;
  const N=V.numericas,T=N.find(r=>r.var==='Tempo de casa'),bl=n=>V.r2_blocos.find(r=>r.bloco===n),gen=V.medias.genero,rac=V.medias.raca,ide=V.medias.ideologia,reg=V.medias.regiao,I=V.ideologia,P=V.partido,gm=k=>gen.find(r=>r.grupo===k),im=k=>ide.find(r=>r.grupo===k);
- document.getElementById('vd-texto').innerHTML=`<b>O que não se associa ao índice.</b> O tempo de casa tem correlação de ${m(T.iq.rho)} com o IQ, embora seja de ${m(T.ipp_norm.rho)} com o IPP: os demais componentes pendem para o lado oposto e o efeito se anula no índice. Idade, número de eleições disputadas e escolaridade também não se associam, e reeleitos e novatos de 2022 têm a mesma média. <b>O que se associa pouco.</b> Região (${pc(bl('Região').iq)} da variância; ${reg[0].grupo} ${m(reg[0].iq)}, ${reg[reg.length-1].grupo} ${m(reg[reg.length-1].iq)}), ideologia (${pc(bl('Ideologia (6 níveis)').iq)}; esquerda ${m(im('Esquerda').iq)}, direita ${m(im('Direita').iq)}) e tamanho do partido (${pc(bl('Tamanho do partido').iq)}). A diferença por ideologia diminui quando se controla gênero e raça (correlação de ${m(I.r)} para ${m(I.r_parcial_genero_raca)}), porque a esquerda tem ${pc(I.pct_mulheres_esquerda,0)} de mulheres e a direita ${pc(I.pct_mulheres_direita,0)}. A associação com o tamanho do partido vem de uma única bancada: sem o PL, a correlação passa de ${m(P.rho)} para ${m(P.rho_sem_pl)}. <b>Gênero e raça.</b> Explicam ${pc(bl('Gênero e raça').iq)} do IQ: mulheres têm média de ${m(gm('Mulheres').iq)} e homens de ${m(gm('Homens').iq)}. Essa associação é esperada e vem inteira do IRD, que mede a representação descritiva; sem ele, a diferença praticamente desaparece (${m(gm('Mulheres').iq_sem_ird)} contra ${m(gm('Homens').iq_sem_ird)}). Manter o IRD no índice é uma decisão conceitual: a representação descritiva é tratada como parte da qualidade da representação. <b>Em conjunto</b>, as características que não deveriam importar explicam ${pc(V.r2_sem_genero_raca.iq)} do IQ, distribuídos entre região, ideologia e partido, sem que nenhuma domine. O índice não funciona como um marcador indireto de antiguidade nem de ideologia.`;})();
+ document.getElementById('vd-texto').innerHTML=`<b>O que não se associa ao índice.</b> O tempo de casa tem correlação de ${m(T.iq.rho)} com o IQ, embora seja de ${m(T.ipp_norm.rho)} com o IPP: os demais componentes pendem para o lado oposto e o efeito se anula no índice. Idade, número de eleições disputadas e escolaridade também não se associam, e reeleitos e novatos de 2022 têm a mesma média.<span class="pb"></span><b>O que se associa pouco.</b> Região (${pc(bl('Região').iq)} da variância; ${reg[0].grupo} ${m(reg[0].iq)}, ${reg[reg.length-1].grupo} ${m(reg[reg.length-1].iq)}), ideologia (${pc(bl('Ideologia (6 níveis)').iq)}; esquerda ${m(im('Esquerda').iq)}, direita ${m(im('Direita').iq)}) e tamanho do partido (${pc(bl('Tamanho do partido').iq)}). A diferença por ideologia diminui quando se controla gênero e raça (correlação de ${m(I.r)} para ${m(I.r_parcial_genero_raca)}), porque a esquerda tem ${pc(I.pct_mulheres_esquerda,0)} de mulheres e a direita ${pc(I.pct_mulheres_direita,0)}. A associação com o tamanho do partido vem de uma única bancada: sem o PL, a correlação passa de ${m(P.rho)} para ${m(P.rho_sem_pl)}.<span class="pb"></span><b>Gênero e raça.</b> Explicam ${pc(bl('Gênero e raça').iq)} do IQ: mulheres têm média de ${m(gm('Mulheres').iq)} e homens de ${m(gm('Homens').iq)}. Essa associação é esperada e vem inteira do IRD, que mede a representação descritiva; sem ele, a diferença praticamente desaparece (${m(gm('Mulheres').iq_sem_ird)} contra ${m(gm('Homens').iq_sem_ird)}). Manter o IRD no índice é uma decisão conceitual: a representação descritiva é tratada como parte da qualidade da representação. <b>Em conjunto</b>, as características que não deveriam importar explicam ${pc(V.r2_sem_genero_raca.iq)} do IQ, distribuídos entre região, ideologia e partido, sem que nenhuma domine. O índice não funciona como um marcador indireto de antiguidade nem de ideologia.`;})();
 
 // ---- validação: eleições de 2026
 (function(){const E=D.validacao.eleicao,R=E.reeleicao,S=E.senado,pc=(v,d=0)=>fmt(v*100,d)+'%',m=(v,d=2)=>fmt(v,d),pv=p=>p<0.001?'< 0,001':fmt(p,3),
@@ -642,7 +671,7 @@ lineChart('t-comp',[{name:'Mulheres',color:cssVar('--accent'),pts:D.time.map(t=>
   table('ve-s',[{l:'Candidato',k:'n'},{l:'Partido · UF',k:'p'},{l:'IQ',k:'i',num:1},{l:'Resultado',k:'r'},{l:'% dos votos',k:'v',num:1}],S.candidatos.map(q=>({n:q.nome,p:`${q.partido} · ${q.uf}`,i:fmt(q.iq,3),r:q.eleito?'Eleito':'Não eleito',v:q.participacao==null?'–':pc(q.participacao,1)})));});
  document.getElementById('ve-sen').innerHTML=cmp(S.comparacao,'Eleitos','Não eleitos','ρ com % dos votos')+`<p class="note" style="margin-top:8px">${S.n} candidatos; a correlação com a votação usa ${S.comparacao[0].n_rho}, pois um candidato não tem votos registrados. Em negrito, p &lt; 0,05.</p>`;
  const si=g(S.comparacao,'iq'),sf_=g(S.comparacao,'ifs_norm'),sr=g(S.comparacao,'irr_norm'),top=S.candidatos.slice(0,5),nt=top.filter(q=>!q.eleito).length,vr=g(S.vs_reeleicao,'irr_norm'),Dr=S.direita,Es=S.esquerda;
- document.getElementById('ve-sen-texto').innerHTML=`<b>No Senado a relação é inversa.</b> Os eleitos têm IQ médio de ${m(si.sim,3)} e os derrotados de ${m(si.nao,3)}. O AUC é ${m(si.auc)}: sorteando um eleito e um derrotado, o eleito tem o IQ maior em ${pc(si.auc)} das vezes (p = ${pv(si.p)}; ${pv(S.p_permutacao)} por permutação). Dos cinco candidatos de maior IQ, ${nt===5?'todos perderam':nt+' perderam'}. A diferença vem dos dois componentes medidos nas redes sociais, IFS (${m(sf_.sim,2)} contra ${m(sf_.nao,2)}) e IRR (${m(sr.sim,2)} contra ${m(sr.nao,2)}); IPP e IPIPE não distinguem os grupos. <b>Três cautelas.</b> São ${S.n} casos. Parte do efeito é ideológica: dos ${Es.n} candidatos de esquerda, que têm IQ médio de ${m(Es.iq)} contra ${m(Dr.iq)} da direita, só ${Es.eleitos} se elegeu; considerando apenas a direita (${Dr.n} candidatos), a diferença se mantém na mesma direção, mas menor e sem significância estatística (${m(Dr.iq_eleitos,3)} contra ${m(Dr.iq_nao,3)}, p = ${pv(Dr.p)}). E os candidatos ao Senado já diferem dos demais num ponto: têm IRR médio de ${m(vr.senado)}, contra ${m(vr.reeleicao)} dos que tentaram a reeleição. O resultado deve ser lido como indício.`;})();
+ document.getElementById('ve-sen-texto').innerHTML=`<b>No Senado a relação é inversa.</b> Os eleitos têm IQ médio de ${m(si.sim,3)} e os derrotados de ${m(si.nao,3)}. O AUC é ${m(si.auc)}: sorteando um eleito e um derrotado, o eleito tem o IQ maior em ${pc(si.auc)} das vezes (p = ${pv(si.p)}; ${pv(S.p_permutacao)} por permutação). Dos cinco candidatos de maior IQ, ${nt===5?'todos perderam':nt+' perderam'}. A diferença vem dos dois componentes medidos nas redes sociais, IFS (${m(sf_.sim,2)} contra ${m(sf_.nao,2)}) e IRR (${m(sr.sim,2)} contra ${m(sr.nao,2)}); IPP e IPIPE não distinguem os grupos.<span class="pb"></span><b>Três cautelas.</b> São ${S.n} casos. Parte do efeito é ideológica: dos ${Es.n} candidatos de esquerda, que têm IQ médio de ${m(Es.iq)} contra ${m(Dr.iq)} da direita, só ${Es.eleitos} se elegeu; considerando apenas a direita (${Dr.n} candidatos), a diferença se mantém na mesma direção, mas menor e sem significância estatística (${m(Dr.iq_eleitos,3)} contra ${m(Dr.iq_nao,3)}, p = ${pv(Dr.p)}). E os candidatos ao Senado já diferem dos demais num ponto: têm IRR médio de ${m(vr.senado)}, contra ${m(vr.reeleicao)} dos que tentaram a reeleição. O resultado deve ser lido como indício.`;})();
 
 // ---- validação: DIAP
 (function(){const P=D.validacao.diap,pc=(v,d=0)=>fmt(v*100,d)+'%',m=(v,d=2)=>fmt(v,d),pv=p=>p<0.001?'< 0,001':fmt(p,3),bp=(v,p)=>p<0.05?`<b>${v}</b>`:v,
@@ -657,7 +686,54 @@ lineChart('t-comp',[{name:'Mulheres',color:cssVar('--accent'),pts:D.time.map(t=>
  const ordem=['iq','ipp_norm','ird_norm','ipipe_norm','ifs_norm','irr_norm','ln_tempo_casa','iq_sem_ipp','iq_sem_ird','iq_geometrica_piso'];
  document.getElementById('vp-tab').innerHTML=`<table><thead><tr><th>Índice</th><th class="num">Cabeças (${P.n_cabecas})</th><th class="num">Demais</th><th class="num">AUC</th><th class="num">p</th><th class="num">Entre os 150 (${P.n_150})</th><th class="num">Demais</th><th class="num">AUC</th><th class="num">p</th></tr></thead><tbody>${ordem.map(k=>{const a=g(P.cabecas,k),b=g(P.top150,k),d=k==='ln_tempo_casa'?2:3,sep=(k==='ln_tempo_casa'||k==='iq_sem_ipp')?' style="border-top:2px solid var(--axis)"':'';return `<tr${sep}><td>${N[k]}</td><td class="num">${m(a.sim,d)}</td><td class="num">${m(a.nao,d)}</td><td class="num">${bp(m(a.auc),a.p)}</td><td class="num">${pv(a.p)}</td><td class="num">${m(b.sim,d)}</td><td class="num">${m(b.nao,d)}</td><td class="num">${bp(m(b.auc),b.p)}</td><td class="num">${pv(b.p)}</td></tr>`;}).join('')}</tbody></table><p class="note" style="margin-top:8px">As três últimas linhas são variantes do índice, calculadas só para este teste. O tempo de casa não faz parte do IQ; está na tabela como referência.</p>`;
  const i=g(P.cabecas,'iq'),ip=g(P.cabecas,'ipp_norm'),tc=g(P.cabecas,'ln_tempo_casa'),pe=g(P.cabecas,'ipipe_norm'),fs=g(P.top150,'ifs_norm'),si=g(P.cabecas,'iq_sem_ipp'),sd=g(P.cabecas,'iq_sem_ird'),qi=P.quartis_iq.map(r=>pc(r.taxa)).join(', '),qp=P.quartis_ipp.map(r=>pc(r.taxa)).join(', ');
- document.getElementById('vp-texto').innerHTML=`<b>O IQ não distingue os Cabeças dos demais deputados.</b> As médias são praticamente iguais (${m(i.sim,3)} e ${m(i.nao,3)}; AUC de ${m(i.auc)}, p = ${pv(i.p)}) e a proporção de Cabeças não cresce com o índice (${qi} do menor ao maior quartil). O resultado é o mesmo para a lista ampliada de 150 nomes e para a geométrica com piso. <b>O IPP distingue bem.</b> Os Cabeças têm IPP médio de ${m(ip.sim)} contra ${m(ip.nao)} (AUC de ${m(ip.auc)}), e a proporção de Cabeças cresce de quartil em quartil do IPP (${qp}). Essa convergência é a evidência mais forte de validade de um componente do índice, com uma ressalva: o tempo de casa, sozinho, distingue os Cabeças tão bem quanto o IPP (AUC de ${m(tc.auc)}). O DIAP reconhece sobretudo parlamentares experientes, e o IPP capta sobretudo experiência. <b>Os demais componentes pendem para o lado oposto.</b> Os Cabeças têm mais exposição a processos eleitorais (IPIPE invertido de ${m(pe.sim)} contra ${m(pe.nao)}, p = ${pv(pe.p)}) e, na lista de 150, IFS mais baixo (${m(fs.sim)} contra ${m(fs.nao)}, p = ${pv(fs.p)}). Sem o IPP, o índice se relaciona negativamente com o reconhecimento do DIAP (AUC de ${m(si.auc)}, p = ${pv(si.p)}). <b>Retirar o IRD não altera o quadro</b> (AUC de ${m(sd.auc)}, p = ${pv(sd.p)}) e ainda faz o índice acompanhar mais o tempo de casa (correlação de ${m(P.tempo_casa_iq)} para ${m(P.tempo_casa_iq_sem_ird)}); a falta de convergência não vem dele. <b>Leitura.</b> O IQ combina dimensões que, entre os deputados, andam em sentidos opostos: a que acompanha a influência reconhecida por especialistas (IPP) e as que medem conduta e comunicação (IPIPE, IFS). No índice composto esses efeitos se anulam. O resultado é coerente com o caráter formativo do índice, mas indica que ele não se comporta como a medida de um atributo único que observadores externos também reconheçam. É uma informação relevante para a decisão sobre a forma de agregação e sobre o que o índice pretende representar.`;})();
+ document.getElementById('vp-texto').innerHTML=`<b>O IQ não distingue os Cabeças dos demais deputados.</b> As médias são praticamente iguais (${m(i.sim,3)} e ${m(i.nao,3)}; AUC de ${m(i.auc)}, p = ${pv(i.p)}) e a proporção de Cabeças não cresce com o índice (${qi} do menor ao maior quartil). O resultado é o mesmo para a lista ampliada de 150 nomes e para a geométrica com piso.<span class="pb"></span><b>O IPP distingue bem.</b> Os Cabeças têm IPP médio de ${m(ip.sim)} contra ${m(ip.nao)} (AUC de ${m(ip.auc)}), e a proporção de Cabeças cresce de quartil em quartil do IPP (${qp}). Essa convergência é a evidência mais forte de validade de um componente do índice, com uma ressalva: o tempo de casa, sozinho, distingue os Cabeças tão bem quanto o IPP (AUC de ${m(tc.auc)}). O DIAP reconhece sobretudo parlamentares experientes, e o IPP capta sobretudo experiência.<span class="pb"></span><b>Os demais componentes pendem para o lado oposto.</b> Os Cabeças têm mais exposição a processos eleitorais (IPIPE invertido de ${m(pe.sim)} contra ${m(pe.nao)}, p = ${pv(pe.p)}) e, na lista de 150, IFS mais baixo (${m(fs.sim)} contra ${m(fs.nao)}, p = ${pv(fs.p)}). Sem o IPP, o índice se relaciona negativamente com o reconhecimento do DIAP (AUC de ${m(si.auc)}, p = ${pv(si.p)}).<span class="pb"></span><b>Retirar o IRD não altera o quadro</b> (AUC de ${m(sd.auc)}, p = ${pv(sd.p)}) e ainda faz o índice acompanhar mais o tempo de casa (correlação de ${m(P.tempo_casa_iq)} para ${m(P.tempo_casa_iq_sem_ird)}); a falta de convergência não vem dele.<span class="pb"></span><b>Leitura.</b> O IQ combina dimensões que, entre os deputados, andam em sentidos opostos: a que acompanha a influência reconhecida por especialistas (IPP) e as que medem conduta e comunicação (IPIPE, IFS). No índice composto esses efeitos se anulam. O resultado é coerente com o caráter formativo do índice, mas indica que ele não se comporta como a medida de um atributo único que observadores externos também reconheçam. É uma informação relevante para a decisão sobre a forma de agregação e sobre o que o índice pretende representar.`;})();
+
+// ---- validação: síntese
+(function(){const V=D.validacao,X=V.discriminante,E=V.eleicao,R=E.reeleicao,S=E.senado,P=V.diap,pc=(v,d=0)=>fmt(v*100,d)+'%',m=(v,d=2)=>fmt(v,d),pv=p=>p<0.001?'< 0,001':fmt(p,3),g=(a,k)=>a.find(r=>r.var===k),
+  T=X.numericas.find(r=>r.var==='Tempo de casa'),bl=n=>X.r2_blocos.find(r=>r.bloco===n),ri=g(R.comparacao,'iq'),si=g(S.comparacao,'iq'),ci=g(P.cabecas,'iq'),c150=g(P.top150,'iq'),ipp=g(P.cabecas,'ipp_norm');
+ const rows=[
+  ['Discriminante','Tempo de casa',`${fmtN(X.n)} deputados`,`ρ = ${m(T.iq.rho)} (p = ${pv(T.iq.p)})`,T.iq.p<0.05?'Relação fraca':'Relação fraca e não significativa, como desejado'],
+  ['Discriminante','Ideologia, região e tamanho do partido',`${fmtN(X.n)} deputados`,`${pc(X.r2_sem_genero_raca.iq,1)} da variância, somados a idade e escolaridade`,'Associações pequenas'],
+  ['Discriminante','Gênero e raça',`${fmtN(X.n)} deputados`,`${pc(bl('Gênero e raça').iq,1)} da variância`,'Esperada: vem do IRD, por desenho'],
+  ['Preditiva','Reeleição para a Câmara em 2026',`${fmtN(R.n)} candidatos`,`AUC = ${m(ri.auc)} (p = ${pv(ri.p)})`,'Sem relação'],
+  ['Preditiva','Variação de votos de 2022 a 2026',`${fmtN(R.n)} candidatos`,`ρ = ${m(ri.rho)} (p = ${pv(ri.p_rho)})`,'Sem relação'],
+  ['Preditiva','Eleição ao Senado em 2026',`${S.n} candidatos`,`AUC = ${m(si.auc)} (p = ${pv(si.p)})`,'Inversa; poucos casos'],
+  ['Convergente','Cabeças do Congresso (DIAP)',`${fmtN(P.n)} deputados, ${P.n_cabecas} Cabeças`,`AUC = ${m(ci.auc)} (p = ${pv(ci.p)})`,'Sem relação'],
+  ['Convergente','Entre os 150 do DIAP',`${fmtN(P.n)} deputados, ${P.n_150} listados`,`AUC = ${m(c150.auc)} (p = ${pv(c150.p)})`,'Sem relação']];
+ document.getElementById('vs-tab').innerHTML=`<table><thead><tr><th>Tipo de teste</th><th>Critério</th><th>Amostra</th><th>Resultado para o IQ</th><th>Leitura</th></tr></thead><tbody>${rows.map((r,i)=>`<tr${i>0&&rows[i-1][0]!==r[0]?' style="border-top:2px solid var(--axis)"':''}><td>${i===0||rows[i-1][0]!==r[0]?`<b>${r[0]}</b>`:''}</td><td>${r[1]}</td><td>${r[2]}</td><td style="font-variant-numeric:tabular-nums">${r[3]}</td><td>${r[4]}</td></tr>`).join('')}</tbody></table><p class="note" style="margin-top:8px">AUC: probabilidade de um deputado do grupo de interesse (reeleito, eleito, Cabeça) ter IQ maior que um dos demais; 0,5 equivale ao acaso. ρ: correlação de postos de Spearman.</p>`;
+ document.getElementById('vs-texto').innerHTML=`<b>O índice passa no teste discriminante.</b> Ele quase não acompanha a antiguidade, a idade ou a escolaridade, e depende pouco de ideologia, região e partido. A associação com gênero e raça é a esperada, pois a representação descritiva faz parte do índice.<span class="pb"></span><b>O índice não converge com os critérios externos testados.</b> Nem o resultado eleitoral de 2026 nem o reconhecimento pelo DIAP acompanham o IQ; no Senado, a relação é inversa.<span class="pb"></span><b>Os componentes, tomados um a um, convergem com critérios específicos</b>: o IPP distingue os Cabeças do Congresso com AUC de ${m(ipp.auc)}. Mas esses efeitos têm sinais opostos entre os componentes e se anulam na média. O conjunto dos testes sustenta a leitura do IQ como índice formativo, que reúne dimensões distintas do mandato por decisão conceitual, e não como medida de um atributo único que outros observadores também captem. A validação que ainda falta é a de um juízo global de qualidade parlamentar, como um painel de especialistas avaliando uma amostra de deputados, que permitiria testar diretamente o peso de cada componente.`;})();
+
+// ---- síntese para decisão
+(function(){const R=D.iq.resumo,F=R.fatorial,A=R.agregacao,V=A.versoes,I=V.iq,G=V.iq_geometrica_piso,B=A.robustez,X=D.validacao.discriminante,E=D.validacao.eleicao,P=D.validacao.diap,m=(v,d=2)=>fmt(v,d),pc=(v,d=0)=>fmt(v*100,d)+'%',pv=p=>p<0.001?'< 0,001':fmt(p,3),g=(a,k)=>a.find(r=>r.var===k),ul=a=>'<ul>'+a.map(x=>`<li>${x}</li>`).join('')+'</ul>',ref=s=>` <span style="color:var(--muted)">${s}</span>`;
+ const vmin=Math.min(...F.vif),vmax=Math.max(...F.vif),fx=B.pisos.filter(r=>r.piso>=0.05&&r.piso<=0.3),rmin=Math.min(...fx.map(r=>r.rho_ref)),mp=B.metodos.iq_mazziotta_pareto,ipp=g(P.cabecas,'ipp_norm'),ci=g(P.cabecas,'iq'),cg=g(P.cabecas,'iq_geometrica_piso'),ri=g(E.reeleicao.comparacao,'iq'),T=X.numericas.find(r=>r.var==='Tempo de casa'),gr=X.r2_blocos.find(r=>r.bloco==='Gênero e raça'),cai=A.caem[0],O=B.partidos_ordem;
+ document.getElementById('rs-d1').innerHTML=ul([
+  `<b>Não há um fator comum</b> por trás dos cinco componentes: o KMO é ${m(F.kmo)} (mínimo usual de 0,6) e o primeiro fator opõe o IPP aos outros quatro.${ref('Seção 1.2')}`,
+  `<b>Os componentes não são redundantes:</b> o VIF fica entre ${m(vmin)} e ${m(vmax)}, praticamente no mínimo. Cada um traz ao índice mais de ${fmt(Math.floor(100/vmax),0)}% de informação própria.${ref('Seção 1.2')}`,
+  `<b>Consequência:</b> o índice não se valida por consistência interna, e pesos derivados de análise fatorial não têm base. Pesos iguais são a escolha neutra.`,
+  `<b>O que isso implica:</b> o IQ é uma composição definida conceitualmente, que soma dimensões distintas do mandato. Ele não se comporta como medida de um atributo único, e por isso não converge com critérios externos como o DIAP ou o resultado eleitoral.${ref('Seção 4')}`]);
+ document.getElementById('rs-d2').innerHTML=ul([
+  `<b>A diferença é conceitual.</b> Na média aritmética as dimensões se compensam; na geométrica, um desempenho muito baixo em uma delas não é compensado pelas outras.${ref('Seção 1.4')}`,
+  `<b>O piso é necessário, e o seu valor exato pesa pouco.</b> Sem ele, o último colocado em um componente vale quase zero e derruba o índice. Com pisos entre 0,05 e 0,30 o ranking é praticamente o mesmo (correlação de ${m(rmin,3)} ou mais com o piso de ${m(A.piso,1)}).`,
+  `<b>O ranking muda pouco no topo e mais no meio:</b> correlação de ${m(G.corr_iq)} com a média aritmética, ${G.top10_comum} dos dez primeiros mantidos, mudança mediana de ${fmt(G.mov_mediana,0)} posições. A maior queda é de ${Math.abs(cai.delta)} posições (${cai.nome}, último em um componente e bem colocado nos demais).`,
+  `<b>Um método independente concorda:</b> o índice de Mazziotta–Pareto, que penaliza desequilíbrio sem usar piso, chega aos mesmos dez primeiros (correlação de ${m(mp.rho_geo)}).`]);
+ const row=(l,a,b)=>`<tr><td>${l}</td><td class="num">${a}</td><td class="num">${b}</td></tr>`,pp=p=>`p ${p<0.001?'':'= '}${pv(p)}`;
+ document.getElementById('rs-tab').innerHTML=`<table><thead><tr><th></th><th class="num">Média aritmética (atual)</th><th class="num">Geométrica com piso</th></tr></thead><tbody>
+  ${row('Mínimo · mediana · máximo',`${m(I.min)} · ${m(I.mediana)} · ${m(I.max)}`,`${m(G.min)} · ${m(G.mediana)} · ${m(G.max)}`)}
+  ${row('Dependência do pior componente do deputado (ρ)',m(I.corr_menor_componente),m(G.corr_menor_componente))}
+  ${row('Três partidos de maior índice',O.a.slice(0,3).join(', '),O.g.slice(0,3).join(', '))}
+  ${row('Partido de menor índice',O.a[O.a.length-1],O.g[O.g.length-1])}
+  ${row('Relação com o CO2-Index (ρ de Spearman)',`${m(I.reg_co2.spearman)} (${pp(I.reg_co2.p_spearman)})`,`${m(G.reg_co2.spearman)} (${pp(G.reg_co2.p_spearman)})`)}
+  ${row('Distingue os Cabeças do DIAP? (AUC)',`${m(ci.auc)} (${pp(ci.p)})`,`${m(cg.auc)} (${pp(cg.p)})`)}</tbody></table><p class="note" style="margin-top:8px">Nas seções 1 a 4 o IQ é a média aritmética. Se a geométrica com piso for adotada, os números dessas seções mudam, mas as conclusões desta tabela se mantêm.</p>`;
+ document.getElementById('rs-fixo').innerHTML=ul([
+  `<b>Ordem dos partidos:</b> ${O.g.slice(0,3).join(', ')} no topo e ${O.g[O.g.length-1]} no fim, nas duas formas de agregação.${ref('Seções 1.1 e 1.4')}`,
+  `<b>Relação com o CO2-Index:</b> negativa, fraca e significativa em todas as variantes testadas; deputados de maior IQ tendem a ter perfil menos emissor.${ref('Seção 3')}`,
+  `<b>Teste discriminante:</b> o índice quase não acompanha o tempo de casa (ρ = ${m(T.iq.rho)}) nem idade ou escolaridade.${ref('Seção 4.1')}`,
+  `<b>Critérios externos:</b> o IQ não se relaciona com a reeleição em 2026 (AUC de ${m(ri.auc)}) nem com as listas do DIAP (AUC de ${m(ci.auc)}); no DIAP o resultado é o mesmo com a geométrica com piso.${ref('Seções 4.2 e 4.3')}`]);
+ document.getElementById('rs-atencao').innerHTML=ul([
+  `<b>Gênero e raça explicam ${pc(gr.iq,1)} do índice.</b> É o efeito esperado do IRD, mantido por decisão conceitual; convém que o texto final diga isso explicitamente.${ref('Seção 4.1')}`,
+  `<b>O IPP acompanha de perto o tempo de casa</b> (ρ = ${m(T.ipp_norm.rho)}) e é o único componente que converge com o DIAP (AUC de ${m(ipp.auc)}). Os demais pendem para o lado oposto, e os efeitos se anulam no índice.${ref('Seção 4.3')}`,
+  `<b>Cobertura:</b> o IQ existe para ${fmtN(R.n_iq_completo)} dos ${fmtN(R.n_deputados)} deputados da 57ª legislatura; faltam sobretudo os que não têm redes sociais analisadas.${ref('Seção 2.1')}`,
+  `<b>Validação pendente:</b> um painel de especialistas avaliando uma amostra de deputados é o teste que permitiria discutir empiricamente os pesos e a agregação.${ref('Seção 4.4')}`]);})();
 
 // ---- download do banco consolidado (só aparece onde a página pode oferecer arquivos)
 (async function(){const downloads=await (window.claude&&window.claude.use?window.claude.use('downloads'):null);if(!downloads)return;
