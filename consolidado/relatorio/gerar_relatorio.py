@@ -2,7 +2,8 @@
 
 Calcula os agregados (cobertura, histogramas, correlações, médias por partido por
 legislatura, séries por legislatura, extremos por legislatura) em dados.json e injeta
-o JSON em relatorio_template.html -> relatorio.html.
+o JSON em relatorio_template.html -> relatorio.html (para publicar no claude.ai) e
+relatorio_completo.html (a mesma página com o esqueleto HTML, para abrir direto no navegador).
 
 Uso: python3 consolidado/relatorio/gerar_relatorio.py
 """
@@ -156,9 +157,24 @@ def main() -> None:
     (HERE / "dados.json").write_text(data, encoding="utf-8")
     template = (HERE / "relatorio_template.html").read_text(encoding="utf-8")
     assert "__DATA__" in template
-    (HERE / "relatorio.html").write_text(template.replace("__DATA__", data), encoding="utf-8")
-    # cópia do banco consolidado publicada junto da página (botão de download)
-    (HERE / "scores_consolidados.csv").write_bytes((ROOT / "consolidado" / "scores_consolidados.csv").read_bytes())
+    # banco consolidado embutido na página, para o botão "Exportar para CSV"
+    # (acrescido do IQ da 57ª e ordenado por legislatura e IQ, ambos decrescentes)
+    exp = f.merge(iq[["id_camara", "iq", "iq_geometrica_piso"]].assign(legislatura=57), on=["id_camara", "legislatura"], how="left")
+    exp = exp.sort_values(["legislatura", "iq", "nome"], ascending=[False, False, True], na_position="last")
+    primeiras = ["id_camara", "legislatura", "nome", "siglaPartido", "siglaUf", "iq", "iq_geometrica_piso"]
+    exp = exp[primeiras + [c for c in exp.columns if c not in primeiras]]
+    csv = exp.to_csv(index=False)
+    (HERE / "scores_consolidados.csv").write_text(csv, encoding="utf-8")
+    assert "</script" not in csv.lower() and "__CSV__" in template
+    pagina = template.replace("__DATA__", data).replace("__CSV__", csv)
+    (HERE / "relatorio.html").write_text(pagina, encoding="utf-8")
+    # versão para abrir direto no navegador ou enviar como arquivo: o claude.ai acrescenta este
+    # esqueleto ao publicar; fora dele a página precisa trazê-lo
+    esqueleto = ('<!doctype html><html lang="pt-BR"><head><meta charset="utf-8">'
+                 '<meta name="viewport" content="width=device-width,initial-scale=1">'
+                 '<style>body{margin:0;font:14px system-ui,sans-serif}img{max-width:100%}[hidden]{display:none!important}</style>'
+                 '</head><body>')
+    (HERE / "relatorio_completo.html").write_text(esqueleto + pagina + "</body></html>", encoding="utf-8")
     print(f"relatorio.html gerado ({len(data):,} bytes de dados)")
 
 

@@ -188,7 +188,7 @@ def load_ipipe(aliases: pd.DataFrame, det: pd.DataFrame, depara: dict) -> tuple[
 
 
 def load_irr(aliases: pd.DataFrame, det: pd.DataFrame, depara: dict) -> tuple[pd.DataFrame, pd.DataFrame]:
-    """IRR da 57ª legislatura; a planilha é identificada pelo nome civil, como o IPIPE."""
+    """IRR (Índice de Reivindicação da Representação) da 57ª legislatura; a planilha é identificada pelo nome civil, como o IPIPE."""
     irr = pd.read_excel(SCORES / "IRR" / "V6_agregado_ponderado_final_IRR_ponderado_57.xlsx", sheet_name="Agregado_Ponderado")
     leg_ids = set(aliases.loc[aliases.legislatura == LEG_IRR, "id_camara"])
     civil = unique_map(det[det.id_camara.isin(leg_ids)], "civil_norm", "id_camara")
