@@ -8,6 +8,9 @@ Validade preditiva: o IQ contra o resultado dos deputados nas eleições de 2026
 Câmara e candidaturas ao Senado), a partir de consolidado/scores/TSE/eleicoes_deputados_57.csv,
 gerado por preparar_tse.py.
 
+Validade convergente: o IQ contra as listas "Cabeças do Congresso" do DIAP (2023 a 2025), a partir de
+consolidado/scores/DIAP/diap_cabecas.csv, gerado por preparar_diap.py.
+
 Saídas:
   consolidado/validacao_caracteristicas.csv  - deputados com IQ completo e suas características
   consolidado/validacao_resumo.json          - resultados usados no relatório
@@ -207,10 +210,44 @@ def eleicao_2026(c: pd.DataFrame) -> dict:
     return {"n": int(len(d)), "destinos": destinos, "reeleicao": reeleicao, "senado": senado}
 
 
+def diap(c: pd.DataFrame) -> dict:
+    """Validade convergente: o IQ contra o reconhecimento pelo DIAP (Cabeças do Congresso, 2023 a 2025)."""
+    d = pd.read_csv(OUT / "scores" / "DIAP" / "diap_cabecas.csv")
+    d = d[d.cargo == "deputado"].dropna(subset=["id_camara"])
+    anos = sorted(int(a) for a in d.ano.unique())
+    t = d.pivot_table(index="id_camara", columns="lista", values="ano", aggfunc="count", fill_value=0)
+    c = c.merge(t, left_on="id_camara", right_index=True, how="left").fillna({"cabeca": 0, "ascensao": 0})
+    c["e_cabeca"] = (c.cabeca > 0).astype(int)
+    c["e_150"] = ((c.cabeca + c.ascensao) > 0).astype(int)
+    c["iq_sem_ipp"] = c[[k for k in COMPS if k != "ipp_norm"]].mean(axis=1)
+    variaveis = INDICES + ["ln_tempo_casa", "iq_sem_ipp", "iq_sem_ird", "iq_geometrica_piso"]
+
+    def tabela(y: str) -> list[dict]:
+        linhas = []
+        for k in variaveis:
+            a, p = auc(c[k], c[y])
+            linhas.append({"var": k, "sim": round(float(c.loc[c[y] == 1, k].mean()), 3), "nao": round(float(c.loc[c[y] == 0, k].mean()), 3), "auc": a, "p": p})
+        return linhas
+
+    def quartis(k: str) -> list[dict]:
+        q = pd.qcut(c[k], 4, labels=["1º (menor)", "2º", "3º", "4º (maior)"])
+        return [{"quartil": str(i), "n": int(len(g)), "taxa": round(float(g.e_cabeca.mean()), 3)} for i, g in c.groupby(q, observed=True)]
+
+    return {
+        "anos": anos, "n": int(len(c)), "n_cabecas": int(c.e_cabeca.sum()), "n_150": int(c.e_150.sum()),
+        "deputados_por_edicao": {str(a): int(((d.ano == a) & (d.lista == "cabeca")).sum()) for a in anos},
+        "anos_como_cabeca": {str(int(k)): int(v) for k, v in c.cabeca.value_counts().sort_index().items()},
+        "cabecas": tabela("e_cabeca"), "top150": tabela("e_150"),
+        "quartis_iq": quartis("iq"), "quartis_ipp": quartis("ipp_norm"),
+        "tempo_casa_iq_sem_ird": round(float(stats.spearmanr(c.iq_sem_ird, c.ln_tempo_casa).statistic), 3),
+        "tempo_casa_iq": round(float(stats.spearmanr(c.iq, c.ln_tempo_casa).statistic), 3),
+    }
+
+
 def main() -> None:
     c = caracteristicas()
     c.to_csv(OUT / "validacao_caracteristicas.csv", index=False)
-    resumo = {"discriminante": discriminante(c), "eleicao": eleicao_2026(c)}
+    resumo = {"discriminante": discriminante(c), "eleicao": eleicao_2026(c), "diap": diap(c)}
     (OUT / "validacao_resumo.json").write_text(json.dumps(resumo, ensure_ascii=False, indent=1, allow_nan=False), encoding="utf-8")
     d = resumo["discriminante"]
     print(f"teste discriminante, n = {d['n']}")
@@ -221,6 +258,8 @@ def main() -> None:
     print("\neleição de 2026:", e["destinos"])
     print("reeleição:", {k: v for k, v in e["reeleicao"].items() if k not in ("comparacao", "quartis")})
     print(pd.DataFrame(e["reeleicao"]["comparacao"]).to_string(index=False))
+    print("\nDIAP:", {k: v for k, v in resumo["diap"].items() if k not in ("cabecas", "top150")})
+    print(pd.DataFrame(resumo["diap"]["cabecas"]).to_string(index=False))
     print("Senado:", {k: v for k, v in e["senado"].items() if k not in ("comparacao", "candidatos", "vs_reeleicao")})
     print(pd.DataFrame(e["senado"]["comparacao"]).to_string(index=False))
 

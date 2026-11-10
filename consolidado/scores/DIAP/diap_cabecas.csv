@@ -1,0 +1,451 @@
+ano,lista,cargo,nome,partido,uf,id_camara,nome_camara
+2023,cabeca,deputado,Adolfo Viana,PSDB,BA,204560,Adolfo Viana
+2023,cabeca,deputado,Aécio Neves,PSDB,MG,74646,Aécio Neves
+2023,cabeca,deputado,Aguinaldo Ribeiro,PP,PB,160527,Aguinaldo Ribeiro
+2023,cabeca,deputado,Alencar Santana,PT,SP,204501,Alencar Santana
+2023,cabeca,deputado,Alice Portugal,PCdoB,BA,74057,Alice Portugal
+2023,cabeca,deputado,Altineu Cortês,PL,RJ,178937,Altineu Côrtes
+2023,cabeca,deputado,André Figueiredo,PDT,CE,133439,André Figueiredo
+2023,cabeca,deputado,Antônio Brito,PSD,BA,160553,Antonio Brito
+2023,cabeca,deputado,Arlindo Chinaglia,PT,SP,73433,Arlindo Chinaglia
+2023,cabeca,deputado,Arnaldo Jardim,Cidadania,SP,141391,Arnaldo Jardim
+2023,cabeca,deputado,Arthur Lira,PP,AL,160541,Arthur Lira
+2023,cabeca,deputado,Arthur Oliveira Maia,União,BA,160600,Arthur Oliveira Maia
+2023,cabeca,deputado,Augusto Coutinho,Republicanos,PE,160665,Augusto Coutinho
+2023,cabeca,deputado,AUREO RIBEIRO,Solidariedade,RJ,160512,Aureo Ribeiro
+2023,cabeca,deputado,Baleia Rossi,MDB,SP,178975,Baleia Rossi
+2023,cabeca,deputado,BENEDITA DA SILVA,PT,RJ,73701,Benedita da Silva
+2023,cabeca,deputado,BOHN GASS,PT,RS,160538,Bohn Gass
+2023,cabeca,deputado,CARLOS JORDY,PL,RJ,204460,Carlos Jordy
+2023,cabeca,senador,Carlos Portinho,PL,RJ,,
+2023,cabeca,deputado,Carlos Zarattini,PT,SP,141398,Carlos Zarattini
+2023,cabeca,deputado,CHICO ALENCAR,PSol,RJ,74171,Chico Alencar
+2023,cabeca,senador,Cid Gomes,PDT,CE,,
+2023,cabeca,senador,CIRO NOGUEIRA,PP,PI,,
+2023,cabeca,deputado,Daniel Almeida,PCdoB,BA,74060,Daniel Almeida
+2023,cabeca,senador,Daniella Ribeiro,PSD,PB,,
+2023,cabeca,deputado,DANILO FORTE,União Brasil,CE,62881,Danilo Forte
+2023,cabeca,senador,Davi Alcolumbre,União Brasil,AP,,
+2023,cabeca,deputado,DOUTOR LUIZINHO,PP,RJ,204450,Doutor Luizinho
+2023,cabeca,deputado,EDUARDO BISMARCK,PDT,CE,204541,Eduardo Bismarck
+2023,cabeca,deputado,Eduardo Bolsonaro,PL,SP,92346,Eduardo Bolsonaro
+2023,cabeca,senador,Eduardo Braga,MDB,AM,,
+2023,cabeca,senador,Eduardo Gomes,PL,TO,,
+2023,cabeca,senador,EFRAIM FILHO,União Brasil,PB,,
+2023,cabeca,senador,Eliziane Gama,PSD,MA,,
+2023,cabeca,deputado,Elmar Nascimento,União Brasil,BA,178854,Elmar Nascimento
+2023,cabeca,deputado,EMANUEL PINHEIRO NETO,MDB,MT,198783,Emanuel Pinheiro Neto
+2023,cabeca,deputado,Erika Kokay,PT,DF,160575,Erika Kokay
+2023,cabeca,senador,ESPERIDIÃO AMIN,PP,SC,,
+2023,cabeca,deputado,EUNÍCIO OLIVEIRA,MDB,CE,74454,Eunício Oliveira
+2023,cabeca,senador,FABIANO CONTARATO,PT,ES,,
+2023,cabeca,deputado,FELIPE CARREIRA,PSB,PE,72442,Felipe Carreras
+2023,cabeca,deputado,Fernanda Melchionna,PSol,RS,204407,Fernanda Melchionna
+2023,cabeca,deputado,Fernando Coelho Filho,União Brasil,PE,141431,Fernando Coelho Filho
+2023,cabeca,senador,Flávio Bolsonaro,PL,RJ,,
+2023,cabeca,deputado,Gleisi Hoffmann,PT,PR,107283,Gleisi Hoffmann
+2023,cabeca,deputado,GUILHERME BOULOS,PSol,SP,220639,Guilherme Boulos
+2023,cabeca,deputado,HEITOR SCHUCH,PSB,RS,178964,Heitor Schuch
+2023,cabeca,deputado,Hugo Motta,Republicanos,PB,160674,Hugo Motta
+2023,cabeca,senador,Humberto Costa,PT,PE,,
+2023,cabeca,deputado,Isnaldo Bulhões Jr.,MDB,AL,204436,Isnaldo Bulhões Jr.
+2023,cabeca,deputado,Jandira Feghali,PCdoB,RJ,74848,Jandira Feghali
+2023,cabeca,senador,Jaques Wagner,PT,BA,,
+2023,cabeca,deputado,JOÃO LEÃO,PP,BA,74550,João Leão
+2023,cabeca,deputado,JONAS DONIZETTE,PSB,SP,160548,Jonas Donizette
+2023,cabeca,deputado,José Guimarães,PT,CE,141470,José Guimarães
+2023,cabeca,deputado,JÚLIO CESAR,PSD,PI,74317,Júlio Cesar
+2023,cabeca,deputado,JÚLIO LOPES,PP,RJ,74253,Julio Lopes
+2023,cabeca,deputado,Kim Kataguiri,União Brasil,SP,204536,Kim Kataguiri
+2023,cabeca,deputado,Lincoln Portela,PL,MG,74585,Lincoln Portela
+2023,cabeca,deputado,LINDBERGH FARIAS,PT,RJ,74858,Lindbergh Farias
+2023,cabeca,deputado,Luciano Bivar,União,PE,74478,Luciano Bivar
+2023,cabeca,deputado,Luisa Canziani,PSD,PR,204410,Luisa Canziani
+2023,cabeca,deputado,LUIZ CARLOS HAULY,Podemos,PR,73778,Luiz Carlos Hauly
+2023,cabeca,deputado,Luiz Carlos Motta,PL,SP,204485,Luiz Carlos Motta
+2023,cabeca,deputado,Luiza Erundina,PSol,SP,74784,Luiza Erundina
+2023,cabeca,senador,Marcelo Castro,MDB,PI,,
+2023,cabeca,deputado,Marcos Pereira,Republicanos,SP,204506,Marcos Pereira
+2023,cabeca,deputado,MARIA DO ROSÁRIO,PT,RS,74398,Maria do Rosário
+2023,cabeca,deputado,MAURO BENEVIDES FILHO,PDT,CE,204486,Mauro Benevides Filho
+2023,cabeca,senador,MECIAS DE JESUS,Republicanos,RR,,
+2023,cabeca,deputado,MENDONÇA FILHO,União Brasil,PE,74428,Mendonça Filho
+2023,cabeca,deputado,NILTO TATTO,PT,SP,178986,Nilto Tatto
+2023,cabeca,deputado,ODAIR CUNHA,PT,MG,74159,Odair Cunha
+2023,cabeca,senador,OMAR AZIZ,PSD,AM,,
+2023,cabeca,deputado,Orlando Silva,PCdoB,SP,178987,Orlando Silva
+2023,cabeca,senador,Otto Alencar,PSD,BA,,
+2023,cabeca,deputado,Paulo Abi-Ackel,PSDB,MG,141516,Paulo Abi-Ackel
+2023,cabeca,senador,Paulo Paim,PT,RS,,
+2023,cabeca,deputado,PEDRO LUPION,PP,PR,204395,Pedro Lupion
+2023,cabeca,senador,PROFESSORA DORINHA SEABRA,União Brasil,TO,,
+2023,cabeca,senador,Randolfe Rodrigues,Rede,AP,,
+2023,cabeca,deputado,Reginaldo Lopes,PT,MG,74161,Reginaldo Lopes
+2023,cabeca,senador,Renan Calheiros,MDB,AL,,
+2023,cabeca,deputado,Renildo Calheiros,PCdoB,PE,73801,Renildo Calheiros
+2023,cabeca,deputado,RICARDO SALLES,PL,SP,220633,Ricardo Salles
+2023,cabeca,senador,Rodrigo Pacheco,PSD,MG,,
+2023,cabeca,senador,Rogério Carvalho,PT,SE,,
+2023,cabeca,deputado,Rogério Correia,PT,MG,204480,Rogério Correia
+2023,cabeca,senador,ROGÉRIO MARINHO,PL,RN,,
+2023,cabeca,deputado,ROSEANA SARNEY,MDB,MA,73806,Roseana Sarney
+2023,cabeca,deputado,RUBENS PEREIRA JUNIOR,PT,MA,178887,Rubens Pereira Júnior
+2023,cabeca,deputado,RUI FALCÃO,PT,SP,73604,Rui Falcão
+2023,cabeca,deputado,Tabata Amaral,PSB,SP,204534,Tabata Amaral
+2023,cabeca,senador,TEREZA CRISTINA,PP,MS,,
+2023,cabeca,deputado,TÚLIO GADELHA,Rede,PE,157130,Túlio Gadêlha
+2023,cabeca,senador,VANDERLAN CARDOSO,PSD,GO,,
+2023,cabeca,senador,Veneziano Vital do Rêgo,MDB,PB,,
+2023,cabeca,deputado,Wellington Roberto,PL,PB,74043,Wellington Roberto
+2023,cabeca,senador,Weverton Rocha,PDT,MA,,
+2023,cabeca,deputado,ZECA DIRCEU,PT,PR,160592,Zeca Dirceu
+2023,ascensao,deputado,ADRIANA VENTURA,Novo,SP,204528,Adriana Ventura
+2023,ascensao,deputado,AIRTON FALEIRO,PT,PA,204495,Airton Faleiro
+2023,ascensao,senador,ALAN RICK,UNIÃO,AC,,
+2023,ascensao,deputado,ALIEL MACHADO,PV,PR,178927,Aliel Machado
+2023,ascensao,deputado,ANDRÉ JANONES,Avante,MG,204515,André Janones
+2023,ascensao,senador,ANGELO CORONEL,PSD,BA,,
+2023,ascensao,deputado,BETO PEREIRA,PSDB,MS,204358,Beto Pereira
+2023,ascensao,deputado,BETO RICHA,PSDB,PR,220683,Beto Richa
+2023,ascensao,deputado,Cláudio Cajado,PP,BA,74537,Claudio Cajado
+2023,ascensao,senador,CONFÚCIO MOURA,MDB,RO,,
+2023,ascensao,deputado,Domingos Neto,PSD,CE,143632,Domingos Neto
+2023,ascensao,deputado,DR. FERNANDO MÁXIMO,União Brasil,RO,220610,Dr. Fernando Máximo
+2023,ascensao,deputado,ELI BORGES,PL,TO,204364,Eli Borges
+2023,ascensao,deputado,ERIKA HILTON,PSol,SP,220645,Erika Hilton
+2023,ascensao,deputado,Evair Vieira de Melo,PP,ES,178871,Evair Vieira de Melo
+2023,ascensao,deputado,FÁBIO MACEDO,Podemos,MA,220681,Fábio Macedo
+2023,ascensao,senador,FLÁVIO ARNS,PSB,PR,,
+2023,ascensao,deputado,GIACOBO,PL,RR,74383,Giacobo
+2023,ascensao,deputado,GILBERTO NASCIMENTO,PSD,SP,74270,Gilberto Nascimento
+2023,ascensao,deputado,Giovani Cherini,PL,RS,160673,Giovani Cherini
+2023,ascensao,deputado,GLAUBER BRAGA,PSol,RJ,152605,Glauber Braga
+2023,ascensao,senador,JAYME CAMPOS,União Brasil,MT,,
+2023,ascensao,deputado,JOÃO DANIEL,PT,SE,178970,João Daniel
+2023,ascensao,deputado,JOSÉ PRIANTE,MDB,PA,74079,José Priante
+2023,ascensao,deputado,JOSEILDO RAMOS,PT,BA,209189,Joseildo Ramos
+2023,ascensao,senador,LAÉRCIO OLIVEIRA,PP,SE,,
+2023,ascensao,senador,LEILA BARROS,PDT,DF,,
+2023,ascensao,deputado,Luis Tibé,Avante,MG,160510,Luis Tibé
+2023,ascensao,deputado,LUIZ GASTÃO,PSD,CE,220658,Luiz Gastão
+2023,ascensao,deputado,LUZIANE LINS,PT,CE,178866,Luizianne Lins
+2023,ascensao,deputado,Marcel van Hattem,Novo,RS,156190,Marcel van Hattem
+2023,ascensao,deputado,Mário Heringer,PDT,MG,74158,Mário Heringer
+2023,ascensao,deputado,NATÁLIA BONAVIDES,PT,RN,204453,Natália Bonavides
+2023,ascensao,deputado,PAULO ALEXANDRE BARBOSA,PSDB,SP,220650,Paulo Alexandre Barbosa
+2023,ascensao,deputado,PAULO GUEDES,PT,MG,204492,Paulo Guedes
+2023,ascensao,deputado,PEDRO UCZAI,PT,SC,160604,Pedro Uczai
+2023,ascensao,deputado,POMPEO DE MATOS,PDT,RS,73486,Pompeo de Mattos
+2023,ascensao,deputado,ROBERTA ROMA,PL,BA,220693,Roberta Roma
+2023,ascensao,deputado,RODRIGO DE CASTRO,União Brasil,MG,141531,Rodrigo de Castro
+2023,ascensao,deputado,SÂMIA BOMFIM,PSol,SP,204535,Sâmia Bomfim
+2023,ascensao,deputado,SANDERSON,PL,RS,204416,Sanderson
+2023,ascensao,senador,SÉRGIO PETECÃO,PSD,AC,,
+2023,ascensao,deputado,Sergio Souza,MDB,PR,178933,Sergio Souza
+2023,ascensao,deputado,SILAS CÂMARA,Republicanos,AM,74356,Silas Câmara
+2023,ascensao,deputado,TALÍRIA PETRONE,PSol,RJ,204464,Talíria Petrone
+2023,ascensao,deputado,TARCISIO MOTTA,PSol,RJ,220598,Tarcísio Motta
+2023,ascensao,deputado,VALMIR ASSUNÇÃO,PT,BA,160610,Valmir Assunção
+2023,ascensao,deputado,ZÉ SILVA,Solidariedade,MG,160632,Zé Silva
+2023,ascensao,deputado,ZÉ VITOR,PL,MG,204517,Zé Vitor
+2023,ascensao,senador,ZEQUINHA MARINHO,Podemos,PA,,
+2024,cabeca,deputado,ADRIANA VENTURA,Novo,SP,204528,Adriana Ventura
+2024,cabeca,deputado,Aécio Neves,PSDB,MG,74646,Aécio Neves
+2024,cabeca,deputado,AFONSO MOTTA,PDT,RS,178835,Afonso Motta
+2024,cabeca,deputado,Aguinaldo Ribeiro,PP,PB,160527,Aguinaldo Ribeiro
+2024,cabeca,deputado,Alencar Santana,PT,SP,204501,Alencar Santana
+2024,cabeca,deputado,ALIEL MACHADO,PV,PR,178927,Aliel Machado
+2024,cabeca,deputado,Altineu Cortês,PL,RJ,178937,Altineu Côrtes
+2024,cabeca,deputado,André Figueiredo,PDT,CE,133439,André Figueiredo
+2024,cabeca,senador,ÂNGELO CORONEL,PSD,BA,,
+2024,cabeca,deputado,Antonio Brito,PSD,BA,160553,Antonio Brito
+2024,cabeca,deputado,Arlindo Chinaglia,PT,SP,73433,Arlindo Chinaglia
+2024,cabeca,deputado,Arnaldo Jardim,Cidadania,SP,141391,Arnaldo Jardim
+2024,cabeca,deputado,Arthur Lira,PP,AL,160541,Arthur Lira
+2024,cabeca,deputado,Augusto Coutinho,Republicanos,PE,160665,Augusto Coutinho
+2024,cabeca,deputado,Aureo Ribeiro,Solidariedade,RJ,160512,Aureo Ribeiro
+2024,cabeca,deputado,Baleia Rossi,MDB,SP,178975,Baleia Rossi
+2024,cabeca,senador,BETO FARO,PT,PA,,
+2024,cabeca,deputado,Benedita da Silva,PT,RJ,73701,Benedita da Silva
+2024,cabeca,deputado,BIA KICIS,PL,DF,204374,Bia Kicis
+2024,cabeca,senador,Carlos Portinho,PL,RJ,,
+2024,cabeca,deputado,Carlos Zarattini,PT,SP,141398,Carlos Zarattini
+2024,cabeca,senador,Ciro Nogueira,PP,PI,,
+2024,cabeca,senador,CONFÚCIO MOURA,MDB,RO,,
+2024,cabeca,deputado,Daniel Almeida,PCdoB,BA,74060,Daniel Almeida
+2024,cabeca,senador,Daniella Ribeiro,PSD,PB,,
+2024,cabeca,deputado,Danilo Forte,União Brasil,CE,62881,Danilo Forte
+2024,cabeca,senador,Davi Alcolumbre,União Brasil,AP,,
+2024,cabeca,deputado,Doutor Luizinho,PP,RJ,204450,Doutor Luizinho
+2024,cabeca,deputado,Eduardo Bismarck,PDT,CE,204541,Eduardo Bismarck
+2024,cabeca,deputado,Eduardo Bolsonaro,PL,SP,92346,Eduardo Bolsonaro
+2024,cabeca,senador,Eduardo Braga,MDB,AM,,
+2024,cabeca,senador,Eduardo Gomes,PL,TO,,
+2024,cabeca,senador,Efraim Filho,União Brasil,PB,,
+2024,cabeca,senador,Eliziane Gama,PSD,MA,,
+2024,cabeca,deputado,Elmar Nascimento,União Brasil,BA,178854,Elmar Nascimento
+2024,cabeca,deputado,ERIKA HILTON,PSOL,SP,220645,Erika Hilton
+2024,cabeca,deputado,Erika Kokay,PT,DF,160575,Erika Kokay
+2024,cabeca,deputado,Eunício Oliveira,MDB,CE,74454,Eunício Oliveira
+2024,cabeca,deputado,Felipe Carreras,PSB,PE,72442,Felipe Carreras
+2024,cabeca,deputado,Fernando Coelho Filho,União Brasil,PE,141431,Fernando Coelho Filho
+2024,cabeca,senador,Flávio Bolsonaro,PL,RJ,,
+2024,cabeca,deputado,GERVÁSIO MAIA,PSB,PB,204394,Gervásio Maia
+2024,cabeca,deputado,Gleisi Hoffmann,PT,PR,107283,Gleisi Hoffmann
+2024,cabeca,deputado,Guilherme Boulos,PSol,SP,220639,Guilherme Boulos
+2024,cabeca,deputado,HUGO LEAL,PSD,RJ,141450,Hugo Leal
+2024,cabeca,deputado,Hugo Motta,Republicanos,PB,160674,Hugo Motta
+2024,cabeca,senador,Humberto Costa,PT,PE,,
+2024,cabeca,deputado,Isnaldo Bulhões Jr.,MDB,AL,204436,Isnaldo Bulhões Jr.
+2024,cabeca,deputado,Jandira Feghali,PCdoB,RJ,74848,Jandira Feghali
+2024,cabeca,senador,Jaques Wagner,PT,BA,,
+2024,cabeca,senador,JORGE KAJURU,PSB,GO,,
+2024,cabeca,deputado,José Guimarães,PT,CE,141470,José Guimarães
+2024,cabeca,deputado,Júlio Lopes,PP,RJ,74253,Julio Lopes
+2024,cabeca,senador,LAÉRCIO OLIVEIRA,PP,SE,,
+2024,cabeca,deputado,LAURA CARNEIRO,PSD,RJ,74856,Laura Carneiro
+2024,cabeca,deputado,Lincoln Portela,PL,MG,74585,Lincoln Portela
+2024,cabeca,deputado,Lindbergh Farias,PT,RJ,74858,Lindbergh Farias
+2024,cabeca,deputado,Luiz Carlos Hauly,Podemos,PR,73778,Luiz Carlos Hauly
+2024,cabeca,deputado,Luiz Carlos Motta,PL,SP,204485,Luiz Carlos Motta
+2024,cabeca,deputado,LUIZ GASTÃO,PSD,CE,220658,Luiz Gastão
+2024,cabeca,deputado,Luiza Erundina,PSol,SP,74784,Luiza Erundina
+2024,cabeca,deputado,Marcos Pereira,Republicanos,SP,204506,Marcos Pereira
+2024,cabeca,deputado,Maria do Rosário,PT,RS,74398,Maria do Rosário
+2024,cabeca,senador,Mecias de Jesus,Republicanos,RR,,
+2024,cabeca,deputado,Mendonça Filho,União Brasil,PE,74428,Mendonça Filho
+2024,cabeca,deputado,NIKOLAS FERREIRA,PL,MG,209787,Nikolas Ferreira
+2024,cabeca,deputado,Odair Cunha,PT,MG,74159,Odair Cunha
+2024,cabeca,senador,Omar Aziz,PSD,AM,,
+2024,cabeca,deputado,Orlando Silva,PCdoB,SP,178987,Orlando Silva
+2024,cabeca,senador,Otto Alencar,PSD,BA,,
+2024,cabeca,deputado,PASTOR HENRIQUE VIEIRA,PSol,RJ,220615,Pastor Henrique Vieira
+2024,cabeca,deputado,PAULINHO DA FORÇA,Solidariedade,SP,141518,Paulinho da Força
+2024,cabeca,deputado,Paulo Abi-Ackel,PSDB,MG,141516,Paulo Abi-Ackel
+2024,cabeca,senador,Paulo Paim,PT,RS,,
+2024,cabeca,deputado,Pedro Lupion,PP,PR,204395,Pedro Lupion
+2024,cabeca,deputado,PEDRO PAULO,PSD,RJ,122158,Pedro Paulo
+2024,cabeca,senador,Professora Dorinha Seabra,União Brasil,TO,,
+2024,cabeca,senador,Randolfe Rodrigues,Sem Partido,AP,,
+2024,cabeca,deputado,Reginaldo Lopes,PT,MG,74161,Reginaldo Lopes
+2024,cabeca,senador,Renan Calheiros,MDB,AL,,
+2024,cabeca,deputado,RENATA ABREU,Podemos,SP,178989,Renata Abreu
+2024,cabeca,deputado,Renildo Calheiros,PCdoB,PE,73801,Renildo Calheiros
+2024,cabeca,senador,Rodrigo Pacheco,PSD,MG,,
+2024,cabeca,senador,Rogério Carvalho,PT,SE,,
+2024,cabeca,deputado,Rogério Correia,PT,MG,204480,Rogério Correia
+2024,cabeca,senador,Rogério Marinho,PL,RN,,
+2024,cabeca,deputado,ROMERO RODRIGUES,Podemos,PB,160629,Romero Rodrigues
+2024,cabeca,deputado,Rubens Pereira Junior,PT,MA,178887,Rubens Pereira Júnior
+2024,cabeca,deputado,Rui Falcão,PT,SP,73604,Rui Falcão
+2024,cabeca,deputado,Tabata Amaral,PSB,SP,204534,Tabata Amaral
+2024,cabeca,senador,Tereza Cristina,PP,MS,,
+2024,cabeca,deputado,Túlio Gadêlha,Rede,PE,157130,Túlio Gadêlha
+2024,cabeca,senador,Veneziano Vital do Rêgo,MDB,PB,,
+2024,cabeca,senador,WELLINGTON FAGUNDES,PL,MT,,
+2024,cabeca,deputado,Wellington Roberto,PL,PB,74043,Wellington Roberto
+2024,cabeca,senador,Weverton Rocha,PDT,MA,,
+2024,cabeca,deputado,ZÉ NETO,PT,BA,204559,Zé Neto
+2024,cabeca,deputado,ZÉ SILVA,Solidariedade,MG,160632,Zé Silva
+2024,cabeca,deputado,Zeca Dirceu,PT,PR,160592,Zeca Dirceu
+2024,cabeca,senador,ZEQUINHA MARINHO,Podemos,PA,,
+2024,ascensao,deputado,Airton Faleiro,PT,PA,204495,Airton Faleiro
+2024,ascensao,senador,Alan Rick,União Brasil,AC,,
+2024,ascensao,deputado,Beto Richa,PSDB,PR,220683,Beto Richa
+2024,ascensao,deputado,BOHN GASS,PT,RS,160538,Bohn Gass
+2024,ascensao,deputado,CAROLINE DE TONI,PL,SC,204369,Caroline de Toni
+2024,ascensao,deputado,DAIANA SANTOS,PCdoB,RS,220555,Daiana Santos
+2024,ascensao,deputado,DAMIÃO FELICIANO,União Brasil,PB,74467,Damião Feliciano
+2024,ascensao,deputado,Domingos Neto,PSD,CE,143632,Domingos Neto
+2024,ascensao,deputado,Dr. Fernando Máximo,União Brasil,RO,220610,Dr. Fernando Máximo
+2024,ascensao,deputado,Dr. FRANCISCO,PT,PI,220688,Dr. Francisco
+2024,ascensao,senador,Dr. IRAN,PP,RR,,
+2024,ascensao,deputado,EMANUEL PINHEIRO NETO,MDB,MT,198783,Emanuel Pinheiro Neto
+2024,ascensao,deputado,FERNANDA MELCHIONNA,PSol,RS,204407,Fernanda Melchionna
+2024,ascensao,deputado,FILIPE BARROS,PL,PR,204411,Filipe Barros
+2024,ascensao,senador,Flávio Arns,PSB,PR,,
+2024,ascensao,deputado,Gilberto Nascimento,PSD,SP,74270,Gilberto Nascimento
+2024,ascensao,deputado,LEO PRATES,PDT,BA,80815,Leo Prates
+2024,ascensao,deputado,HEITOR SCHUCH,PSB,RS,178964,Heitor Schuch
+2024,ascensao,deputado,João Daniel,PT,SE,178970,João Daniel
+2024,ascensao,deputado,José Priante,MDB,PA,74079,José Priante
+2024,ascensao,deputado,JULIO ARCOVERDE,PP,PI,66385,Julio Arcoverde
+2024,ascensao,senador,Leila Barros,PDT,DF,,
+2024,ascensao,deputado,LÍDICE DA MATA,PSB,BA,139285,Lídice da Mata
+2024,ascensao,deputado,LUCAS RAMOS,PSB,PE,220662,Lucas Ramos
+2024,ascensao,deputado,LUIZ FERNANDO FARIA,PSD,MG,141487,Luiz Fernando Faria
+2024,ascensao,deputado,LUISA CANZIANI,PSD,PR,204410,Luisa Canziani
+2024,ascensao,deputado,Luizianne Lins,PT,CE,178866,Luizianne Lins
+2024,ascensao,deputado,MARANGONI,União Brasil,SP,220648,Marangoni
+2024,ascensao,deputado,MAURO BENEVIDES FILHO,PDT,CE,204486,Mauro Benevides Filho
+2024,ascensao,deputado,Natália Bonavides,PT,RN,204453,Natália Bonavides
+2024,ascensao,deputado,PAUDERNEY AVELINO,União Brasil,AM,74095,Pauderney Avelino
+2024,ascensao,deputado,Paulo Guedes,PT,MG,204492,Paulo Guedes
+2024,ascensao,deputado,PEDRO CAMPOS,PSB,PE,220667,Pedro Campos
+2024,ascensao,deputado,Pedro Uczai,PT,SC,160604,Pedro Uczai
+2024,ascensao,deputado,Pompeo de Matos,PDT,RS,73486,Pompeo de Mattos
+2024,ascensao,deputado,PROFESSORA LUCIENE CALVANTE,PSol,SP,221338,Professora Luciene Cavalcante
+2024,ascensao,deputado,RAFAEL PRUDENTE,MDB,DF,220532,Rafael Prudente
+2024,ascensao,deputado,RICARDO SILVA,PSD,SP,213274,Ricardo Silva
+2024,ascensao,deputado,Roberta Roma,PL,BA,220693,Roberta Roma
+2024,ascensao,deputado,Rodrigo de Castro,União Brasil,MG,141531,Rodrigo de Castro
+2024,ascensao,deputado,Sâmia Bonfim,PSol,SP,204535,Sâmia Bomfim
+2024,ascensao,senador,Sérgio Petecão,PSD,AC,,
+2024,ascensao,deputado,Sergio Souza,MDB,PR,178933,Sergio Souza
+2024,ascensao,deputado,Silas Câmara,Republicanos,AM,74356,Silas Câmara
+2024,ascensao,deputado,TADEU VENERI,PT,PR,220682,Tadeu Veneri
+2024,ascensao,deputado,Talíria Petrone,PSol,RJ,204464,Talíria Petrone
+2024,ascensao,deputado,Tarcísio Motta,PSol,RJ,220598,Tarcísio Motta
+2024,ascensao,deputado,TONINHO WANDSCHEER,PP,PR,178934,Toninho Wandscheer
+2024,ascensao,deputado,Valmir Assunção,PT,BA,160610,Valmir Assunção
+2024,ascensao,deputado,VICENTINHO JÚNIOR,PP,TO,137070,Vicentinho Júnior
+2025,cabeca,deputado,Aécio Neves,PSDB,MG,74646,Aécio Neves
+2025,cabeca,deputado,Aguinaldo Ribeiro,PP,PB,160527,Aguinaldo Ribeiro
+2025,cabeca,deputado,Aliel Machado,PV,PR,178927,Aliel Machado
+2025,cabeca,deputado,Altineu Cortês,PL,RJ,178937,Altineu Côrtes
+2025,cabeca,deputado,André Figueiredo,PDT,CE,133439,André Figueiredo
+2025,cabeca,deputado,Antonio Brito,PSD,BA,160553,Antonio Brito
+2025,cabeca,deputado,Arlindo Chinaglia,PT,SP,73433,Arlindo Chinaglia
+2025,cabeca,deputado,Arnaldo Jardim,Cidadania,SP,141391,Arnaldo Jardim
+2025,cabeca,deputado,Arthur Lira,PP,AL,160541,Arthur Lira
+2025,cabeca,deputado,Augusto Coutinho,Republicanos,PE,160665,Augusto Coutinho
+2025,cabeca,deputado,Aureo Ribeiro,Solidariedade,RJ,160512,Aureo Ribeiro
+2025,cabeca,deputado,Baleia Rossi,MDB,SP,178975,Baleia Rossi
+2025,cabeca,deputado,Bia Kicis,PL,DF,204374,Bia Kicis
+2025,cabeca,senador,Carlos Portinho,PL,RJ,,
+2025,cabeca,deputado,CARLOS VERAS,PT,PE,204426,Carlos Veras
+2025,cabeca,deputado,Carlos Zarattini,PT,SP,141398,Carlos Zarattini
+2025,cabeca,senador,Ciro Nogueira,PP,PI,,
+2025,cabeca,senador,Confúcio Moura,MDB,RO,,
+2025,cabeca,deputado,Daniel Almeida,PCdoB,BA,74060,Daniel Almeida
+2025,cabeca,deputado,Danilo Forte,União Brasil,CE,62881,Danilo Forte
+2025,cabeca,senador,Daniella Ribeiro,PP,PB,,
+2025,cabeca,senador,Davi Alcolumbre,União Brasil,AP,,
+2025,cabeca,deputado,DOMINGOS NETO,PSD,CE,143632,Domingos Neto
+2025,cabeca,senador,Dr. HIRAN,PP,RR,,
+2025,cabeca,deputado,Dr. Luizinho,PP,RJ,204450,Doutor Luizinho
+2025,cabeca,deputado,Elmar Nascimento,União Brasil,BA,178854,Elmar Nascimento
+2025,cabeca,deputado,Erika Kokay,PT,DF,160575,Erika Kokay
+2025,cabeca,deputado,Erika Hilton,PSol,SP,220645,Erika Hilton
+2025,cabeca,deputado,Eunício Oliveira,MDB,CE,74454,Eunício Oliveira
+2025,cabeca,deputado,Felipe Carreras,PSB,PE,72442,Felipe Carreras
+2025,cabeca,deputado,Fernando Coelho Filho,União Brasil,PE,141431,Fernando Coelho Filho
+2025,cabeca,deputado,FILIPE BARROS,PL,PR,204411,Filipe Barros
+2025,cabeca,deputado,Gervásio Maia,PSB,PB,204394,Gervásio Maia
+2025,cabeca,deputado,GILBERTO ABRAMO,Republicanos,MG,204491,Gilberto Abramo
+2025,cabeca,senador,Eduardo Braga,MDB,AM,,
+2025,cabeca,senador,Eduardo Gomes,PL,TO,,
+2025,cabeca,senador,Efraim Filho,União Brasil,PB,,
+2025,cabeca,senador,Eliziane Gama,PSD,MA,,
+2025,cabeca,senador,Flávio Bolsonaro,PL,RJ,,
+2025,cabeca,deputado,Guilherme Boulos,PSol,SP,220639,Guilherme Boulos
+2025,cabeca,deputado,Hugo Motta,Republicanos,PB,160674,Hugo Motta
+2025,cabeca,senador,Humberto Costa,PT,PE,,
+2025,cabeca,deputado,Isnaldo Bulhões Jr.,MDB,AL,204436,Isnaldo Bulhões Jr.
+2025,cabeca,senador,IZALCI LUCAS,PL,DF,,
+2025,cabeca,deputado,Jandira Feghali,PCdoB,RJ,74848,Jandira Feghali
+2025,cabeca,senador,Jaques Wagner,PT,BA,,
+2025,cabeca,deputado,JOAQUIM PASSARINHO,PL,PA,178910,Joaquim Passarinho
+2025,cabeca,deputado,José Guimarães,PT,CE,141470,José Guimarães
+2025,cabeca,deputado,Júlio Lopes,PP,RJ,74253,Julio Lopes
+2025,cabeca,deputado,Laura Carneiro,PSD,RJ,74856,Laura Carneiro
+2025,cabeca,deputado,LÉO PRATES,PDT,BA,80815,Leo Prates
+2025,cabeca,deputado,Lincoln Portela,PL,MG,74585,Lincoln Portela
+2025,cabeca,deputado,Lindbergh Farias,PT,RJ,74858,Lindbergh Farias
+2025,cabeca,deputado,Luiz Carlos Hauly,Podemos,PR,73778,Luiz Carlos Hauly
+2025,cabeca,deputado,Luiz Carlos Motta,PL,SP,204485,Luiz Carlos Motta
+2025,cabeca,deputado,Luiz Gastão,PSD,CE,220658,Luiz Gastão
+2025,cabeca,deputado,Luiza Erundina,PSol,SP,74784,Luiza Erundina
+2025,cabeca,deputado,Marcos Pereira,Republicanos,SP,204506,Marcos Pereira
+2025,cabeca,senador,MARCELO CASTRO,MDB,PI,,
+2025,cabeca,deputado,MARCEL VAN HATTEM,Novo,RS,156190,Marcel van Hattem
+2025,cabeca,deputado,Maria do Rosário,PT,RS,74398,Maria do Rosário
+2025,cabeca,deputado,MÁRIO HERINGER,PDT,MG,74158,Mário Heringer
+2025,cabeca,senador,Mecias de Jesus,Republicanos,RR,,
+2025,cabeca,deputado,Mendonça Filho,União Brasil,PE,74428,Mendonça Filho
+2025,cabeca,deputado,MOSES RODRIGUES,União Brasil,CE,178997,Moses Rodrigues
+2025,cabeca,senador,NELSINHO TRAD,PSD,MS,,
+2025,cabeca,deputado,Odair Cunha,PT,MG,74159,Odair Cunha
+2025,cabeca,senador,Omar Aziz,PSD,AM,,
+2025,cabeca,deputado,Orlando Silva,PCdoB,SP,178987,Orlando Silva
+2025,cabeca,senador,Otto Alencar,PSD,BA,,
+2025,cabeca,deputado,Paulo Abi-Ackel,PSDB,MG,141516,Paulo Abi-Ackel
+2025,cabeca,deputado,PAULO AZI,PP,BA,178860,Paulo Azi
+2025,cabeca,senador,Paulo Paim,PT,RS,,
+2025,cabeca,deputado,PAULO PIMENTA,PT,RS,74400,Paulo Pimenta
+2025,cabeca,deputado,Paulinho da Força,Solidariedade,SP,141518,Paulinho da Força
+2025,cabeca,deputado,PEDRO CAMPOS,PSB,PE,220667,Pedro Campos
+2025,cabeca,deputado,PEDRO LUCAS FERNANDES,União Brasil,MA,122974,Pedro Lucas Fernandes
+2025,cabeca,deputado,Pedro Lupion,PP,PR,204395,Pedro Lupion
+2025,cabeca,deputado,Pedro Paulo,PSD,RJ,122158,Pedro Paulo
+2025,cabeca,senador,Professora Dorinha Seabra,União Brasil,TO,,
+2025,cabeca,senador,Randolfe Rodrigues,PT,AP,,
+2025,cabeca,deputado,Reginaldo Lopes,PT,MG,74161,Reginaldo Lopes
+2025,cabeca,senador,Renan Calheiros,MDB,AL,,
+2025,cabeca,deputado,Renildo Calheiros,PCdoB,PE,73801,Renildo Calheiros
+2025,cabeca,deputado,RICARDO BARROS,PP,PR,73788,Ricardo Barros
+2025,cabeca,senador,Rodrigo Pacheco,PSD,MG,,
+2025,cabeca,senador,Rogério Carvalho,PT,SE,,
+2025,cabeca,deputado,Rogério Correia,PT,MG,204480,Rogério Correia
+2025,cabeca,senador,Rogério Marinho,PL,RN,,
+2025,cabeca,deputado,Rubens Pereira Júnior,PT,MA,178887,Rubens Pereira Júnior
+2025,cabeca,deputado,SÓSTENES CAVALCANTE,PL,RJ,178947,Sóstenes Cavalcante
+2025,cabeca,deputado,Tabata Amaral,PSB,SP,204534,Tabata Amaral
+2025,cabeca,deputado,TALIRIA PETRONE,PSol,RJ,204464,Talíria Petrone
+2025,cabeca,senador,Tereza Cristina,PP,MS,,
+2025,cabeca,senador,Veneziano Vital do Rêgo,MDB,PB,,
+2025,cabeca,deputado,Wellington Roberto,PL,PB,74043,Wellington Roberto
+2025,cabeca,senador,Weverton Rocha,PDT,MA,,
+2025,cabeca,deputado,Zé Silva,Solidariedade,MG,160632,Zé Silva
+2025,cabeca,senador,Zequinha Marinho,Podemos,PA,,
+2025,cabeca,deputado,Zeca Dirceu,PT,PR,160592,Zeca Dirceu
+2025,ascensao,senador,Alan Rick,União Brasil,AC,,
+2025,ascensao,deputado,ALENCAR SANTANA,PT,SP,204501,Alencar Santana
+2025,ascensao,deputado,ALICE PORTUGAL,PCdoB,BA,74057,Alice Portugal
+2025,ascensao,deputado,BENEDITA DA SILVA,PT,RJ,73701,Benedita da Silva
+2025,ascensao,senador,BETO FARO,PT,PA,,
+2025,ascensao,deputado,Beto Richa,PSDB,PR,220683,Beto Richa
+2025,ascensao,deputado,Bohn Gass,PT,RS,160538,Bohn Gass
+2025,ascensao,deputado,Caroline de Toni,PL,SC,204369,Caroline de Toni
+2025,ascensao,deputado,Daiana Santos,PCdoB,RS,220555,Daiana Santos
+2025,ascensao,deputado,Damião Feliciano,União Brasil,PB,74467,Damião Feliciano
+2025,ascensao,deputado,DANDARA,PT,MG,220629,Dandara
+2025,ascensao,deputado,Dr. Fernando Máximo,União Brasil,RO,220610,Dr. Fernando Máximo
+2025,ascensao,deputado,Dr. Francisco,PT,PI,220688,Dr. Francisco
+2025,ascensao,deputado,Emanuel Pinheiro Neto,MDB,MT,198783,Emanuel Pinheiro Neto
+2025,ascensao,deputado,Fernanda Melchionna,PSol,RS,204407,Fernanda Melchionna
+2025,ascensao,senador,Flávio Arns,PSB,PR,,
+2025,ascensao,deputado,Gilberto Nascimento,PSD,SP,74270,Gilberto Nascimento
+2025,ascensao,deputado,HUGO LEAL,PSD,RJ,141450,Hugo Leal
+2025,ascensao,deputado,JACK ROCHA,PT,ES,220527,Jack Rocha
+2025,ascensao,deputado,José Priante,MDB,PA,74079,José Priante
+2025,ascensao,deputado,JONAS DONIZETE,PSB,SP,160548,Jonas Donizette
+2025,ascensao,deputado,Julio Arcoverde,PP,PI,66385,Julio Arcoverde
+2025,ascensao,senador,LAERCIO OLIVEIRA,PP,SE,,
+2025,ascensao,deputado,LAFAYTTE DE ANDRADA,Republicanos,MG,98057,Lafayette de Andrada
+2025,ascensao,senador,Leila Barros,PDT,DF,,
+2025,ascensao,deputado,Lídice da Mata,PSB,BA,139285,Lídice da Mata
+2025,ascensao,deputado,Lucas Ramos,PSB,PE,220662,Lucas Ramos
+2025,ascensao,deputado,LULA DA FONTE,PP,PE,220669,Lula da Fonte
+2025,ascensao,deputado,Luiz Fernando Faria,PSD,MG,141487,Luiz Fernando Faria
+2025,ascensao,deputado,Luisa Canziani,PSD,PR,204410,Luisa Canziani
+2025,ascensao,deputado,Marangoni,União Brasil,SP,220648,Marangoni
+2025,ascensao,deputado,Mauro Benevides Filho,PDT,CE,204486,Mauro Benevides Filho
+2025,ascensao,deputado,NILTON TATTO,PT,SP,178986,Nilto Tatto
+2025,ascensao,deputado,Pauderney Avelino,União Brasil,AM,74095,Pauderney Avelino
+2025,ascensao,deputado,Pedro Uczai,PT,SC,160604,Pedro Uczai
+2025,ascensao,deputado,Pompeo de Matos,PDT,RS,73486,Pompeo de Mattos
+2025,ascensao,deputado,Professora Luciene Cavalcante,PSol,SP,221338,Professora Luciene Cavalcante
+2025,ascensao,deputado,Rafael Prudente,MDB,DF,220532,Rafael Prudente
+2025,ascensao,deputado,REIMONT,PT,RJ,220606,Reimont
+2025,ascensao,deputado,REGINALDO VERAS,PV,DF,220533,Prof. Reginaldo Veras
+2025,ascensao,deputado,Roberta Roma,PL,BA,220693,Roberta Roma
+2025,ascensao,deputado,Rodrigo de Castro,União Brasil,MG,141531,Rodrigo de Castro
+2025,ascensao,deputado,RUI FALCÃO,PT,SP,73604,Rui Falcão
+2025,ascensao,deputado,Sâmia Bonfim,PSol,SP,204535,Sâmia Bomfim
+2025,ascensao,deputado,Sérgio Souza,MDB,PR,178933,Sergio Souza
+2025,ascensao,deputado,Silas Câmara,Republicanos,AM,74356,Silas Câmara
+2025,ascensao,deputado,Tadeu Veneri,PT,PR,220682,Tadeu Veneri
+2025,ascensao,deputado,Tarcísio Motta,PSol,RJ,220598,Tarcísio Motta
+2025,ascensao,senador,TERESA LEITÃO,PT,PE,,
+2025,ascensao,deputado,TÚLIO GADÊLHA,Rede,PE,157130,Túlio Gadêlha
