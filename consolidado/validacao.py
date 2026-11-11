@@ -29,6 +29,8 @@ import numpy as np
 import pandas as pd
 from scipy import stats
 
+from indice_qualidade import media_geometrica
+
 ROOT = Path(__file__).resolve().parents[1]
 OUT = ROOT / "consolidado"
 LEG = 57
@@ -63,7 +65,7 @@ def caracteristicas() -> pd.DataFrame:
     c["esquerda"] = (c.IDEOLOGIA == "esquerda").astype(int)
     c["regiao"] = c.siglaUf.map({uf: r for r, ufs in REGIOES.items() for uf in ufs})
     c["tam_partido"] = c.siglaPartido.map(iq.groupby("siglaPartido").size())  # bancada na 57ª
-    c["iq_sem_ird"] = c[[k for k in COMPS if k != "ird_norm"]].mean(axis=1)
+    c["iq_sem_ird"] = media_geometrica(c[[k for k in COMPS if k != "ird_norm"]])  # mesma agregação do IQ
     return c
 
 
@@ -219,8 +221,8 @@ def diap(c: pd.DataFrame) -> dict:
     c = c.merge(t, left_on="id_camara", right_index=True, how="left").fillna({"cabeca": 0, "ascensao": 0})
     c["e_cabeca"] = (c.cabeca > 0).astype(int)
     c["e_150"] = ((c.cabeca + c.ascensao) > 0).astype(int)
-    c["iq_sem_ipp"] = c[[k for k in COMPS if k != "ipp_norm"]].mean(axis=1)
-    variaveis = INDICES + ["ln_tempo_casa", "iq_sem_ipp", "iq_sem_ird", "iq_geometrica_piso"]
+    c["iq_sem_ipp"] = media_geometrica(c[[k for k in COMPS if k != "ipp_norm"]])
+    variaveis = INDICES + ["ln_tempo_casa", "iq_sem_ipp", "iq_sem_ird", "iq_aritmetica"]
 
     def tabela(y: str) -> list[dict]:
         linhas = []

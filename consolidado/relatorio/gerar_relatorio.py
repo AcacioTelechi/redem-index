@@ -158,10 +158,10 @@ def main() -> None:
     template = (HERE / "relatorio_template.html").read_text(encoding="utf-8")
     assert "__DATA__" in template
     # banco consolidado embutido na página, para o botão "Exportar para CSV"
-    # (acrescido do IQ da 57ª e ordenado por legislatura e IQ, ambos decrescentes)
-    exp = f.merge(iq[["id_camara", "iq", "iq_geometrica_piso"]].assign(legislatura=57), on=["id_camara", "legislatura"], how="left")
+    # (acrescido do IQ da 57ª e da variante aritmética, e ordenado por legislatura e IQ, ambos decrescentes)
+    exp = f.merge(iq[["id_camara", "iq", "iq_aritmetica"]].assign(legislatura=57), on=["id_camara", "legislatura"], how="left")
     exp = exp.sort_values(["legislatura", "iq", "nome"], ascending=[False, False, True], na_position="last")
-    primeiras = ["id_camara", "legislatura", "nome", "siglaPartido", "siglaUf", "iq", "iq_geometrica_piso"]
+    primeiras = ["id_camara", "legislatura", "nome", "siglaPartido", "siglaUf", "iq", "iq_aritmetica"]
     exp = exp[primeiras + [c for c in exp.columns if c not in primeiras]]
     csv = exp.to_csv(index=False)
     (HERE / "scores_consolidados.csv").write_text(csv, encoding="utf-8")

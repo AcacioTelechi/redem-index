@@ -4,7 +4,8 @@ Componentes: IPP, IRD (peso), IPIPE (exposição, invertido), IFS e IRR. CO2 nã
 da correlação. Novos componentes entram adicionando uma linha em COMPONENTES.
 
 Cada componente vira uma posição percentual (0 = pior, 1 = melhor) dentro da legislatura em
-que foi medido, e o IQ é a média simples dos componentes.
+que foi medido, e o IQ é a média geométrica dos componentes, reescalados para [0,1; 1] (o piso).
+A média aritmética fica só como análise de sensibilidade (coluna iq_aritmetica).
 
 Saídas:
   consolidado/indice_qualidade.csv                  - IQ dos deputados da 57ª legislatura (exige todos os
@@ -36,7 +37,7 @@ COMPONENTES = {
     "ifs": ("ifs", True),
     "irr": ("irr", True),
 }
-LEG_IQ = 57  # legislatura com os quatro componentes
+LEG_IQ = 57  # legislatura com todos os componentes
 LEG_CO2 = 56  # o CO2-Index só existe para a 56ª
 
 
@@ -55,6 +56,23 @@ def normalizar_por_legislatura(f: pd.DataFrame) -> pd.DataFrame:
     for nome, (col, maior) in COMPONENTES.items():
         f[f"{nome}_norm"] = f.groupby("legislatura")[col].transform(lambda s: rank01(s, maior))
     return f
+
+
+PISO_GEOMETRICA = 0.1  # cada componente é reescalado para [piso, 1] antes da média geométrica
+
+
+def media_geometrica(X: pd.DataFrame, piso: float = PISO_GEOMETRICA, pesos: list[float] | None = None) -> pd.Series:
+    """Média geométrica (ponderada, se houver pesos) dos componentes reescalados para [piso, 1].
+
+    É a forma de agregação do IQ: um desempenho muito baixo em um componente não é compensado
+    pelos demais, e o piso impede que um último lugar (posição percentual perto de zero) anule
+    o índice. Componentes ausentes são ignorados; quem chama decide se exige todos.
+    """
+    L = np.log(piso + (1 - piso) * X)
+    if pesos is None:
+        return np.exp(L.mean(axis=1))
+    w = pd.Series(pesos, index=X.columns, dtype=float)
+    return np.exp((L * w).sum(axis=1, min_count=1) / (L.notna() * w).sum(axis=1))
 
 
 def corr_table(df: pd.DataFrame, x: str, cols: list[str]) -> list[dict]:
@@ -140,18 +158,15 @@ def senioridade(ids: pd.Index) -> pd.DataFrame:
     return pd.DataFrame({"n_eleicoes": det.cpf.reindex(ids).map(n_el).values, "ln_tempo_casa": tempo.reindex(ids).values}, index=ids)
 
 
-PISO_GEOMETRICA = 0.1  # cada componente é reescalado para [piso, 1] antes da média geométrica
-
-
 def agregacoes(c: pd.DataFrame, normcols: list[str]) -> dict:
-    """Compara a média aritmética (IQ) com a geométrica pura e a geométrica com piso."""
+    """Compara o IQ (geométrica com piso) com a média aritmética e a geométrica pura."""
     d = c.copy()
     d["menor_componente"] = d[normcols].min(axis=1)
     pos = lambda k: d[k].rank(ascending=False)
     top = lambda k: set(d.nlargest(10, k).id_camara)
     bot = lambda k: set(d.nsmallest(10, k).id_camara)
     versoes = {}
-    for k in ["iq", "iq_geometrica", "iq_geometrica_piso"]:
+    for k in ["iq", "iq_aritmetica", "iq_geometrica"]:
         mov = (pos("iq") - pos(k)).abs()
         versoes[k] = {
             "min": round(float(d[k].min()), 3), "mediana": round(float(d[k].median()), 3), "max": round(float(d[k].max()), 3),
@@ -161,16 +176,16 @@ def agregacoes(c: pd.DataFrame, normcols: list[str]) -> dict:
             "corr_menor_componente": round(float(d[k].corr(d.menor_componente, method="spearman")), 3),
             "reg_co2": regressao(d, k, "co2_index"),
         }
-    d["delta"] = pos("iq") - pos("iq_geometrica_piso")  # positivo = sobe com a geométrica com piso
-    linha = lambda r: {"nome": str(r.nome), "partido": str(r.siglaPartido), "uf": str(r.siglaUf), "iq": round(float(r.iq), 2),
-                       "geo": round(float(r.iq_geometrica_piso), 2), "delta": int(round(r.delta)),
+    d["delta"] = pos("iq_aritmetica") - pos("iq")  # positivo = posição melhor no IQ do que na média aritmética
+    linha = lambda r: {"nome": str(r.nome), "partido": str(r.siglaPartido), "uf": str(r.siglaUf), "arit": round(float(r.iq_aritmetica), 2),
+                       "iq": round(float(r.iq), 2), "delta": int(round(r.delta)),
                        "comp": [round(float(getattr(r, n)), 2) for n in normcols]}
-    g = d.groupby("siglaPartido").agg(n=("iq", "size"), iq=("iq", "mean"), geo=("iq_geometrica", "mean"), piso=("iq_geometrica_piso", "mean"))
-    g = g[g.n >= 8].sort_values("piso", ascending=False)
+    g = d.groupby("siglaPartido").agg(n=("iq", "size"), iq=("iq", "mean"), arit=("iq_aritmetica", "mean"), geo=("iq_geometrica", "mean"))
+    g = g[g.n >= 8].sort_values("iq", ascending=False)
     return {"piso": PISO_GEOMETRICA, "n": int(len(d)), "menor_valor_componente": round(float(d[normcols].min().min()), 4), "versoes": versoes,
             "sobem": [linha(r) for r in d.nlargest(5, "delta").itertuples()],
             "caem": [linha(r) for r in d.nsmallest(5, "delta").itertuples()],
-            "partidos": [{"partido": str(i), "n": int(r.n), "iq": round(float(r.iq), 3), "geo": round(float(r.geo), 3), "piso": round(float(r.piso), 3)} for i, r in g.iterrows()]}
+            "partidos": [{"partido": str(i), "n": int(r.n), "iq": round(float(r.iq), 3), "arit": round(float(r.arit), 3), "geo": round(float(r.geo), 3)} for i, r in g.iterrows()]}
 
 
 def mazziotta_pareto(M: pd.DataFrame) -> pd.Series:
@@ -182,31 +197,31 @@ def mazziotta_pareto(M: pd.DataFrame) -> pd.Series:
 
 
 def robustez_agregacao(c: pd.DataFrame, normcols: list[str]) -> dict:
-    """Sensibilidade da geométrica ao valor do piso e comparação com o Mazziotta-Pareto."""
+    """Sensibilidade do IQ ao valor do piso e comparação com a aritmética e o Mazziotta-Pareto."""
     d = c.copy()
     X = d[normcols]
-    ref = d["iq_geometrica_piso"]
+    ref = d["iq"]
     pos = lambda s: s.rank(ascending=False)
     top = lambda s: set(d.loc[s.nlargest(10).index, "id_camara"])
     bot = lambda s: set(d.loc[s.nsmallest(10).index, "id_camara"])
     rho = lambda a, b: round(float(a.corr(b, method="spearman")), 3)
     pisos = []
     for p in [0, 0.01, 0.05, 0.10, 0.15, 0.20, 0.30, 0.50]:
-        s = np.exp(np.log(p + (1 - p) * X).mean(axis=1))
+        s = media_geometrica(X, piso=p)
         d["_s"] = s
         r = regressao(d, "_s", "co2_index")
-        pisos.append({"piso": p, "rho_ref": rho(s, ref), "rho_aritm": rho(s, d.iq), "mov_max": float((pos(s) - pos(ref)).abs().max()),
+        pisos.append({"piso": p, "rho_ref": rho(s, ref), "rho_aritm": rho(s, d.iq_aritmetica), "mov_max": float((pos(s) - pos(ref)).abs().max()),
                       "top10": len(top(s) & top(ref)), "bottom10": len(bot(s) & bot(ref)), "co2_spearman": r["spearman"], "co2_p": r["p_spearman"]})
     d["dp"] = X.std(axis=1)
     metodos = {}
-    for k in ["iq", "iq_geometrica_piso", "iq_mazziotta_pareto"]:
+    for k in ["iq", "iq_aritmetica", "iq_mazziotta_pareto"]:
         r = regressao(d, k, "co2_index")
-        metodos[k] = {"rho_aritm": rho(d[k], d.iq), "rho_geo": rho(d[k], ref), "mov_max": float((pos(d[k]) - pos(d.iq)).abs().max()),
-                      "top10_geo": len(top(d[k]) & top(ref)), "bottom10_geo": len(bot(d[k]) & bot(ref)),
+        metodos[k] = {"rho_iq": rho(d[k], ref), "rho_aritm": rho(d[k], d.iq_aritmetica), "mov_max": float((pos(d[k]) - pos(ref)).abs().max()),
+                      "top10_iq": len(top(d[k]) & top(ref)), "bottom10_iq": len(bot(d[k]) & bot(ref)),
                       "rho_desequilibrio": rho(d[k], d.dp), "co2_spearman": r["spearman"], "co2_p": r["p_spearman"]}
-    g = d.groupby("siglaPartido").agg(n=("iq", "size"), a=("iq", "mean"), g=("iq_geometrica_piso", "mean"), m=("iq_mazziotta_pareto", "mean"))
+    g = d.groupby("siglaPartido").agg(n=("iq", "size"), iq=("iq", "mean"), arit=("iq_aritmetica", "mean"), mp=("iq_mazziotta_pareto", "mean"))
     g = g[g.n >= 8]
-    ordem = {k: list(g.sort_values(k, ascending=False).index) for k in ["a", "g", "m"]}
+    ordem = {k: list(g.sort_values(k, ascending=False).index) for k in ["iq", "arit", "mp"]}
     return {"pisos": pisos, "metodos": metodos, "partidos_ordem": ordem}
 
 
@@ -250,30 +265,31 @@ def main() -> None:
     iq = base[["nome", "siglaPartido", "siglaUf"] + normcols].copy()
     iq["co2_index"] = iq.index.map(co2)
     iq["n_componentes"] = iq[normcols].notna().sum(axis=1)
-    iq["iq_parcial"] = iq[normcols].mean(axis=1)  # média do que existe
-    iq["iq"] = iq["iq_parcial"].where(iq["n_componentes"] == len(COMPONENTES))
+    completo_mask = iq["n_componentes"] == len(COMPONENTES)
+    # IQ = média geométrica com piso dos componentes; exige todos
+    iq["iq_parcial"] = media_geometrica(iq[normcols])  # com os componentes que existem
+    iq["iq"] = iq["iq_parcial"].where(completo_mask)
+    # formas alternativas de agregação, só para a análise de sensibilidade
+    iq["iq_aritmetica"] = iq[normcols].mean(axis=1).where(completo_mask)
+    iq["iq_geometrica"] = media_geometrica(iq[normcols], piso=0).where(completo_mask)
+    iq["iq_mazziotta_pareto"] = mazziotta_pareto(iq.loc[completo_mask, normcols])
     # sensibilidade: pesos derivados da análise fatorial (carga² normalizada)
-    fat = analise_fatorial(iq.loc[iq["iq"].notna(), normcols])
-    ids_completos = iq.index[iq["iq"].notna()]
+    fat = analise_fatorial(iq.loc[completo_mask, normcols])
+    ids_completos = iq.index[completo_mask]
     fat["vif"] = vif(iq.loc[ids_completos, normcols])
     fat["vif_original"] = vif(base.loc[ids_completos, [col for col, _ in COMPONENTES.values()]])
-    iq["iq_fatorial"] = (iq[normcols] * fat["pesos"]).sum(axis=1).where(iq["iq"].notna())
-    # formas alternativas de agregação: geométrica pura e geométrica com piso
-    completo_mask = iq["iq"].notna()
-    iq["iq_geometrica"] = np.exp(np.log(iq[normcols]).mean(axis=1)).where(completo_mask)
-    iq["iq_geometrica_piso"] = np.exp(np.log(PISO_GEOMETRICA + (1 - PISO_GEOMETRICA) * iq[normcols]).mean(axis=1)).where(completo_mask)
-    iq["iq_mazziotta_pareto"] = mazziotta_pareto(iq.loc[completo_mask, normcols])
+    iq["iq_fatorial"] = media_geometrica(iq[normcols], pesos=fat["pesos"]).where(completo_mask)
     # sensibilidade: IPIPE por eleição disputada (propensão a processos, não tempo de exposição)
     iq = iq.join(senioridade(iq.index))
     iq["ipipe_adj_norm"] = rank01(base["ipipe_score_exposicao"] / iq["n_eleicoes"], False)
     cols_adj = [c if c != "ipipe_norm" else "ipipe_adj_norm" for c in normcols]
-    iq["iq_ipipe_ajustado"] = iq[cols_adj].mean(axis=1).where(iq["iq"].notna() & iq["ipipe_adj_norm"].notna())
+    iq["iq_ipipe_ajustado"] = media_geometrica(iq[cols_adj]).where(completo_mask & iq["ipipe_adj_norm"].notna())
     iq = iq.reset_index().sort_values("iq", ascending=False)
     iq.to_csv(OUT / "indice_qualidade.csv", index=False)
 
     # ---- opção 2: IQ por parlamentar-legislatura com o que existe
     f["n_componentes"] = f[normcols].notna().sum(axis=1)
-    f["iq_disponivel"] = f[normcols].mean(axis=1)
+    f["iq_disponivel"] = media_geometrica(f[normcols])  # mesma agregação, com os componentes da linha
     f[["id_camara", "legislatura", "nome", "siglaPartido", "siglaUf", "co2_index"] + normcols + ["n_componentes", "iq_disponivel"]].to_csv(
         OUT / "indice_qualidade_por_legislatura.csv", index=False
     )
