@@ -102,7 +102,7 @@ def main() -> None:
         "ird": hist(f.ird_peso, np.linspace(0, 7, 29)),
         "co2": hist(f.co2_index, np.linspace(-6, 9, 31), clip=(-6, 9)),
         "ipipe": hist(f.ipipe_score_exposicao, np.linspace(0, 300, 31), clip=(0, 300)),
-        "ifs": hist(f.ifs, np.linspace(0.3, 1, 29)),
+        "ifs": hist(f.ifs, np.linspace(0, 100, 26)),
         "irr": hist(f.irr, np.linspace(0, 1, 21)),
     }
     out["hist"]["co2"]["note"] = "valores abaixo de −6 agrupados no primeiro intervalo"

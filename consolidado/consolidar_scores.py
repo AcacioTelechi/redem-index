@@ -230,6 +230,13 @@ def load_irr(aliases: pd.DataFrame, det: pd.DataFrame, depara: dict) -> tuple[pd
 
 
 def load_ifs(aliases: pd.DataFrame, det: pd.DataFrame, depara: dict) -> tuple[pd.DataFrame, pd.DataFrame]:
+    """IFS (Índice de Falar Sincero) conforme o whitepaper: cada postagem recebe um score de fake news
+    entre 0 e 1 (fake_probability); o IFS é a média desses scores, invertida e normalizada de 0 a 100
+    (min-max entre os deputados da legislatura). ifs_bruto é o valor antes da normalização, 100 x (1 - média).
+
+    ifs_proporcao guarda a definição anterior, 1 - (posts classificados como fake / total de posts),
+    em escala de 0 a 1, para comparação.
+    """
     posts = read_xlsx_columns(
         SCORES / "IFS" / "df_predictions.xlsx",
         "Sheet1",
@@ -237,16 +244,11 @@ def load_ifs(aliases: pd.DataFrame, det: pd.DataFrame, depara: dict) -> tuple[pd
     )
     posts["prediction"] = pd.to_numeric(posts.prediction)
     posts["fake_probability"] = pd.to_numeric(posts.fake_probability)
-    posts["score"] = posts.prediction * posts.fake_probability
     prof = (
         posts.groupby(["screen_name", "user_id"])
-        .agg(ifs_n_posts=("score", "size"), ifs_n_fake=("prediction", "sum"), soma_score=("score", "sum"))
+        .agg(ifs_n_posts=("prediction", "size"), ifs_n_fake=("prediction", "sum"), soma_score=("fake_probability", "sum"))
         .reset_index()
     )
-    # IFS conforme a documentação: 1 - (posts classificados como fake / total de posts)
-    prof["ifs"] = 1 - prof.ifs_n_fake / prof.ifs_n_posts
-    # variante usada na planilha df_predictions.xlsx: 1 - soma(f*p) / total de posts
-    prof["ifs_soma_score"] = 1 - prof.soma_score / prof.ifs_n_posts
 
     perfis = pd.read_csv(SCORES / "IFS" / "perfis_2023.csv")
     perfis["civil_norm"] = perfis.nome_registro.map(norm)
@@ -273,9 +275,13 @@ def load_ifs(aliases: pd.DataFrame, det: pd.DataFrame, depara: dict) -> tuple[pd
         .agg(ifs_n_posts=("ifs_n_posts", "sum"), ifs_n_fake=("ifs_n_fake", "sum"), soma_score=("soma_score", "sum"))
         .reset_index()
     )
-    ok["ifs"] = 1 - ok.ifs_n_fake / ok.ifs_n_posts
-    ok["ifs_soma_score"] = 1 - ok.soma_score / ok.ifs_n_posts
-    return ok[["id_camara", "legislatura", "ifs", "ifs_soma_score", "ifs_n_posts", "ifs_n_fake"]], unmatched
+    ok["ifs_bruto"] = 100 * (1 - ok.soma_score / ok.ifs_n_posts)
+    # normalização min-max dentro da legislatura: o pior deputado fica em 0 e o melhor em 100
+    lim = ok.groupby("legislatura")["ifs_bruto"].agg(["min", "max"])
+    lo, hi = ok.legislatura.map(lim["min"]), ok.legislatura.map(lim["max"])
+    ok["ifs"] = 100 * (ok.ifs_bruto - lo) / (hi - lo)
+    ok["ifs_proporcao"] = 1 - ok.ifs_n_fake / ok.ifs_n_posts
+    return ok[["id_camara", "legislatura", "ifs", "ifs_bruto", "ifs_proporcao", "ifs_n_posts", "ifs_n_fake"]], unmatched
 
 
 # --------------------------------------------------------------------------- main

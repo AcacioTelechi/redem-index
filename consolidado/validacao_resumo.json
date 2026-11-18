@@ -5,8 +5,8 @@
    {
     "var": "Tempo de casa",
     "iq": {
-     "rho": 0.088,
-     "p": 0.075906
+     "rho": 0.084,
+     "p": 0.088832
     },
     "ipp_norm": {
      "rho": 0.903,
@@ -21,8 +21,8 @@
      "p": 0.0
     },
     "ifs_norm": {
-     "rho": -0.12,
-     "p": 0.015096
+     "rho": -0.107,
+     "p": 0.030712
     },
     "irr_norm": {
      "rho": 0.013,
@@ -32,8 +32,8 @@
    {
     "var": "Eleições disputadas",
     "iq": {
-     "rho": 0.07,
-     "p": 0.157983
+     "rho": 0.066,
+     "p": 0.183971
     },
     "ipp_norm": {
      "rho": 0.517,
@@ -48,8 +48,8 @@
      "p": 0.00018
     },
     "ifs_norm": {
-     "rho": -0.089,
-     "p": 0.074401
+     "rho": -0.092,
+     "p": 0.064893
     },
     "irr_norm": {
      "rho": 0.084,
@@ -59,8 +59,8 @@
    {
     "var": "Idade",
     "iq": {
-     "rho": 0.051,
-     "p": 0.307177
+     "rho": 0.033,
+     "p": 0.508118
     },
     "ipp_norm": {
      "rho": 0.458,
@@ -75,8 +75,8 @@
      "p": 0.550235
     },
     "ifs_norm": {
-     "rho": -0.156,
-     "p": 0.001549
+     "rho": -0.198,
+     "p": 5.8e-05
     },
     "irr_norm": {
      "rho": 0.02,
@@ -86,8 +86,8 @@
    {
     "var": "Tamanho do partido",
     "iq": {
-     "rho": -0.178,
-     "p": 0.000299
+     "rho": -0.172,
+     "p": 0.000483
     },
     "ipp_norm": {
      "rho": -0.043,
@@ -102,8 +102,8 @@
      "p": 0.80801
     },
     "ifs_norm": {
-     "rho": -0.045,
-     "p": 0.369488
+     "rho": -0.042,
+     "p": 0.402504
     },
     "irr_norm": {
      "rho": -0.192,
@@ -115,8 +115,8 @@
    {
     "var": "Escolaridade",
     "iq": {
-     "eta2": 0.0,
-     "p": 0.414794
+     "eta2": 0.0016,
+     "p": 0.30219
     },
     "ipp_norm": {
      "eta2": 0.0159,
@@ -131,8 +131,8 @@
      "p": 0.699748
     },
     "ifs_norm": {
-     "eta2": 0.0041,
-     "p": 0.201013
+     "eta2": 0.0084,
+     "p": 0.095661
     },
     "irr_norm": {
      "eta2": 0.0,
@@ -142,8 +142,8 @@
    {
     "var": "Ideologia (6 níveis)",
     "iq": {
-     "eta2": 0.0441,
-     "p": 0.000385
+     "eta2": 0.054,
+     "p": 6.6e-05
     },
     "ipp_norm": {
      "eta2": 0.0222,
@@ -158,8 +158,8 @@
      "p": 0.012033
     },
     "ifs_norm": {
-     "eta2": 0.0,
-     "p": 0.416786
+     "eta2": 0.0021,
+     "p": 0.321324
     },
     "irr_norm": {
      "eta2": 0.1239,
@@ -169,8 +169,8 @@
    {
     "var": "Região",
     "iq": {
-     "eta2": 0.0292,
-     "p": 0.003368
+     "eta2": 0.0289,
+     "p": 0.003546
     },
     "ipp_norm": {
      "eta2": 0.0213,
@@ -185,8 +185,8 @@
      "p": 0.672189
     },
     "ifs_norm": {
-     "eta2": 0.0056,
-     "p": 0.180026
+     "eta2": 0.0027,
+     "p": 0.27892
     },
     "irr_norm": {
      "eta2": 0.0743,
@@ -196,7 +196,7 @@
    {
     "var": "Gênero",
     "iq": {
-     "eta2": 0.1073,
+     "eta2": 0.1106,
      "p": 0.0
     },
     "ipp_norm": {
@@ -212,8 +212,8 @@
      "p": 0.121295
     },
     "ifs_norm": {
-     "eta2": 0.0,
-     "p": 0.653079
+     "eta2": 0.0002,
+     "p": 0.296376
     },
     "irr_norm": {
      "eta2": 0.008,
@@ -223,8 +223,8 @@
    {
     "var": "Raça (branca ou não)",
     "iq": {
-     "eta2": 0.0225,
-     "p": 0.001477
+     "eta2": 0.0207,
+     "p": 0.00219
     },
     "ipp_norm": {
      "eta2": 0.0059,
@@ -240,7 +240,7 @@
     },
     "ifs_norm": {
      "eta2": 0.0,
-     "p": 0.784322
+     "p": 0.775009
     },
     "irr_norm": {
      "eta2": 0.0,
@@ -251,50 +251,50 @@
   "r2_blocos": [
    {
     "bloco": "Gênero e raça",
-    "iq": 0.1413,
-    "iq_sem_ird": 0.0091
+    "iq": 0.1451,
+    "iq_sem_ird": 0.011
    },
    {
     "bloco": "Região",
     "iq": 0.0435,
-    "iq_sem_ird": 0.0403
+    "iq_sem_ird": 0.0412
    },
    {
     "bloco": "Ideologia (6 níveis)",
-    "iq": 0.0642,
-    "iq_sem_ird": 0.068
+    "iq": 0.0774,
+    "iq_sem_ird": 0.0799
    },
    {
     "bloco": "Tamanho do partido",
-    "iq": 0.0456,
-    "iq_sem_ird": 0.0536
+    "iq": 0.0436,
+    "iq_sem_ird": 0.051
    },
    {
     "bloco": "Tempo de casa e idade",
-    "iq": 0.0135,
-    "iq_sem_ird": 0.0422
+    "iq": 0.0134,
+    "iq_sem_ird": 0.0427
    },
    {
     "bloco": "Escolaridade",
-    "iq": 0.0184,
-    "iq_sem_ird": 0.0192
+    "iq": 0.0213,
+    "iq_sem_ird": 0.0219
    }
   ],
   "r2_todos": {
-   "iq": 0.2777,
-   "iq_sem_ird": 0.1762
+   "iq": 0.2934,
+   "iq_sem_ird": 0.191
   },
   "r2_sem_genero_raca": {
-   "iq": 0.1479,
-   "iq_sem_ird": 0.1633
+   "iq": 0.1647,
+   "iq_sem_ird": 0.1773
   },
   "medias": {
    "genero": [
     {
      "grupo": "Mulheres",
      "n": 67,
-     "iq": 0.585,
-     "iq_sem_ird": 0.529
+     "iq": 0.588,
+     "iq_sem_ird": 0.533
     },
     {
      "grupo": "Homens",
@@ -308,41 +308,41 @@
      "grupo": "Não brancos",
      "n": 101,
      "iq": 0.539,
-     "iq_sem_ird": 0.508
+     "iq_sem_ird": 0.509
     },
     {
      "grupo": "Brancos",
      "n": 306,
      "iq": 0.494,
-     "iq_sem_ird": 0.507
+     "iq_sem_ird": 0.508
     }
    ],
    "ideologia": [
     {
      "grupo": "Esquerda",
      "n": 103,
-     "iq": 0.544,
-     "iq_sem_ird": 0.547
+     "iq": 0.551,
+     "iq_sem_ird": 0.556
     },
     {
      "grupo": "Direita",
      "n": 304,
-     "iq": 0.491,
-     "iq_sem_ird": 0.494
+     "iq": 0.49,
+     "iq_sem_ird": 0.492
     }
    ],
    "regiao": [
     {
      "grupo": "Nordeste",
      "n": 125,
-     "iq": 0.533,
-     "iq_sem_ird": 0.54
+     "iq": 0.535,
+     "iq_sem_ird": 0.542
     },
     {
      "grupo": "Norte",
      "n": 55,
-     "iq": 0.51,
-     "iq_sem_ird": 0.491
+     "iq": 0.512,
+     "iq_sem_ird": 0.493
     },
     {
      "grupo": "Sudeste",
@@ -353,41 +353,41 @@
     {
      "grupo": "Centro-Oeste",
      "n": 33,
-     "iq": 0.486,
-     "iq_sem_ird": 0.474
+     "iq": 0.482,
+     "iq_sem_ird": 0.469
     },
     {
      "grupo": "Sul",
      "n": 58,
-     "iq": 0.473,
-     "iq_sem_ird": 0.482
+     "iq": 0.477,
+     "iq_sem_ird": 0.487
     }
    ],
    "reeleito": [
     {
      "grupo": "Novatos em 2022",
      "n": 181,
-     "iq": 0.507,
-     "iq_sem_ird": 0.5
+     "iq": 0.508,
+     "iq_sem_ird": 0.502
     },
     {
      "grupo": "Reeleitos em 2022",
      "n": 226,
-     "iq": 0.503,
-     "iq_sem_ird": 0.512
+     "iq": 0.504,
+     "iq_sem_ird": 0.513
     }
    ]
   },
   "ideologia": {
-   "d_cohen": 0.496,
-   "r": 0.216,
-   "r_parcial_genero_raca": 0.178,
+   "d_cohen": 0.567,
+   "r": 0.247,
+   "r_parcial_genero_raca": 0.211,
    "pct_mulheres_esquerda": 0.262,
    "pct_mulheres_direita": 0.132
   },
   "partido": {
-   "rho": -0.178,
-   "rho_sem_pl": -0.009
+   "rho": -0.172,
+   "rho_sem_pl": 0.006
   }
  },
  "ideologia": {
@@ -406,65 +406,65 @@
    {
     "k": 20,
     "esperado": 5.1,
-    "topo": 11,
-    "p_topo": 0.003492,
-    "base": 4,
-    "p_base": 0.398402
+    "topo": 12,
+    "p_topo": 0.000774,
+    "base": 2,
+    "p_base": 0.081095
    },
    {
     "k": 50,
     "esperado": 12.7,
     "topo": 24,
     "p_topo": 0.000172,
-    "base": 8,
-    "p_base": 0.070519
+    "base": 6,
+    "p_base": 0.012402
    },
    {
     "k": 100,
     "esperado": 25.3,
-    "topo": 41,
-    "p_topo": 4.7e-05,
+    "topo": 43,
+    "p_topo": 5e-06,
     "base": 13,
     "p_base": 0.000549
    }
   ],
-  "media_esquerda": 0.544,
-  "media_direita": 0.491,
-  "diferenca": 0.0527,
+  "media_esquerda": 0.551,
+  "media_direita": 0.49,
+  "diferenca": 0.0612,
   "ic": [
-   0.0281,
-   0.0774
+   0.0364,
+   0.0862
   ],
-  "d_cohen": 0.507,
-  "auc": 0.634,
-  "p_auc": 4.8e-05,
-  "rho_niveis": -0.221,
-  "p_niveis": 7e-06,
+  "d_cohen": 0.584,
+  "auc": 0.652,
+  "p_auc": 4e-06,
+  "rho_niveis": -0.233,
+  "p_niveis": 2e-06,
   "niveis": [
    {
     "nivel": "extrema esquerda",
     "n": 10,
-    "iq": 0.537
+    "iq": 0.549
    },
    {
     "nivel": "esquerda",
     "n": 58,
-    "iq": 0.546
+    "iq": 0.555
    },
    {
     "nivel": "centro-esquerda",
     "n": 35,
-    "iq": 0.543
+    "iq": 0.545
    },
    {
     "nivel": "centro-direita",
     "n": 51,
-    "iq": 0.496
+    "iq": 0.489
    },
    {
     "nivel": "direita",
     "n": 93,
-    "iq": 0.512
+    "iq": 0.511
    },
    {
     "nivel": "extrema direita",
@@ -476,46 +476,46 @@
    {
     "quintil": "1º (menor IQ)",
     "n": 82,
-    "pct": 0.122
+    "pct": 0.134
    },
    {
     "quintil": "2º",
     "n": 81,
-    "pct": 0.247
+    "pct": 0.222
    },
    {
     "quintil": "3º",
     "n": 81,
-    "pct": 0.235
+    "pct": 0.185
    },
    {
     "quintil": "4º",
     "n": 81,
-    "pct": 0.259
+    "pct": 0.272
    },
    {
     "quintil": "5º (maior IQ)",
     "n": 82,
-    "pct": 0.402
+    "pct": 0.451
    }
   ],
-  "z_tendencia": 3.78,
-  "p_tendencia": 0.000157,
+  "z_tendencia": 4.5,
+  "p_tendencia": 7e-06,
   "controles": [
    {
     "modelo": "Só ideologia",
-    "coef": 0.0527,
-    "p": 1.1e-05
+    "coef": 0.0612,
+    "p": 0.0
    },
    {
     "modelo": "Controlando gênero e raça",
-    "coef": 0.0408,
-    "p": 0.000327
+    "coef": 0.0489,
+    "p": 1.9e-05
    },
    {
     "modelo": "Controlando também tempo de casa",
-    "coef": 0.0343,
-    "p": 0.00253
+    "coef": 0.0426,
+    "p": 0.000206
    }
   ],
   "componentes": [
@@ -536,8 +536,8 @@
    },
    {
     "var": "ifs_norm",
-    "coef": -0.0072,
-    "p": 0.822642
+    "coef": 0.0424,
+    "p": 0.186719
    },
    {
     "var": "irr_norm",
@@ -552,32 +552,32 @@
    {
     "destino": "Deputado federal: eleito",
     "n": 239,
-    "iq": 0.511
+    "iq": 0.513
    },
    {
     "destino": "Deputado federal: não eleito",
     "n": 94,
-    "iq": 0.505
+    "iq": 0.504
    },
    {
     "destino": "Senado",
     "n": 37,
-    "iq": 0.483
+    "iq": 0.481
    },
    {
     "destino": "Outro cargo",
     "n": 15,
-    "iq": 0.51
+    "iq": 0.509
    },
    {
     "destino": "Não concorreu",
     "n": 19,
-    "iq": 0.475
+    "iq": 0.481
    },
    {
     "destino": "Deputado federal: candidatura sem votos",
     "n": 3,
-    "iq": 0.427
+    "iq": 0.434
    }
   ],
   "reeleicao": {
@@ -586,19 +586,19 @@
    "taxa": 0.737,
    "n_amplo": 333,
    "taxa_amplo": 0.718,
-   "auc_amplo": 0.525,
-   "p_amplo": 0.476091,
+   "auc_amplo": 0.533,
+   "p_amplo": 0.343865,
    "n_suplentes": 13,
    "n_poucos_votos": 2,
    "comparacao": [
     {
      "var": "iq",
-     "sim": 0.511,
-     "nao": 0.502,
-     "auc": 0.531,
-     "p": 0.393186,
-     "rho": 0.037,
-     "p_rho": 0.515954,
+     "sim": 0.512,
+     "nao": 0.499,
+     "auc": 0.543,
+     "p": 0.241101,
+     "rho": 0.041,
+     "p_rho": 0.470425,
      "n_rho": 319
     },
     {
@@ -633,12 +633,12 @@
     },
     {
      "var": "ifs_norm",
-     "sim": 0.515,
-     "nao": 0.46,
-     "auc": 0.555,
-     "p": 0.133092,
-     "rho": -0.036,
-     "p_rho": 0.525552,
+     "sim": 0.523,
+     "nao": 0.444,
+     "auc": 0.58,
+     "p": 0.029172,
+     "rho": -0.009,
+     "p_rho": 0.869309,
      "n_rho": 319
     },
     {
@@ -656,27 +656,27 @@
     {
      "quartil": "1º (menor IQ)",
      "n": 80,
-     "taxa": 0.762
+     "taxa": 0.725
     },
     {
      "quartil": "2º",
      "n": 80,
-     "taxa": 0.65
+     "taxa": 0.675
     },
     {
      "quartil": "3º",
      "n": 79,
-     "taxa": 0.759
+     "taxa": 0.722
     },
     {
      "quartil": "4º (maior IQ)",
      "n": 80,
-     "taxa": 0.775
+     "taxa": 0.825
     }
    ],
    "var_votos_mediana": -0.0193,
    "pct_cresceram": 0.473,
-   "ols_iq_t": 0.12
+   "ols_iq_t": 0.27
   },
   "senado": {
    "n": 37,
@@ -684,12 +684,12 @@
    "comparacao": [
     {
      "var": "iq",
-     "sim": 0.435,
-     "nao": 0.519,
-     "auc": 0.289,
-     "p": 0.030671,
-     "rho": -0.251,
-     "p_rho": 0.139,
+     "sim": 0.439,
+     "nao": 0.512,
+     "auc": 0.312,
+     "p": 0.055357,
+     "rho": -0.227,
+     "p_rho": 0.183007,
      "n_rho": 36
     },
     {
@@ -724,12 +724,12 @@
     },
     {
      "var": "ifs_norm",
-     "sim": 0.431,
-     "nao": 0.622,
-     "auc": 0.312,
-     "p": 0.055285,
-     "rho": -0.301,
-     "p_rho": 0.074054,
+     "sim": 0.447,
+     "nao": 0.565,
+     "auc": 0.384,
+     "p": 0.237884,
+     "rho": -0.196,
+     "p_rho": 0.251597,
      "n_rho": 36
     },
     {
@@ -743,43 +743,43 @@
      "n_rho": 36
     }
    ],
-   "p_permutacao": 0.023,
+   "p_permutacao": 0.0595,
    "esquerda": {
     "n": 5,
     "eleitos": 1,
-    "iq": 0.634
+    "iq": 0.639
    },
    "direita": {
     "n": 32,
     "eleitos": 15,
-    "iq": 0.459,
-    "iq_eleitos": 0.426,
-    "iq_nao": 0.488,
-    "auc": 0.318,
-    "p": 0.082372
+    "iq": 0.456,
+    "iq_eleitos": 0.43,
+    "iq_nao": 0.478,
+    "auc": 0.345,
+    "p": 0.140819
    },
    "candidatos": [
-    {
-     "nome": "Benedita da Silva",
-     "partido": "PT",
-     "uf": "RJ",
-     "iq": 0.732,
-     "eleito": 0,
-     "participacao": 0.2022
-    },
     {
      "nome": "Erika Kokay",
      "partido": "PT",
      "uf": "DF",
-     "iq": 0.721,
+     "iq": 0.745,
      "eleito": 0,
      "participacao": 0.1891
+    },
+    {
+     "nome": "Benedita da Silva",
+     "partido": "PT",
+     "uf": "RJ",
+     "iq": 0.738,
+     "eleito": 0,
+     "participacao": 0.2022
     },
     {
      "nome": "Mendonça Filho",
      "partido": "PL",
      "uf": "PE",
-     "iq": 0.697,
+     "iq": 0.695,
      "eleito": 0,
      "participacao": 0.186
     },
@@ -787,79 +787,63 @@
      "nome": "Helena Lima",
      "partido": "PSD",
      "uf": "RR",
-     "iq": 0.657,
+     "iq": 0.662,
      "eleito": 0,
      "participacao": 0.175
-    },
-    {
-     "nome": "Túlio Gadêlha",
-     "partido": "PSD",
-     "uf": "PE",
-     "iq": 0.636,
-     "eleito": 0,
-     "participacao": 0.0723
-    },
-    {
-     "nome": "Silvia Cristina",
-     "partido": "PP",
-     "uf": "RO",
-     "iq": 0.628,
-     "eleito": 0,
-     "participacao": 0.1703
     },
     {
      "nome": "Júlio Cesar",
      "partido": "PSD",
      "uf": "PI",
-     "iq": 0.624,
+     "iq": 0.628,
      "eleito": 1,
      "participacao": 0.2698
+    },
+    {
+     "nome": "Silvia Cristina",
+     "partido": "PP",
+     "uf": "RO",
+     "iq": 0.627,
+     "eleito": 0,
+     "participacao": 0.1703
+    },
+    {
+     "nome": "Túlio Gadêlha",
+     "partido": "PSD",
+     "uf": "PE",
+     "iq": 0.625,
+     "eleito": 0,
+     "participacao": 0.0723
     },
     {
      "nome": "Luizianne Lins",
      "partido": "REDE",
      "uf": "CE",
-     "iq": 0.562,
+     "iq": 0.566,
      "eleito": 1,
      "participacao": 0.2905
-    },
-    {
-     "nome": "Helio Lopes",
-     "partido": "PL",
-     "uf": "RR",
-     "iq": 0.557,
-     "eleito": 0,
-     "participacao": 0.1297
     },
     {
      "nome": "Aécio Neves",
      "partido": "PSDB",
      "uf": "MG",
-     "iq": 0.556,
+     "iq": 0.555,
      "eleito": 0,
      "participacao": 0.0408
     },
     {
-     "nome": "Dr. Zacharias Calil",
-     "partido": "MDB",
-     "uf": "GO",
-     "iq": 0.554,
+     "nome": "Helio Lopes",
+     "partido": "PL",
+     "uf": "RR",
+     "iq": 0.546,
      "eleito": 0,
-     "participacao": 0.1494
-    },
-    {
-     "nome": "Carlos Henrique Gaguim",
-     "partido": "UNIÃO",
-     "uf": "TO",
-     "iq": 0.525,
-     "eleito": 0,
-     "participacao": 0.1545
+     "participacao": 0.1297
     },
     {
      "nome": "Vander Loubet",
      "partido": "PT",
      "uf": "MS",
-     "iq": 0.517,
+     "iq": 0.523,
      "eleito": 0,
      "participacao": 0.1388
     },
@@ -867,7 +851,7 @@
      "nome": "Pedro Paulo",
      "partido": "PSD",
      "uf": "RJ",
-     "iq": 0.514,
+     "iq": 0.516,
      "eleito": 0,
      "participacao": 0.1195
     },
@@ -875,7 +859,7 @@
      "nome": "Eduardo Velloso",
      "partido": "SOLIDARIEDADE",
      "uf": "AC",
-     "iq": 0.496,
+     "iq": 0.495,
      "eleito": 0,
      "participacao": 0.1087
     },
@@ -883,47 +867,55 @@
      "nome": "Arthur Lira",
      "partido": "PP",
      "uf": "AL",
-     "iq": 0.481,
+     "iq": 0.494,
      "eleito": 1,
      "participacao": 0.2887
+    },
+    {
+     "nome": "Carlos Henrique Gaguim",
+     "partido": "UNIÃO",
+     "uf": "TO",
+     "iq": 0.488,
+     "eleito": 0,
+     "participacao": 0.1545
+    },
+    {
+     "nome": "Dr. Zacharias Calil",
+     "partido": "MDB",
+     "uf": "GO",
+     "iq": 0.485,
+     "eleito": 0,
+     "participacao": 0.1494
     },
     {
      "nome": "José Medeiros",
      "partido": "PL",
      "uf": "MT",
-     "iq": 0.455,
+     "iq": 0.466,
      "eleito": 1,
      "participacao": 0.2735
-    },
-    {
-     "nome": "Gustavo Gayer",
-     "partido": "PL",
-     "uf": "GO",
-     "iq": 0.452,
-     "eleito": 1,
-     "participacao": 0.2453
-    },
-    {
-     "nome": "Evair Vieira de Melo",
-     "partido": "REPUBLICANOS",
-     "uf": "ES",
-     "iq": 0.451,
-     "eleito": 1,
-     "participacao": 0.2439
     },
     {
      "nome": "Rodrigo Valadares",
      "partido": "PL",
      "uf": "SE",
-     "iq": 0.439,
+     "iq": 0.451,
      "eleito": 0,
      "participacao": 0.0554
+    },
+    {
+     "nome": "Evair Vieira de Melo",
+     "partido": "REPUBLICANOS",
+     "uf": "ES",
+     "iq": 0.449,
+     "eleito": 1,
+     "participacao": 0.2439
     },
     {
      "nome": "Marcel van Hattem",
      "partido": "NOVO",
      "uf": "RS",
-     "iq": 0.437,
+     "iq": 0.444,
      "eleito": 1,
      "participacao": 0.3008
     },
@@ -936,26 +928,18 @@
      "participacao": 0.3197
     },
     {
-     "nome": "Delegado Éder Mauro",
+     "nome": "Gustavo Gayer",
      "partido": "PL",
-     "uf": "PA",
-     "iq": 0.423,
-     "eleito": 0,
-     "participacao": 0.2226
-    },
-    {
-     "nome": "Eduardo da Fonte",
-     "partido": "PP",
-     "uf": "PE",
-     "iq": 0.417,
-     "eleito": 0,
-     "participacao": 0.1387
+     "uf": "GO",
+     "iq": 0.431,
+     "eleito": 1,
+     "participacao": 0.2453
     },
     {
      "nome": "Acácio Favacho",
      "partido": "MDB",
      "uf": "AP",
-     "iq": 0.409,
+     "iq": 0.429,
      "eleito": 0,
      "participacao": 0.1487
     },
@@ -963,79 +947,87 @@
      "nome": "Filipe Barros",
      "partido": "PL",
      "uf": "PR",
-     "iq": 0.408,
+     "iq": 0.425,
      "eleito": 1,
      "participacao": 0.2725
-    },
-    {
-     "nome": "Caroline de Toni",
-     "partido": "PL",
-     "uf": "SC",
-     "iq": 0.406,
-     "eleito": 1,
-     "participacao": 0.3346
-    },
-    {
-     "nome": "Alexandre Guimarães",
-     "partido": "MDB",
-     "uf": "TO",
-     "iq": 0.406,
-     "eleito": 1,
-     "participacao": 0.1916
     },
     {
      "nome": "Capitão Alberto Neto",
      "partido": "PL",
      "uf": "AM",
-     "iq": 0.399,
+     "iq": 0.419,
      "eleito": 0,
      "participacao": 0.2366
+    },
+    {
+     "nome": "Eduardo da Fonte",
+     "partido": "PP",
+     "uf": "PE",
+     "iq": 0.411,
+     "eleito": 0,
+     "participacao": 0.1387
+    },
+    {
+     "nome": "Caroline de Toni",
+     "partido": "PL",
+     "uf": "SC",
+     "iq": 0.41,
+     "eleito": 1,
+     "participacao": 0.3346
     },
     {
      "nome": "Bia Kicis",
      "partido": "PL",
      "uf": "DF",
-     "iq": 0.397,
+     "iq": 0.409,
      "eleito": 1,
      "participacao": 0.2744
     },
     {
-     "nome": "Eli Borges",
-     "partido": "REPUBLICANOS",
+     "nome": "Alexandre Guimarães",
+     "partido": "MDB",
      "uf": "TO",
-     "iq": 0.392,
+     "iq": 0.407,
+     "eleito": 1,
+     "participacao": 0.1916
+    },
+    {
+     "nome": "Delegado Éder Mauro",
+     "partido": "PL",
+     "uf": "PA",
+     "iq": 0.406,
      "eleito": 0,
-     "participacao": 0.1644
+     "participacao": 0.2226
     },
     {
      "nome": "Sanderson",
      "partido": "PL",
      "uf": "RS",
-     "iq": 0.385,
+     "iq": 0.395,
      "eleito": 1,
      "participacao": 0.3011
+    },
+    {
+     "nome": "Eli Borges",
+     "partido": "REPUBLICANOS",
+     "uf": "TO",
+     "iq": 0.389,
+     "eleito": 0,
+     "participacao": 0.1644
     },
     {
      "nome": "Carlos Jordy",
      "partido": "PL",
      "uf": "RJ",
-     "iq": 0.376,
+     "iq": 0.38,
      "eleito": 1,
      "participacao": 0.2456
-    },
-    {
-     "nome": "Ricardo Salles",
-     "partido": "NOVO",
-     "uf": "SP",
-     "iq": 0.366,
-     "eleito": 0,
-     "participacao": null
     },
     {
      "nome": "Domingos Sávio",
      "partido": "PL",
      "uf": "MG",
-     "iq": 0.364,
+     "iq": 0.365,
      "eleito": 1,
      "participacao": 0.2421
     },
@@ -1043,15 +1035,23 @@
      "nome": "Nicoletti",
      "partido": "PL",
      "uf": "RR",
-     "iq": 0.318,
+     "iq": 0.319,
      "eleito": 1,
      "participacao": 0.2268
+    },
+    {
+     "nome": "Ricardo Salles",
+     "partido": "NOVO",
+     "uf": "SP",
+     "iq": 0.295,
+     "eleito": 0,
+     "participacao": null
     },
     {
      "nome": "Marcelo Crivella",
      "partido": "REPUBLICANOS",
      "uf": "RJ",
-     "iq": 0.268,
+     "iq": 0.26,
      "eleito": 0,
      "participacao": 0.0339
     }
@@ -1059,9 +1059,9 @@
    "vs_reeleicao": [
     {
      "var": "iq",
-     "senado": 0.483,
-     "reeleicao": 0.509,
-     "p": 0.100063
+     "senado": 0.481,
+     "reeleicao": 0.51,
+     "p": 0.078753
     },
     {
      "var": "ipp_norm",
@@ -1083,9 +1083,9 @@
     },
     {
      "var": "ifs_norm",
-     "senado": 0.54,
-     "reeleicao": 0.498,
-     "p": 0.384599
+     "senado": 0.514,
+     "reeleicao": 0.502,
+     "p": 0.801707
     },
     {
      "var": "irr_norm",
@@ -1119,10 +1119,10 @@
   "cabecas": [
    {
     "var": "iq",
-    "sim": 0.517,
-    "nao": 0.501,
-    "auc": 0.52,
-    "p": 0.572409
+    "sim": 0.52,
+    "nao": 0.502,
+    "auc": 0.523,
+    "p": 0.510103
    },
    {
     "var": "ipp_norm",
@@ -1147,10 +1147,10 @@
    },
    {
     "var": "ifs_norm",
-    "sim": 0.468,
-    "nao": 0.506,
-    "auc": 0.461,
-    "p": 0.264011
+    "sim": 0.483,
+    "nao": 0.505,
+    "auc": 0.477,
+    "p": 0.516038
    },
    {
     "var": "irr_norm",
@@ -1168,33 +1168,33 @@
    },
    {
     "var": "iq_sem_ipp",
-    "sim": 0.476,
-    "nao": 0.505,
-    "auc": 0.428,
-    "p": 0.038626
+    "sim": 0.478,
+    "nao": 0.506,
+    "auc": 0.433,
+    "p": 0.053865
    },
    {
     "var": "iq_sem_ird",
-    "sim": 0.53,
+    "sim": 0.533,
     "nao": 0.501,
-    "auc": 0.551,
-    "p": 0.139804
+    "auc": 0.556,
+    "p": 0.107265
    },
    {
     "var": "iq_aritmetica",
-    "sim": 0.519,
+    "sim": 0.523,
     "nao": 0.505,
-    "auc": 0.512,
-    "p": 0.72437
+    "auc": 0.519,
+    "p": 0.59065
    }
   ],
   "top150": [
    {
     "var": "iq",
-    "sim": 0.51,
+    "sim": 0.513,
     "nao": 0.502,
-    "auc": 0.507,
-    "p": 0.815661
+    "auc": 0.514,
+    "p": 0.644571
    },
    {
     "var": "ipp_norm",
@@ -1219,10 +1219,10 @@
    },
    {
     "var": "ifs_norm",
-    "sim": 0.444,
-    "nao": 0.524,
-    "auc": 0.418,
-    "p": 0.007005
+    "sim": 0.46,
+    "nao": 0.52,
+    "auc": 0.439,
+    "p": 0.04765
    },
    {
     "var": "irr_norm",
@@ -1240,41 +1240,41 @@
    },
    {
     "var": "iq_sem_ipp",
-    "sim": 0.478,
+    "sim": 0.482,
     "nao": 0.509,
-    "auc": 0.428,
-    "p": 0.018652
+    "auc": 0.435,
+    "p": 0.033803
    },
    {
     "var": "iq_sem_ird",
-    "sim": 0.517,
+    "sim": 0.521,
     "nao": 0.502,
-    "auc": 0.528,
-    "p": 0.352696
+    "auc": 0.535,
+    "p": 0.25073
    },
    {
     "var": "iq_aritmetica",
-    "sim": 0.514,
-    "nao": 0.505,
-    "auc": 0.51,
-    "p": 0.750806
+    "sim": 0.518,
+    "nao": 0.504,
+    "auc": 0.518,
+    "p": 0.562586
    }
   ],
   "quartis_iq": [
    {
     "quartil": "1º (menor)",
     "n": 102,
-    "taxa": 0.206
+    "taxa": 0.216
    },
    {
     "quartil": "2º",
     "n": 102,
-    "taxa": 0.245
+    "taxa": 0.225
    },
    {
     "quartil": "3º",
     "n": 101,
-    "taxa": 0.158
+    "taxa": 0.168
    },
    {
     "quartil": "4º (maior)",
@@ -1304,7 +1304,7 @@
     "taxa": 0.382
    }
   ],
-  "tempo_casa_iq_sem_ird": 0.192,
-  "tempo_casa_iq": 0.088
+  "tempo_casa_iq_sem_ird": 0.189,
+  "tempo_casa_iq": 0.084
  }
 }
