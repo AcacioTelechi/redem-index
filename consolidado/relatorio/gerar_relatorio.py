@@ -108,7 +108,7 @@ def main() -> None:
     out["hist"]["co2"]["note"] = "valores abaixo de −6 agrupados no primeiro intervalo"
     out["hist"]["ipipe"]["note"] = "valores acima de 300 agrupados no último intervalo"
 
-    out["corr56"] = corr(f[f.legislatura == 56], [("ipp_final_v4", "IPP"), ("ird_peso", "IRD"), ("ipipe_score_exposicao", "IPIPE")])
+    out["corr56"] = corr(f[f.legislatura == 56], [("ipp_final_v4", "IPP"), ("ird_peso", "IRD"), ("ipipe_score_exposicao", "IPIPE"), ("irr", "IRR")])
     out["corr57"] = corr(f[f.legislatura == 57], [("ipp_final_v4", "IPP"), ("ird_peso", "IRD"), ("ipipe_score_exposicao", "IPIPE"), ("ifs", "IFS"), ("irr", "IRR")])
 
     out["party"] = {}

@@ -53,9 +53,10 @@ def caracteristicas() -> pd.DataFrame:
     sc = pd.read_csv(OUT / "scores_consolidados.csv")
     sc = sc[sc.legislatura == LEG][["id_camara", "ipipe_id_parlamentar"]]
     ip = pd.read_csv(OUT / "scores" / "IPIPE" / f"IPIPE_{LEG}A_PARLAMENTARES.csv")
-    irr = pd.read_excel(OUT / "scores" / "IRR" / "V6_agregado_ponderado_final_IRR_ponderado_57.xlsx", sheet_name="Agregado_Ponderado")
+    irr = pd.read_excel(OUT / "scores" / "IRR" / f"IRR_{LEG}a_legislatura_banco_final.xlsx", sheet_name=0)
     ip["k"] = ip.nome.map(norm)
-    irr["k"] = irr.PARLAMENTAR.map(norm)
+    irr["k"] = irr.nome_registro.map(norm)
+    irr = irr.rename(columns={"idade": "IDADE", "instrucao": "INSTRUCAO"}).drop_duplicates("k")
     ip = ip.merge(irr[["k", "IDADE", "INSTRUCAO"]], on="k", how="left")
     a = sc.merge(ip[["id_parlamentar", "IDEOLOGIA", "IDEOLOGIA_MATIZADA", "RACA", "GENERO", "reeleito", "IDADE", "INSTRUCAO"]],
                  left_on="ipipe_id_parlamentar", right_on="id_parlamentar", how="left")
@@ -130,6 +131,53 @@ def discriminante(c: pd.DataFrame) -> dict:
                       "pct_mulheres_esquerda": round(float(c[c.esquerda == 1].mulher.mean()), 3), "pct_mulheres_direita": round(float(c[c.esquerda == 0].mulher.mean()), 3)},
         "partido": {"rho": round(float(stats.spearmanr(c.tam_partido, c.iq).statistic), 3),
                     "rho_sem_pl": round(float(stats.spearmanr(sem_pl.tam_partido, sem_pl.iq).statistic), 3)},
+    }
+
+
+def ideologia(c: pd.DataFrame) -> dict:
+    """Ideologia e IQ: extremos do ranking contra o acaso, distribuição inteira, controles e componentes."""
+    v = c.sort_values("iq", ascending=False).reset_index(drop=True)
+    n, k_esq = len(v), int(v.esquerda.sum())
+    extremos = []
+    for k in (10, 20, 50, 100):
+        topo, base = int(v.head(k).esquerda.sum()), int(v.tail(k).esquerda.sum())
+        extremos.append({"k": k, "esperado": round(k * k_esq / n, 1),
+                         "topo": topo, "p_topo": round(float(stats.hypergeom.sf(topo - 1, n, k_esq, k)), 6),   # tantos ou mais
+                         "base": base, "p_base": round(float(stats.hypergeom.cdf(base, n, k_esq, k)), 6)})    # tão poucos ou menos
+    e, d = v.loc[v.esquerda == 1, "iq"], v.loc[v.esquerda == 0, "iq"]
+    a, p_mw = auc(v.iq, v.esquerda)
+    rng = np.random.default_rng(0)
+    boot = [rng.choice(e.values, len(e)).mean() - rng.choice(d.values, len(d)).mean() for _ in range(5000)]
+    dp = np.sqrt(((len(e) - 1) * e.var() + (len(d) - 1) * d.var()) / (n - 2))
+    ordem = {"extrema esquerda": 1, "esquerda": 2, "centro-esquerda": 3, "centro-direita": 4, "direita": 5, "extrema direita": 6}
+    sp = stats.spearmanr(v.IDEOLOGIA_MATIZADA.map(ordem), v.iq)
+    niveis = [{"nivel": k, "n": int(len(g)), "iq": round(float(g.iq.mean()), 3)} for k, g in sorted(v.groupby("IDEOLOGIA_MATIZADA"), key=lambda kv: ordem[kv[0]])]
+    # % de esquerda por quintil do IQ e tendência de Cochran-Armitage
+    q = pd.qcut(v.iq.rank(method="first"), 5, labels=["1º (menor IQ)", "2º", "3º", "4º", "5º (maior IQ)"])
+    tab = v.groupby(q, observed=True).esquerda.agg(["size", "sum"])
+    x, nn, r = np.arange(5), tab["size"].values, tab["sum"].values
+    pbar = r.sum() / nn.sum()
+    z = (x * (r - nn * pbar)).sum() / np.sqrt(pbar * (1 - pbar) * ((nn * x**2).sum() - (nn * x).sum() ** 2 / nn.sum()))
+
+    def efeito(y: str, controles: list[str]) -> dict:
+        X = np.column_stack([np.ones(n), v.esquerda] + [v[k].astype(float) for k in controles])
+        b = np.linalg.lstsq(X, v[y], rcond=None)[0]
+        res = v[y] - X @ b
+        ep = np.sqrt(np.diag(np.linalg.inv(X.T @ X)) * res.var(ddof=X.shape[1]))
+        return {"coef": round(float(b[1]), 4), "p": round(float(2 * stats.t.sf(abs(b[1] / ep[1]), n - X.shape[1])), 6)}
+
+    return {
+        "n": n, "n_esquerda": k_esq, "pct_esquerda": round(k_esq / n, 4), "extremos": extremos,
+        "media_esquerda": round(float(e.mean()), 3), "media_direita": round(float(d.mean()), 3),
+        "diferenca": round(float(e.mean() - d.mean()), 4), "ic": [round(float(x), 4) for x in np.percentile(boot, [2.5, 97.5])],
+        "d_cohen": round(float((e.mean() - d.mean()) / dp), 3), "auc": a, "p_auc": p_mw,
+        "rho_niveis": round(float(sp.statistic), 3), "p_niveis": round(float(sp.pvalue), 6), "niveis": niveis,
+        "quintis": [{"quintil": str(i), "n": int(r_["size"]), "pct": round(float(r_["sum"] / r_["size"]), 3)} for i, r_ in tab.iterrows()],
+        "z_tendencia": round(float(z), 2), "p_tendencia": round(float(2 * stats.norm.sf(abs(z))), 6),
+        "controles": [{"modelo": "Só ideologia", **efeito("iq", [])},
+                      {"modelo": "Controlando gênero e raça", **efeito("iq", ["mulher", "nao_branco"])},
+                      {"modelo": "Controlando também tempo de casa", **efeito("iq", ["mulher", "nao_branco", "ln_tempo_casa"])}],
+        "componentes": [{"var": k, **efeito(k, [])} for k in COMPS],
     }
 
 
@@ -249,7 +297,7 @@ def diap(c: pd.DataFrame) -> dict:
 def main() -> None:
     c = caracteristicas()
     c.to_csv(OUT / "validacao_caracteristicas.csv", index=False)
-    resumo = {"discriminante": discriminante(c), "eleicao": eleicao_2026(c), "diap": diap(c)}
+    resumo = {"discriminante": discriminante(c), "ideologia": ideologia(c), "eleicao": eleicao_2026(c), "diap": diap(c)}
     (OUT / "validacao_resumo.json").write_text(json.dumps(resumo, ensure_ascii=False, indent=1, allow_nan=False), encoding="utf-8")
     d = resumo["discriminante"]
     print(f"teste discriminante, n = {d['n']}")

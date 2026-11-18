@@ -18,6 +18,7 @@ import re
 import unicodedata
 from pathlib import Path
 
+import numpy as np
 import openpyxl
 import pandas as pd
 
@@ -30,7 +31,8 @@ DEPARA_PATH = OUT_DIR / "depara_nomes.csv"
 LEG_CO2 = 56  # CO2-INDEX cobre a 56a legislatura (2019-2023)
 LEGS_IPIPE = [56, 57]  # arquivos IPIPE_56A_* e IPIPE_57A_*
 LEG_IFS = 57  # postagens de 2023
-LEG_IRR = 57  # planilha V6_..._IRR_ponderado_57
+LEGS_IRR = [56, 57]  # arquivos IRR_56a_* e IRR_57a_*_banco_final.xlsx (Instagram de 2019 e de 2023)
+PISO_IRR = 0.1  # mesmo piso da média geométrica do IQ (indice_qualidade.PISO_GEOMETRICA)
 
 
 # --------------------------------------------------------------------------- helpers
@@ -188,30 +190,43 @@ def load_ipipe(aliases: pd.DataFrame, det: pd.DataFrame, depara: dict) -> tuple[
 
 
 def load_irr(aliases: pd.DataFrame, det: pd.DataFrame, depara: dict) -> tuple[pd.DataFrame, pd.DataFrame]:
-    """IRR (Índice de Reivindicação da Representação) da 57ª legislatura; a planilha é identificada pelo nome civil, como o IPIPE."""
-    irr = pd.read_excel(SCORES / "IRR" / "V6_agregado_ponderado_final_IRR_ponderado_57.xlsx", sheet_name="Agregado_Ponderado")
-    leg_ids = set(aliases.loc[aliases.legislatura == LEG_IRR, "id_camara"])
-    civil = unique_map(det[det.id_camara.isin(leg_ids)], "civil_norm", "id_camara")
-    # os nomes civis são os mesmos do IPIPE: reaproveita o de-para feito para ele
-    civil_ipipe = {nome: i for (indice, nome), i in depara.items() if indice == "IPIPE"}
-    irr["id_camara"] = match_names(irr, "PARLAMENTAR", "IRR", [civil, civil_ipipe], depara)
-    irr["legislatura"] = LEG_IRR
-    unmatched = irr[irr.id_camara.isna()][["PARLAMENTAR", "PLATAFORMAS", "N_POSTS_TOTAL"]]
-    ok = irr.dropna(subset=["id_camara"]).rename(
+    """IRR (Índice de Reivindicação da Representação) da 56ª e da 57ª, medido no Instagram.
+
+    Usa o recorte de Instagram (colunas *_instagram), que é o comparável entre as duas legislaturas;
+    o agregado Instagram+X só existe na 57ª. As quatro dimensões (escopo, especificidade, consistência
+    e valência; a recepção ficou fora do índice) viram posição percentual entre os parlamentares da
+    legislatura que entram no índice. O banco traz a média aritmética dessas posições (irr_instagram,
+    mantida em irr_aritmetica); aqui o IRR é a média geométrica delas, reescaladas para [piso, 1],
+    a mesma agregação do IQ.
+    """
+    dims = ["escopo", "especificidade", "consistencia", "valencia"]
+    partes, nao_casados = [], []
+    for leg in LEGS_IRR:
+        irr = pd.read_excel(SCORES / "IRR" / f"IRR_{leg}a_legislatura_banco_final.xlsx", sheet_name=0)
+        irr = irr[(irr.no_indice == "sim") & irr.irr_instagram.notna()].copy()
+        if "id_camara" not in irr:  # o banco da 57ª é identificado pelo nome civil, como o IPIPE
+            leg_ids = set(aliases.loc[aliases.legislatura == leg, "id_camara"])
+            civil = unique_map(det[det.id_camara.isin(leg_ids)], "civil_norm", "id_camara")
+            civil_ipipe = {nome: i for (indice, nome), i in depara.items() if indice == "IPIPE"}
+            irr["id_camara"] = match_names(irr, "nome_registro", "IRR", [civil, civil_ipipe], depara)
+            irr["nome_civil"] = irr["nome_registro"]
+        pos = irr[[f"{d}_instagram" for d in dims]].rank(pct=True)
+        assert (pos.mean(axis=1) - irr.irr_instagram).abs().max() < 2e-3, f"IRR {leg}: irr_instagram não é a média dos percentis"
+        irr["irr"] = np.exp(np.log(PISO_IRR + (1 - PISO_IRR) * pos).mean(axis=1))
+        irr["legislatura"] = leg
+        nao_casados.append(irr[irr.id_camara.isna()][["legislatura", "nome_civil", "n_posts_instagram"]])
+        partes.append(irr.dropna(subset=["id_camara"]))
+    ok = pd.concat(partes, ignore_index=True).rename(
         columns={
-            "IRR_PONDERADO_VOLUME_final": "irr",
-            "N_POSTS_TOTAL": "irr_n_posts",
-            "N_POSTS_CLAIM_VALIDA": "irr_n_posts_claim",
-            "RECEPCAO": "irr_recepcao",
-            "ESCOPO": "irr_escopo",
-            "ESPECIFICIDADE": "irr_especificidade",
-            "CONSISTENCIA": "irr_consistencia",
-            "VALENCIA": "irr_valencia",
-            "QUADRANTE": "irr_quadrante",
+            "irr_instagram": "irr_aritmetica",
+            "n_posts_instagram": "irr_n_posts",
+            "n_reivindicacoes_instagram": "irr_n_posts_claim",
+            "recepcao_relativa_instagram": "irr_recepcao_relativa",
+            **{f"{d}_instagram": f"irr_{d}" for d in dims},
         }
-    )[["id_camara", "legislatura", "irr", "irr_n_posts", "irr_n_posts_claim", "irr_recepcao", "irr_escopo",
-       "irr_especificidade", "irr_consistencia", "irr_valencia", "irr_quadrante"]]
-    return ok, unmatched
+    )[["id_camara", "legislatura", "irr", "irr_aritmetica", "irr_n_posts", "irr_n_posts_claim",
+       "irr_escopo", "irr_especificidade", "irr_consistencia", "irr_valencia", "irr_recepcao_relativa"]]
+    return ok, pd.concat(nao_casados, ignore_index=True)
 
 
 def load_ifs(aliases: pd.DataFrame, det: pd.DataFrame, depara: dict) -> tuple[pd.DataFrame, pd.DataFrame]:
@@ -295,7 +310,7 @@ def main() -> None:
             co2_nc.assign(indice="CO2", nome_origem=co2_nc.nome_padronizado),
             ipipe_nc.assign(indice="IPIPE", nome_origem=ipipe_nc.nome),
             ifs_nc.assign(indice="IFS", nome_origem=ifs_nc.screen_name),
-            irr_nc.assign(indice="IRR", nome_origem=irr_nc.PARLAMENTAR),
+            irr_nc.assign(indice="IRR", nome_origem=irr_nc.nome_civil),
         ],
         ignore_index=True,
     )
